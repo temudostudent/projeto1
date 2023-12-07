@@ -24,7 +24,11 @@ public class Artista extends Utilizador implements Serializable {
     @Override
     public void criarListaMusicas(String nomeDoAlbum,boolean visibilidade) {
         PlayList nova=new PlayList(nomeDoAlbum,visibilidade);
-
         albuns.add(nova);
+    }
+    //Adiciona música
+    public void addMusica(String titulo, int ano, double duracao, String genero, boolean estado){
+
+
     }
 }

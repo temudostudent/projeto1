@@ -40,7 +40,7 @@ public class Musica implements Serializable {
         return soma;
     }
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
-    public void ratingMedia(){
+    public void getRatingMedia(){
         this.ratingMedia=(double)(somaRatings()/rating.size());
     }
 
