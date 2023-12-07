@@ -16,10 +16,12 @@ public class Cliente extends Utilizador implements Serializable {
     }
 
     // Método para adicionar músicas a uma determinada PlayList
-
-    public void adicionarMusica (String nomePlayList){
+    public void adicionarMusica (String nomePlayList, Musica x){
+        Musica x;
         for(PlayList f  : playlists){   // percorre o arrayList de playList
-            if(f.getNome().equals(nomePlayList))  //verifica se o nome
+            if(f.getNome().equals(nomePlayList)){//pesquisa o nome da playList
+                f.add(x); // adiciona a musica à
+            }
 
         }
 

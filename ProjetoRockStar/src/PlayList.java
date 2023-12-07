@@ -6,7 +6,7 @@ public class PlayList {
 
    private ArrayList<Musica> musicas;
 
-    public PlayList(String nome, Boolean visibilidade) {
+    public PlayList(String nome, boolean visibilidade) {
         this.nome = nome;
         this.visibilidade = visibilidade;
     }
