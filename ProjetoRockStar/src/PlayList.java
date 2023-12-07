@@ -11,4 +11,7 @@ public class PlayList {
         this.visibilidade = visibilidade;
     }
 
+    public String getNome() {
+        return nome;
+    }
 }
