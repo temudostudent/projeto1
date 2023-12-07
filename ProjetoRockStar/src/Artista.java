@@ -20,8 +20,11 @@ public class Artista extends Utilizador implements Serializable {
         musicas.forEach(System.out::println);
     }
 
+    //Cria um novo objeto Playlist e adiciona à lista do Artista, recebe o nome da playlist
     @Override
     public void criarListaMusicas(String nomeDoAlbum,boolean visibilidade) {
         PlayList nova=new PlayList(nomeDoAlbum,visibilidade);
+
+        albuns.add(nova);
     }
 }
