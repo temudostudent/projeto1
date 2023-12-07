@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class PlayList {
     private String nome;
-   private  Boolean visibilidade;
+   private  boolean visibilidade;
 
    private ArrayList<Musica> musicas;
 
