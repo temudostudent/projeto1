@@ -20,10 +20,13 @@ public class Cliente extends Utilizador implements Serializable {
         Musica x;
         for(PlayList f  : playlists){   // percorre o arrayList de playList
             if(f.getNome().equals(nomePlayList)){//pesquisa o nome da playList
-                f.add(x); // adiciona a musica à
+                f.add(x); // adiciona a musica à lista
             }
 
         }
+    }
+
+    public void criarPlayListGenero (String genero, int tamanho){
 
     }
 
