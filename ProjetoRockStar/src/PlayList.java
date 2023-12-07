@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class PlayList {
     private String nome;
    private  boolean visibilidade;
+   private String genero;
 
    private ArrayList<Musica> musicas;
 
@@ -10,6 +11,7 @@ public class PlayList {
         this.nome = nome;
         this.visibilidade = visibilidade;
     }
+
 
     public String getNome() {
         return nome;
