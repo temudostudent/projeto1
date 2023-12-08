@@ -64,14 +64,4 @@ public class Artista extends Utilizador implements Serializable {
         }
     }
 
-
-    //Escolher Album pelo nome
-    public void albumDesejado(String titulo){
-        for (PlayList a : albuns){
-            if (a.getNome().equalsIgnoreCase(titulo)){
-
-            }
-        }
-    }
-
 }
