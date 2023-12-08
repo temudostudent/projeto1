@@ -36,6 +36,7 @@ public class Artista extends Utilizador implements Serializable {
         musicas.add(novaM);
     }
     //Adiciona música a Album
+    //Pesquisa no map se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
     public void addMusica(String nomeAlbum, String tituloMusica){
         PlayList album = albuns.get(nomeAlbum);
         if (album != null){
@@ -50,6 +51,18 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Remover música de Album
+    public void removeMusica(String nomeAlbum, String tituloMusica){
+        PlayList album = albuns.get(nomeAlbum);
+        if (album != null){
+            for (Musica m : musicas){
+                if (m.getTitulo().equalsIgnoreCase(tituloMusica)){
+                    album.removeMusica(m);
+                }
+            }
+        }else{
+            System.out.println("Álbum '" + nomeAlbum + "' não encontrado");
+        }
+    }
 
 
     //Escolher Album pelo nome
