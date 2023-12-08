@@ -44,4 +44,8 @@ public class Musica implements Serializable {
         this.ratingMedia=(double)(somaRatings()/rating.size());
     }
 
+    //get título
+    public String getTitulo() {
+        return titulo;
+    }
 }
