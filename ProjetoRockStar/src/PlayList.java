@@ -11,6 +11,16 @@ public class PlayList {
         this.visibilidade = visibilidade;
     }
 
+    //Adiciona música
+    public  void addMusica(Musica m){
+        musicas.add(m);
+    }
+
+    //Remove música
+    public  void removeMusica(Musica m){
+        musicas.remove(m);
+    }
+
     public String getNome() {
         return nome;
     }
