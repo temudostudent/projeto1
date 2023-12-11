@@ -31,6 +31,8 @@ public class Musica implements Serializable {
     public void addRating(int valor){
         rating.add(valor);
     }
+
+
     //soma de todos os ratings
     private int somaRatings(){
         int soma=0;
@@ -39,6 +41,8 @@ public class Musica implements Serializable {
         }
         return soma;
     }
+
+
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
     public void getRatingMedia(){
         this.ratingMedia=(double)(somaRatings()/rating.size());
