@@ -20,5 +20,4 @@ public class Musica implements Serializable {
         this.estado = estado;
     }
 
-
 }

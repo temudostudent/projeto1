@@ -32,11 +32,10 @@ public class Cliente extends Utilizador implements Serializable {
         PlayList nova = new PlayList<Musica>(tamanho);   // cria uma nova playList
         for(Musica musica : listaGlobalmusicas){
             if(musica.getGenero.equals(genero)){
-                nova.add(musica);                       // adiciona todas as musicas do genero selecionado
+                nova.add(musica);                       // adiciona todas as musicas do genero selecionado na playList
             }
         }
         Random aleatorio = new Random();
-
 
     }
     // remover um playList dando o atributo nome
