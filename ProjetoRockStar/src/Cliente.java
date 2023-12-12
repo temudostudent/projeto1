@@ -8,6 +8,7 @@ public class Cliente extends Utilizador implements Serializable {
     //Atributos
 
     private ArrayList<PlayList> playlists;
+    private ArrayList<Compra> compras;
 
     // Construtor classe Cliente
 
@@ -28,7 +29,6 @@ public class Cliente extends Utilizador implements Serializable {
     public void criarListaMusicas(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
-
     }
 
     // Método para adicionar músicas a uma determinada PlayList
@@ -43,6 +43,7 @@ public class Cliente extends Utilizador implements Serializable {
     // criar uma playList indicando o género e tamanho
     public void criarPlayListGenero(String genero, int tamanho) {
         String nome;
+        int cont = 0;
         boolean visibilidade;
         PlayList nova = new PlayList();                                     // cria uma nova playList
         for(PlayList f : playlists ){                                        // percorre todas as playlists

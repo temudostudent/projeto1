@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayList {
     private String nome;
@@ -15,6 +16,14 @@ public class PlayList {
 
     public void adicionarMusica(Musica m){
         musicas.add(m);
+    }
+
+    public void percorrerPlayList(int tamanho){
+        int cont = 0;
+        ArrayList nova = new ArrayList<>();
+        Random random = new Random();
+        for(Musica m : musicas) {
+        }
     }
     public Musica encontrarMusicaGenero( String genero){
         Musica g = null;
