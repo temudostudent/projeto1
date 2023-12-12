@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author cesartemudo
+ * @version 1.0
+ */
+
 public class Artista extends Utilizador implements Serializable {
 
     //Atributos
@@ -11,6 +16,7 @@ public class Artista extends Utilizador implements Serializable {
     private ArrayList<Musica> musicas=new ArrayList<>();
 
     //Construtor que recebe username, password, pin
+
     public Artista(String username, String password, int pin) {
         super(username, password);
         this.pin = pin;
@@ -28,6 +34,7 @@ public class Artista extends Utilizador implements Serializable {
         PlayList novaP=new PlayList(nomeDoAlbum,visibilidade);
         albuns.put(nomeDoAlbum,novaP);
     }
+
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
     public void novaMusica(String titulo, int ano, double duracao, String genero, boolean estado){
         //Descobrir como colocar o próprio artista como atributo da música
