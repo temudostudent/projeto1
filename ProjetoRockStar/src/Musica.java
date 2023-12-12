@@ -19,4 +19,8 @@ public class Musica implements Serializable {
         this.genero = genero;
         this.estado = estado;
     }
+
+    public String getGenero() {
+        return genero;
+    }
 }
