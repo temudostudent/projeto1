@@ -11,6 +11,6 @@ public abstract class Utilizador implements Serializable {
     }
 
     public abstract void verListas();
-    public abstract void criarListaMusicas();
+    public abstract void criarListaMusicas(String nomeDaLista,boolean visibilidade);
 
 }
