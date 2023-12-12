@@ -18,9 +18,9 @@ public class Cliente extends Utilizador implements Serializable {
 
     // Método para adicionar músicas a uma determinada PlayList
     public void adicionarMusica (String nomePlayList, Musica musica){
-        for(PlayList f  : playlists){   // percorre o arrayList de playList
-            if(f.getNome().equals(nomePlayList)){//pesquisa o nome da playList
-                f.add(musica); // adiciona a musica à lista
+        for(PlayList f  : playlists){                                      // percorre o arrayList de playList
+            if(f.getNome().equals(nomePlayList)){                          //pesquisa o nome da playList
+                f.add(musica);                                             // adiciona a musica à lista
             }
         }
     }
@@ -46,7 +46,7 @@ public class Cliente extends Utilizador implements Serializable {
             }
         }
     }
-    // carregar saldo do cliente informando a quantidade
+    // alterar saldo do cliente informando a quantidade
     public void alterarSaldo(double quantia){
         saldo *= quantia;
     }
