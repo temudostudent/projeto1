@@ -31,7 +31,6 @@ public class Musica implements Serializable {
         rating.add(valor);
     }
 
-
     //soma de todos os ratings
     private int somaRatings(){
         int soma=0;
@@ -50,6 +49,11 @@ public class Musica implements Serializable {
     //get título
     public String getTitulo() {
         return titulo;
+    }
+
+    //get genero
+    public String getGenero() {
+        return genero;
     }
 
     @Override
