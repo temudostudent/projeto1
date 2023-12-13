@@ -30,5 +30,18 @@ public class Album extends ConjuntoMusicas{
         this.musicas.forEach(System.out::println);
     }
 
+    //Procura música no álbum pelo título da música
+    public Musica encontraMusica(String tituloMusica){
+        Musica musica=new Musica();
+        for (Musica mVariavel : this.musicas){
+            if (mVariavel.getTitulo().equalsIgnoreCase(tituloMusica)){
+                return musica=mVariavel;
+            }else System.out.println("Música '" + tituloMusica + "' não encontrado");
+        }
+    return musica;}
 
+    @Override
+    public String getNome() {
+        return super.getNome();
+    }
 }
