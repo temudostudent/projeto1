@@ -9,6 +9,7 @@ public class PlayList {
     public PlayList(String nome, boolean visibilidade) {
         this.nome = nome;
         this.visibilidade = visibilidade;
+        new ArrayList<Musica>();
     }
 
     //Adiciona música

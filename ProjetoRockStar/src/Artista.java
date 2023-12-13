@@ -1,7 +1,5 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author cesartemudo
@@ -12,7 +10,67 @@ public class Artista extends Utilizador implements Serializable {
 
     //Atributos
     private int pin;
-    private Map<String,PlayList> albuns; //Atributo como map para facilitar a pesquisa de albuns
+    private Map<String,PlayList> albuns=new Map<String, PlayList>() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean containsKey(Object key) {
+            return false;
+        }
+
+        @Override
+        public boolean containsValue(Object value) {
+            return false;
+        }
+
+        @Override
+        public PlayList get(Object key) {
+            return null;
+        }
+
+        @Override
+        public PlayList put(String key, PlayList value) {
+            return null;
+        }
+
+        @Override
+        public PlayList remove(Object key) {
+            return null;
+        }
+
+        @Override
+        public void putAll(Map<? extends String, ? extends PlayList> m) {
+
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public Set<String> keySet() {
+            return null;
+        }
+
+        @Override
+        public Collection<PlayList> values() {
+            return null;
+        }
+
+        @Override
+        public Set<Entry<String, PlayList>> entrySet() {
+            return null;
+        }
+    }; //Atributo como map para facilitar a pesquisa de albuns
     private ArrayList<Musica> musicas=new ArrayList<>();
 
     //Construtor que recebe username, password, pin
@@ -36,9 +94,9 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
-    public void novaMusica(String titulo, int ano, double duracao, String genero, boolean estado){
+    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado){
         //Descobrir como colocar o próprio artista como atributo da música
-        Musica novaM=new Musica(titulo,Artista this,ano,duracao,genero,estado);
+        Musica novaM=new Musica(titulo,this,ano,mes,dia,duracao,genero,estado);
 
         musicas.add(novaM);
     }
