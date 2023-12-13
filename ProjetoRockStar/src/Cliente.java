@@ -23,8 +23,6 @@ public class Cliente extends Utilizador implements Serializable {
         }
 
     }
-
-    @Override
     public void criarListaMusicas(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
