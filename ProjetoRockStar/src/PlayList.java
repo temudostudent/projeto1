@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayList {
     private String nome;
@@ -9,19 +10,41 @@ public class PlayList {
     public PlayList(String nome, boolean visibilidade) {
         this.nome = nome;
         this.visibilidade = visibilidade;
+        this.musicas = new ArrayList<>();
     }
+    public PlayList(){};
 
-    //Adiciona música
-    public  void addMusica(Musica m){
+    public void adicionarMusica(Musica m){
         musicas.add(m);
     }
 
-    //Remove música
-    public  void removeMusica(Musica m){
-        musicas.remove(m);
+    public void percorrerPlayList(int tamanho){
+        int cont = 0;
+        ArrayList nova = new ArrayList<>();
+        Random random = new Random();
+        for(Musica m : musicas) {
+        }
+    }
+    public Musica encontrarMusicaGenero( String genero){
+        Musica g = null;
+        for(Musica m : musicas){
+            if(m.getGenero().equals(genero)){
+                g = (Musica) m;
+            }
+        }
+        return g;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayList{" +
+                "nome='" + nome + '\'' +
+                ", visibilidade=" + visibilidade +
+                ", musicas=" + musicas +
+                '}';
     }
 }
