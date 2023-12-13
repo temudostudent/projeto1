@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas{
 
-   private  boolean visibilidade;
+   private boolean visibilidade;
 
     public PlayList(String nome, boolean visibilidade) {
         super(nome);
@@ -11,16 +11,19 @@ public class PlayList extends ConjuntoMusicas{
         super.musicas=new ArrayList<>();
     }
 
+    //Adiciona música a Playlist
     @Override
     public void adicionarMusica(Musica m) {
         this.musicas.add(m);
     }
 
+    //Remove música da Playlist
     @Override
     public void removeMusica(Musica m) {
         this.musicas.remove(m);
     }
 
+    //Imprime todos os items da Playlist
     @Override
     public void imprimirLista() {
         this.musicas.forEach(System.out::println);
@@ -43,6 +46,17 @@ public class PlayList extends ConjuntoMusicas{
         return g;
     }
 
+    //Mostra a visibilidade da Playlist
+    public boolean isVisibilidade() {
+        return visibilidade;
+    }
+
+    //Define a visibilidade da Playlist
+    public void setVisibilidade(boolean visibilidade) {
+        this.visibilidade = visibilidade;
+    }
+
+    //Get nome da Playlist
     public String getNome() {
         return nome;
     }

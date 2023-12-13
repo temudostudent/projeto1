@@ -12,16 +12,19 @@ public class Album extends ConjuntoMusicas{
         super.musicas=new ArrayList<>();
     }
 
+    //Adiciona música a Playlist
     @Override
     public void adicionarMusica(Musica m) {
         this.musicas.add(m);
     }
 
+    //Remove música da Playlist
     @Override
     public void removeMusica(Musica m) {
         this.musicas.remove(m);
     }
 
+    //Imprime todos os items da Playlist
     @Override
     public void imprimirLista() {
         this.musicas.forEach(System.out::println);
