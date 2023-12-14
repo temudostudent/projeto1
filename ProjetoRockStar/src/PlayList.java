@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas{
    private  boolean visibilidade;
@@ -23,6 +24,23 @@ public class PlayList extends ConjuntoMusicas{
     @Override
     public void imprimirLista() {
         musicas.forEach(System.out::println);
+    }
+
+    public void percorrerPlayList(int tamanho){
+        int cont = 0;
+        ArrayList nova = new ArrayList<>();
+        Random random = new Random();
+        for(Musica m : musicas) {
+        }
+    }
+    public Musica encontrarMusicaGenero( String genero){
+        Musica g = null;
+        for(Musica m : musicas){
+            if(m.getGenero().equals(genero)){
+                g = (Musica) m;
+            }
+        }
+        return g;
     }
 
     public String getNome() {
