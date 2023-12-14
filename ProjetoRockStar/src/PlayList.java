@@ -1,27 +1,41 @@
 import java.util.ArrayList;
 
-public class PlayList {
-    private String nome;
+public class PlayList extends ConjuntoMusicas{
    private  boolean visibilidade;
 
-   private ArrayList<Musica> musicas;
-
     public PlayList(String nome, boolean visibilidade) {
-        this.nome = nome;
+        super(nome);
         this.visibilidade = visibilidade;
+        super.musicas = new ArrayList<>();
     }
 
     //Adiciona música
-    public  void addMusica(Musica m){
-        musicas.add(m);
+    @Override
+    public void adicionarMusica(Musica m) {
+        this.musicas.add(m);
     }
 
     //Remove música
     public  void removeMusica(Musica m){
-        musicas.remove(m);
+        this.musicas.remove(m);
+    }
+
+    @Override
+    public void imprimirLista() {
+        musicas.forEach(System.out::println);
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
+    }
+
+    //Mostra a visibilidade
+    public boolean isVisibilidade() {
+        return this.visibilidade;
+    }
+
+    //Set visibilidade
+    public void setVisibilidade(boolean visibilidade) {
+        this.visibilidade = visibilidade;
     }
 }
