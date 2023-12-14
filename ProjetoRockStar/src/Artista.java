@@ -48,12 +48,18 @@ public class Artista extends Utilizador implements Serializable {
     //Adiciona música a Album
     //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
     public void addMusica(String nomeAlbum, String tituloMusica) {
+        int cont = 0;
         for (Album a : albuns) {
             if (a.getNome().equalsIgnoreCase(nomeAlbum)) {   //descobrir album pelo nome
                 for (Musica m : musicas) {
                     if (m.getTitulo().equalsIgnoreCase(tituloMusica)) { //descobrir musica pelo título
                         albuns.get(albuns.indexOf(a)).adicionarMusica(m);
+                        cont++;
                     }
+                }
+                if (cont == 1) {
+                    System.out.println("Música '" + tituloMusica + "' adicionada com sucesso ao álbum '" + nomeAlbum + "'");
+                    break;
                 }
             } else {
                 System.out.println("Álbum '" + nomeAlbum + "' não encontrado");
@@ -123,8 +129,4 @@ public class Artista extends Utilizador implements Serializable {
         }
     return cont;
     }
-
-    
-
-
 }
