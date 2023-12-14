@@ -51,9 +51,19 @@ public class Musica implements Serializable {
         return titulo;
     }
 
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+
     //get genero
     public String getGenero() {
         return genero;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override

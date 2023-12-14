@@ -44,4 +44,8 @@ public class Album extends ConjuntoMusicas{
     public String getNome() {
         return super.getNome();
     }
+
+    public String getGenero() {
+        return genero;
+    }
 }

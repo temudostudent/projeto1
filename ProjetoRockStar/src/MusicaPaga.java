@@ -12,4 +12,12 @@ public class MusicaPaga extends Musica implements Serializable {
         super(titulo, artista, ano, mes, dia, duracao, genero, estado);
         this.preco = preco;
     }
+
+    public double getPreco() {return preco;}
+
+    public void setPreco(double preco) {
+        if (preco<0){
+            this.preco=0;
+        }else this.preco = preco;
+    }
 }

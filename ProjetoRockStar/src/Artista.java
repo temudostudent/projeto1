@@ -19,6 +19,7 @@ public class Artista extends Utilizador implements Serializable {
         this.pin = pin;
         this.musicas = new ArrayList<>();
         this.albuns = new ArrayList<>();
+        super.saldo=0;
     }
 
     //Imprimir todos os albuns do artista
@@ -34,8 +35,13 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
-    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado) {
-        Musica novaM = new Musica(titulo, this, ano, mes, dia, duracao, genero, estado);
+    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado,double preco) {
+        Musica novaM=null;
+        if (preco<=0){
+            novaM = new Musica(titulo,this,ano,mes,dia,duracao,genero,estado);
+        }else {
+            novaM = new MusicaPaga(titulo,this,ano,mes,dia,duracao,genero,estado,preco);
+        }
         musicas.add(novaM);
     }
 
@@ -65,4 +71,60 @@ public class Artista extends Utilizador implements Serializable {
             }
         }
     }
+
+    //Altera o título
+    public void corrigirTitulo(Musica m, String novoTitulo){
+        m.setTitulo(novoTitulo);
+    }
+
+    //Altera o preço
+    public void alterarPreco(MusicaPaga m, double novoPreco){
+        m.setPreco(novoPreco);
+    }
+
+    //Número total de músicas
+    public int totalMusicas(){
+        return musicas.size();
+    }
+
+    //Valor total das músicas que tem na coleção neste momento
+    public double valorTotalColecao(){
+        double soma=0;
+        for (int i=0;i<musicas.size();i++){
+            if (musicas.get(i) instanceof MusicaPaga){
+                soma+=((MusicaPaga) musicas.get(i)).getPreco();
+            }
+        }
+    return soma;
+    }
+
+    //Valor total de todas as músicas vendidas
+    public double valorTotalVendas(){
+        return getSaldo();
+    }
+
+    //Número total de álbuns
+    public int totalAlbuns(){
+        return albuns.size();
+    }
+
+    //Inativar música m
+    public void inativarMusica(Musica m){
+        m.setEstado(false);
+    }
+
+    //Número total de álbuns do género X
+    public int totalAlbunsGenero(String genero){
+        int cont=0;
+        for (Album a : albuns){
+            if (a.getGenero().equalsIgnoreCase(genero)){
+                cont++;
+            }
+        }
+    return cont;
+    }
+
+    
+
+
 }
