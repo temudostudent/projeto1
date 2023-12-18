@@ -6,11 +6,12 @@ public class MusicaPaga extends Musica implements Serializable {
 
     private double preco;
 
-   private  ArrayList <Double> listaprecos = new ArrayList<>();
+   private  ArrayList <Double> historicoPreco;
 
     public MusicaPaga(String titulo, Artista artista, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
         super(titulo, artista, ano, mes, dia, duracao, genero, estado);
         this.preco = preco;
+        this.historicoPreco = new ArrayList<>();
     }
 
     public double getPreco() {return preco;}
@@ -20,4 +21,6 @@ public class MusicaPaga extends Musica implements Serializable {
             this.preco=0;
         }else this.preco = preco;
     }
+
+
 }
