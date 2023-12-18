@@ -6,10 +6,18 @@ public class MusicaPaga extends Musica implements Serializable {
 
     private double preco;
 
-   private  ArrayList <Double> listaprecos = new ArrayList<Double>();
+   private  ArrayList <Double> listaprecos = new ArrayList<>();
 
-    public MusicaPaga(String titulo, LocalDate ano, double duracao, String genero, boolean estado, double preco) {
-        super(titulo, ano, duracao, genero, estado);
+    public MusicaPaga(String titulo, Artista artista, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
+        super(titulo, artista, ano, mes, dia, duracao, genero, estado);
         this.preco = preco;
+    }
+
+    public double getPreco() {return preco;}
+
+    public void setPreco(double preco) {
+        if (preco<0){
+            this.preco=0;
+        }else this.preco = preco;
     }
 }

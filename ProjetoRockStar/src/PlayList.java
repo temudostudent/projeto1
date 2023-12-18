@@ -1,21 +1,30 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayList {
-    private String nome;
+public class PlayList extends ConjuntoMusicas{
    private  boolean visibilidade;
 
-   private ArrayList<Musica> musicas;
-
     public PlayList(String nome, boolean visibilidade) {
-        this.nome = nome;
+        super(nome);
         this.visibilidade = visibilidade;
-        this.musicas = new ArrayList<>();
+        super.musicas = new ArrayList<>();
     }
-    public PlayList(){};
 
-    public void adicionarMusica(Musica m){
-        musicas.add(m);
+    //Adiciona música
+    @Override
+    public void adicionarMusica(Musica m) {
+        this.musicas.add(m);
+    }
+
+    //Remove música
+    @Override
+    public  void removeMusica(Musica m){
+        this.musicas.remove(m);
+    }
+
+    @Override
+    public void imprimirLista() {
+        musicas.forEach(System.out::println);
     }
 
     public void percorrerPlayList(int tamanho){
@@ -36,15 +45,16 @@ public class PlayList {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
-    @Override
-    public String toString() {
-        return "PlayList{" +
-                "nome='" + nome + '\'' +
-                ", visibilidade=" + visibilidade +
-                ", musicas=" + musicas +
-                '}';
+    //Mostra a visibilidade
+    public boolean isVisibilidade() {
+        return this.visibilidade;
+    }
+
+    //Set visibilidade
+    public void setVisibilidade(boolean visibilidade) {
+        this.visibilidade = visibilidade;
     }
 }

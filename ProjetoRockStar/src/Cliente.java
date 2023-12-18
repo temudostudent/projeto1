@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-// criação Classe Cliente
+// criação classe Cliente
 public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
@@ -10,9 +10,9 @@ public class Cliente extends Utilizador implements Serializable {
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> compras;
 
-    // Construtor classe Cliente
+    // Construtor classe
 
-    public Cliente(String username, String password) {
+    public Cliente(String username,String password) {
         super(username, password);
         this.playlists = playlists;
     }
@@ -24,9 +24,7 @@ public class Cliente extends Utilizador implements Serializable {
         }
 
     }
-
-    @Override
-    public void criarListaMusicas(String nomeDaLista, boolean visibilidade) {
+    public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
     }
@@ -45,7 +43,7 @@ public class Cliente extends Utilizador implements Serializable {
         String nome;
         int cont = 0;
         boolean visibilidade;
-        PlayList nova = new PlayList();                                     // cria uma nova playList
+        PlayList nova = new PlayList(genero+"list", true);    // cria uma nova playList
         for(PlayList f : playlists ){                                        // percorre todas as playlists
             nova.adicionarMusica( f.encontrarMusicaGenero(genero));          // encontra musica pelo genero e adiciona-a a uma nova playList
         }
