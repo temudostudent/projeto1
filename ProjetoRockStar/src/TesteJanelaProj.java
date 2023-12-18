@@ -1,0 +1,237 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TesteJanelaProj {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> createAndShowGUI());
+    }
+
+    private static void createAndShowGUI() {
+        JPanel painelTitulo,painelInicial,painelRegistar,painelLogin;
+        JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
+        JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
+
+
+        //Criar Frame
+        JFrame f = new JFrame("Rockstar Inc");
+        JFrame fPin = new JFrame("PIN");
+
+        //Criar Paineis
+        painelTitulo = new JPanel();
+        painelTitulo.setBackground(new Color(255,178,102));
+        painelTitulo.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+
+        painelInicial = new JPanel();
+        painelInicial.setBackground(new Color(255,178,102));
+        painelInicial.setLayout(null);
+
+        painelRegistar = new JPanel();
+        painelRegistar.setBackground(new Color(255,178,102));
+        painelRegistar.setLayout(null);
+
+        painelLogin = new JPanel();
+        painelLogin.setBackground(new Color(255,178,102));
+        painelLogin.setLayout(null);
+
+        JPanel painelPIN = new JPanel();
+        painelPIN.setLayout(new BorderLayout());
+
+        //Texto
+        rockstarTxt = new JLabel("RockStar Inc");
+        rockstarTxt.setFont(new Font("Magneto",Font.BOLD,120));
+
+        usernameLegendaL = new JLabel("Username");
+        usernameLegendaL.setFont(new Font("Calibri",Font.BOLD,15));
+        usernameLegendaL.setBounds(440,135,100,30);
+
+        passLegendaL = new JLabel("Password");
+        passLegendaL.setFont(new Font("Calibri",Font.BOLD,15));
+        passLegendaL.setBounds(695,135,100,30);
+
+        usernameLegendaR = new JLabel("Username");
+        usernameLegendaR.setFont(new Font("Calibri",Font.BOLD,15));
+        usernameLegendaR.setBounds(440,135,100,30);
+
+        passLegendaR = new JLabel("Password");
+        passLegendaR.setFont(new Font("Calibri",Font.BOLD,15));
+        passLegendaR.setBounds(695,135,100,30);
+
+        pinL = new JLabel("PIN");
+        pinL.setFont(new Font("Calibri",Font.BOLD,15));
+        pinL.setBounds(590,340,100,30);
+
+        pinR = new JLabel("PIN");
+        pinR.setFont(new Font("Calibri",Font.BOLD,15));
+        pinR.setBounds(590,300,100,30);
+        pinR.setVisible(false);
+
+        //Botões
+        botaoRegistar1=new JButton("Registar");
+        botaoRegistar1.setFont(new Font("Calibri",Font.BOLD,30));
+        botaoRegistar1.setBounds(350,300,200,80);
+
+        botaoLogin1=new JButton("Login");
+        botaoLogin1.setFont(new Font("Calibri",Font.BOLD,30));
+        botaoLogin1.setBounds(650,300,200,80);
+
+        botaoRegistar2=new JButton("Registar");
+        botaoRegistar2.setFont(new Font("Calibri",Font.BOLD,30));
+        botaoRegistar2.setBounds(500,360,200,80);
+
+        botaoLogin2 = new JButton("Login");
+        botaoLogin2.setFont(new Font("Calibri",Font.BOLD,30));
+        botaoLogin2.setBounds(500,360,200,80);
+
+        JButton okPIN = new JButton("OK");
+        okPIN.setFont(new Font("Calibri",Font.BOLD,10));
+
+        JRadioButton rbotaoArtista = new JRadioButton("Artista",false);
+        rbotaoArtista.setBounds(445,200,100,30);
+        rbotaoArtista.setContentAreaFilled(false);
+        rbotaoArtista.setBorderPainted(false);
+
+        JRadioButton rbotaoUser = new JRadioButton("Usuário",false);
+        rbotaoUser.setBounds(690,200,100,30);
+        rbotaoUser.setContentAreaFilled(false);
+        rbotaoUser.setBorderPainted(false);
+
+        ButtonGroup grupoBotoesRegistar = new ButtonGroup();
+        grupoBotoesRegistar.add(rbotaoArtista);
+        grupoBotoesRegistar.add(rbotaoUser);
+
+        //Caixas de texto
+
+        JTextField cxUsernameL = new JTextField();
+        cxUsernameL.setBounds(400,100,150,30);
+
+        JPasswordField cxPassL = new JPasswordField();
+        cxPassL.setBounds(650,100,150,30);
+
+        JTextField cxUsernameR = new JTextField();
+        cxUsernameR.setBounds(400,100,150,30);
+
+        JPasswordField cxPassR = new JPasswordField();
+        cxPassR.setBounds(650,100,150,30);
+
+        JTextField cxPinL = new JTextField();
+        cxPinL.setBounds(550,300,150,30);
+
+        JTextField cxPinR = new JTextField();
+        cxPinR.setBounds(550,260,100,30);
+        cxPinR.setVisible(false);
+
+        //----------------------------------------------------------------------------------------------
+
+        //Painel Título
+
+        painelTitulo.add(rockstarTxt);
+
+        //----------------------------------------------------------------------------------------------
+
+        //Painel Inicial
+
+        //Adicionar botões ao painel
+        painelInicial.add(botaoRegistar1);
+        botaoRegistar1.addActionListener(new ActionListener() {     //Segue para o painel de Registrar
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.remove(painelInicial);
+                f.add(painelRegistar);
+                f.repaint();
+                f.revalidate();
+            }
+        });
+
+        painelInicial.add(botaoLogin1);
+        botaoLogin1.addActionListener(new ActionListener() {        //Segue para o painel de Login
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.remove(painelInicial);
+                f.add(painelLogin);
+                f.repaint();
+                f.revalidate();
+            }
+        });
+
+        //----------------------------------------------------------------------------------------------
+
+        //Painel Login
+
+        //Adicionar componentes
+        painelLogin.add(cxUsernameL);
+        painelLogin.add(cxPassL);
+        painelLogin.add(botaoLogin2);
+        botaoLogin2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {fPin.setVisible(true);
+            }
+        });
+        painelLogin.add(usernameLegendaL);
+        painelLogin.add(passLegendaL);
+
+        //----------------------------------------------------------------------------------------------
+
+        //Painel Registar
+
+        //Adicionar componentes
+        painelRegistar.add(cxUsernameR);
+        painelRegistar.add(cxPassR);
+        painelRegistar.add(botaoRegistar2);
+        botaoRegistar2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (rbotaoArtista.isSelected()){
+
+                }
+            }
+        });
+        painelRegistar.add(usernameLegendaR);
+        painelRegistar.add(passLegendaR);
+        painelRegistar.add(rbotaoArtista);
+        rbotaoArtista.addActionListener(new ActionListener() {  //Aparece PIN
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pinR.setVisible(rbotaoArtista.isSelected());
+                cxPinR.setVisible(rbotaoArtista.isSelected());
+            }
+        });
+        painelRegistar.add(rbotaoUser);
+        rbotaoUser.addActionListener(new ActionListener() { //Desaparece PIN
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pinR.setVisible(!rbotaoUser.isSelected());
+                cxPinR.setVisible(!rbotaoUser.isSelected());
+            }
+        });
+        painelRegistar.add(pinR);
+        painelRegistar.add(cxPinR);
+
+        //----------------------------------------------------------------------------------------------
+
+        //Adicionar paineis/botões às frames
+        f.add(painelTitulo,BorderLayout.NORTH);
+        f.add(painelInicial);
+
+        fPin.add(pinL,BorderLayout.WEST);
+        fPin.add(cxPinL,BorderLayout.CENTER);
+        fPin.add(okPIN,BorderLayout.SOUTH);
+
+
+        //Configurar frames
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(1200,800);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false);
+        f.setVisible(true);
+
+        fPin.pack();
+        fPin.setLocationRelativeTo(null);
+        fPin.setResizable(false);
+        fPin.setVisible(false);
+
+
+
+    }
+}
