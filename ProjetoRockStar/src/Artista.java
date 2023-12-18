@@ -129,4 +129,8 @@ public class Artista extends Utilizador implements Serializable {
         }
     return cont;
     }
+
+    public int getPin() {
+        return pin;
+    }
 }
