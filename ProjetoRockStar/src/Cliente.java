@@ -38,7 +38,7 @@ public class Cliente extends Utilizador implements Serializable {
         }
     }
 
-    // criar uma playList indicando o género e tamanho
+    // Criar uma playList indicando o género e tamanho
     public void criarPlayListGenero(String genero, int tamanho) {
         String nome;
         int cont = 0;
