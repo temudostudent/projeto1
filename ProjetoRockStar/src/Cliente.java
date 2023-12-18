@@ -59,6 +59,10 @@ public class Cliente extends Utilizador implements Serializable {
         }
     }
 
+    public void adicionarCarrinho(){
+        compras.add(m);
+    }
+
     // alterar saldo do cliente informando a quantidade
     public void alterarSaldo(double quantia) {
         saldo *= quantia;

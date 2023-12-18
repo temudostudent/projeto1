@@ -277,8 +277,9 @@ public class InterfaceArtista {
             //Criar painel fixo Titulo  ----------------------------------------------
             painelTitulo = new JPanel();
             painelTitulo.setBackground(new Color(225,145,102));
+            painelTitulo.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
             titulo = new JLabel("ROCKSTAR.INC");
-            titulo.setFont(new Font("Gill Sans Ultra Bold Condensed", Font.BOLD, 80));
+            titulo.setFont(new Font("Magneto", Font.BOLD, 80));
             painelTitulo.add(titulo);
 
             //Criar Painel Fixo Menu  ----------------------------------------------------

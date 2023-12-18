@@ -110,7 +110,7 @@ public class InterfaceCliente {
 
         //Criar componentes do Painel Carrinho
         listacompras = new JLabel ("LISTA DE MUSICAS DENTRO DO CARRINHO");
-        listacompras.setBounds(50,0,250,40);
+        listacompras.setBounds(50,0,280,40);
         listaMusicasCarrinho = new JTable();
         listaMusicasCarrinho.setBounds(50, 50,250,300);
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA CARRINHO");
