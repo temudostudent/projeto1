@@ -54,6 +54,7 @@ public class Aplicacao implements Serializable {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
+
             }
         }
         return login;
@@ -81,6 +82,8 @@ public class Aplicacao implements Serializable {
             for (Artista a : artistas) {
                 if (a.getPin().equals(pin)) {
                     login = true;
+                    JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",
