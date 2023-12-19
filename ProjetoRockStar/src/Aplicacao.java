@@ -42,7 +42,7 @@ public class Aplicacao implements Serializable {
     }
 
     //Login - Verificar se todas as condições coincidem
-    public boolean loginArtistaCesar(String username,String password,String PIN){
+    public boolean loginArtista(String username,String password,String PIN){
         boolean login=false;
         int cont=0, a=0;
         do {
@@ -57,38 +57,19 @@ public class Aplicacao implements Serializable {
         }while (cont==0);
     return login;}
 
-    public boolean loginCliente(String username, String password) {
-        boolean login = false;
-        if (procurarUserCliente(username)) {
-            for (Cliente c : clientes) {
-                if (c.getPassword().equals(password)) {
-                    login = true;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-
+    public boolean loginCliente(String username, String password){
+        boolean login=false;
+        int cont=0, c=0;
+        do {
+            clientes.get(c);
+            if (artistas.get(c).getUsername().equals(username) &&
+                    artistas.get(c).getPassword().equals(password)) {
+                login = true;
+                cont++;
             }
-        }
-        return login;
-    }
-
-    public boolean loginArtista(String username, String password, String pin) {
-        boolean login = false;
-        if (procurarUserArtista(username)) {
-            for (Artista a : artistas) {
-                if (a.getPassword().equals(password) && a.getPin().equals(pin)) {
-                    login = true;
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Dados Incorretos. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-
-            }
-        }
-        return login;
-    }
+            c++;
+        }while (cont==0);
+        return login;}
 
 
     //Listar músicas
@@ -146,21 +127,6 @@ public class Aplicacao implements Serializable {
 
     return pin;}
 
-    public int tipoUtilizador(String username) {
-        int utilizador = 0;
-        for (Cliente c : clientes) {
-            if (c.getUsername().equals(username)) {
-                utilizador = 1;
-            }
-        }
-        for (Artista a : artistas) {
-            if (a.getUsername().equals(username)) {
-                utilizador = 2;
-            }
-        }
-
-        return utilizador;
-    }
 
 
 
