@@ -94,8 +94,8 @@ public class Cliente extends Utilizador implements Serializable {
 
         //Deduzir o preço do saldo do Cliente
         double saldoAtual;
-        saldoAtual =  getSaldo() - compra.totalCarrinho();
-        setSaldo(saldoAtual);
+        //saldoAtual =  getSaldo() - compra.totalCarrinho();
+        //setSaldo(saldoAtual);
 
         //Adicionar compra ao historico
         historicoCompras.add(compra);

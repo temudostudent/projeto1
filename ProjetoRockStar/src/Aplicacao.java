@@ -1,7 +1,9 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Aplicacao implements Serializable {
 
@@ -20,22 +22,30 @@ public class Aplicacao implements Serializable {
     }
 
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
-    public void registarArtista(String username,String password,int pin){
-        if (verificaSeExiste(username)==false){
+    public void registarArtista(String username,String password,String pin){
+        if (procurarUserArtista(username)==false && procurarUserCliente(username)==false){
             Artista novoA = new Artista(username,password,pin);
             artistas.add(novoA);
-        }else System.out.println("O username '" + username + "' já existe");
+            JOptionPane.showMessageDialog(null,"Registo de Artista com sucesso!","",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }else JOptionPane.showMessageDialog(null,"O user '" + username + "' já existe",
+                "Aviso!",JOptionPane.INFORMATION_MESSAGE);;
     }
 
     public void registarCliente(String username,String password){
-        if (verificaSeExiste(username)==false){
+        if (procurarUserCliente(username)==false && procurarUserArtista(username)==false){
             Cliente novoC = new Cliente(username,password);
             clientes.add(novoC);
-        }else System.out.println("O username '" + username + "' já existe");
+            JOptionPane.showMessageDialog(null,"Registo de Cliente com sucesso!","",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null,"O user '" + username + "' já existe",
+                    "Aviso!",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     //Login - Verificar se todas as condições coincidem
-    public boolean loginArtista(String username,String password,int PIN){
+    public boolean loginArtista(String username,String password,String PIN){
         boolean login=false;
         int cont=0, a=0;
         do {
@@ -64,27 +74,6 @@ public class Aplicacao implements Serializable {
         }while (cont==0);
         return login;}
 
-    //Verifica se o username já existe
-    private boolean verificaSeExiste(String username){
-        boolean existe=false;
-        int cont=0, a=0, c=0;
-        do {
-            artistas.get(a);
-                if (artistas.get(a).getUsername().equals(username)) {
-                    existe = true;
-                    cont++;
-                }
-            a++;
-        }while (cont==0);
-        do {
-           clientes.get(c);
-                if (clientes.get(c).getUsername().equals(username)) {
-                    existe = true;
-                    cont++;
-                }
-            c++;
-        } while (cont == 0);
-    return existe;}
 
     //Listar músicas
     public void listarMusicas(){
@@ -109,6 +98,39 @@ public class Aplicacao implements Serializable {
         Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
         musicas.sort(comparador);
     }
+
+    //Verifica se o username já existe
+    private boolean procurarUserArtista(String username){
+        boolean existe=false;
+        for (Artista a : artistas){
+            if (a.getUsername().equals(username)) {
+                existe=true;
+            }
+        }
+    return existe;}
+
+    private boolean procurarUserCliente(String username){
+        boolean existe=false;
+        for (Cliente c : clientes){
+            if (c.getUsername().equals(username)) {
+                existe=true;
+            }
+        }
+        return existe;}
+
+    //Gerador automático PIN
+    public String gerarPin(){
+        String pin;
+        int num;
+
+        Random random = new Random();
+        num= 1000 + random.nextInt(9000);
+
+        pin= String.valueOf(num);
+
+    return pin;}
+
+
 
 
 }

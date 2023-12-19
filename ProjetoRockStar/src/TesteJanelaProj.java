@@ -13,6 +13,8 @@ public class TesteJanelaProj {
         JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
         JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
 
+        Aplicacao app=new Aplicacao();
+
 
         //Criar Frame
         JFrame f = new JFrame("Rockstar Inc");
@@ -100,6 +102,7 @@ public class TesteJanelaProj {
         rbotaoUser.setBounds(690,170,100,30);
         rbotaoUser.setContentAreaFilled(false);
         rbotaoUser.setBorderPainted(false);
+        rbotaoUser.setSelected(true);
 
         ButtonGroup grupoBotoesRegistar = new ButtonGroup();
         grupoBotoesRegistar.add(rbotaoArtista);
@@ -206,6 +209,14 @@ public class TesteJanelaProj {
         botaoRegistar2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String username=cxUsernameR.getText();
+                String password=cxPassR.getText();
+                if (rbotaoUser.isSelected()){
+                    app.registarCliente(username,password);
+                }else {
+                    String pin= cxPinR.getText();
+                    app.registarArtista(username,password,pin);
+                }
                 f.remove(painelRegistar);
                 f.add(painelLogin);
                 f.repaint();
@@ -235,6 +246,12 @@ public class TesteJanelaProj {
         painelRegistar.add(pinR);
         painelRegistar.add(cxPinR);
         painelRegistar.add(randomPIN);
+        randomPIN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cxPinR.setText(app.gerarPin());
+            }
+        });
 
         //----------------------------------------------------------------------------------------------
 
