@@ -165,6 +165,35 @@ public class Aplicacao implements Serializable {
         return tipo;
     }
 
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
 
+    public ArrayList<Artista> getArtistas() {
+        return artistas;
+    }
 
+    public ArrayList<Musica> getMusicas() {
+        return musicas;
+    }
+
+    public ArrayList<PlayList> getPlaylists() {
+        return playlists;
+    }
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void setArtistas(ArrayList<Artista> artistas) {
+        this.artistas = artistas;
+    }
+
+    public void setMusicas(ArrayList<Musica> musicas) {
+        this.musicas = musicas;
+    }
+
+    public void setPlaylists(ArrayList<PlayList> playlists) {
+        this.playlists = playlists;
+    }
 }
