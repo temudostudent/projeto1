@@ -70,7 +70,6 @@ public class Aplicacao implements Serializable {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
         }
         return login;
