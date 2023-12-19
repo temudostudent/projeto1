@@ -9,12 +9,12 @@ import java.util.*;
 public class Artista extends Utilizador implements Serializable {
 
     //Atributos
-    private int pin;
+    private String pin;
     private ArrayList<Album> albuns;
     private ArrayList<Musica> musicas;
 
     //Construtor que recebe username, password, pin
-    public Artista(String username, String password, int pin) {
+    public Artista(String username, String password, String pin) {
         super(username, password);
         this.pin = pin;
         this.musicas = new ArrayList<>();
@@ -130,7 +130,7 @@ public class Artista extends Utilizador implements Serializable {
     return cont;
     }
 
-    public int getPin() {
+    public String getPin() {
         return pin;
     }
 }
