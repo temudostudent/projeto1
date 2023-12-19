@@ -47,8 +47,12 @@ public class Aplicacao implements Serializable {
     //Login - Verificar se todas as condições coincidem
     public boolean loginArtista(String username,String password,String PIN){
         boolean login=false;
-        int cont=0, a=0;
-        do {
+        int cont=0;
+
+        if (procurarUserArtista(username)==true){
+
+        }
+        /*do {
             artistas.get(a);
                 if (artistas.get(a).getUsername().equals(username) &&
                         artistas.get(a).getPassword().equals(password) &&
@@ -57,12 +61,12 @@ public class Aplicacao implements Serializable {
                     cont++;
                 }
             a++;
-        }while (cont==0);
+        }while (cont==0);*/
     return login;}
 
     public boolean loginCliente(String username, String password){
         boolean login=false;
-        int cont=0, c=0;
+        int cont=0;
         do {
             clientes.get(c);
             if (artistas.get(c).getUsername().equals(username) &&
@@ -116,7 +120,7 @@ public class Aplicacao implements Serializable {
                 existe=true;
             }
         }
-        return existe;}
+    return existe;}
 
     //Gerador automático PIN
     public String gerarPin(){

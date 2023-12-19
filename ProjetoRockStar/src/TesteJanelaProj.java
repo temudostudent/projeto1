@@ -180,7 +180,12 @@ public class TesteJanelaProj {
         painelLogin.add(botaoLogin2);
         botaoLogin2.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {fPin.setVisible(true);
+            public void actionPerformed(ActionEvent e) {
+                String username=cxUsernameL.getText();
+                String password=cxPassL.getText();
+
+
+                fPin.setVisible(true);
             }
         });
         painelLogin.add(usernameLegendaL);
@@ -217,6 +222,8 @@ public class TesteJanelaProj {
                     String pin= cxPinR.getText();
                     app.registarArtista(username,password,pin);
                 }
+                cxUsernameR.setText("");
+                cxPassR.setText("");
                 f.remove(painelRegistar);
                 f.add(painelLogin);
                 f.repaint();
