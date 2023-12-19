@@ -41,22 +41,7 @@ public class Aplicacao implements Serializable {
         }
     }
 
-    //Login - Verificar se todas as condições coincidem
-    public boolean loginArtista(String username,String password,String PIN){
-        boolean login=false;
-        int cont=0, a=0;
-        do {
-            artistas.get(a);
-                if (artistas.get(a).getUsername().equals(username) &&
-                        artistas.get(a).getPassword().equals(password) &&
-                        artistas.get(a).getPin() == PIN) {
-                    login = true;
-                    cont++;
-                }
-            a++;
-        }while (cont==0);
-    return login;}
-
+    //Login Cliente - Verificar se todas as condições coincidem
     public boolean loginCliente(String username, String password) {
         boolean login = false;
         if (procurarUserCliente(username)) {
@@ -72,6 +57,8 @@ public class Aplicacao implements Serializable {
         }
         return login;
     }
+
+    //Método LoginArtista - Verificar se todas as condições coincidem
 
     public boolean loginArtista(String username, String password, String pin) {
         boolean login = false;

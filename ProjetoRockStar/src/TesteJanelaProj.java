@@ -188,8 +188,20 @@ public class TesteJanelaProj {
                 String username=cxUsernameL.getText();
                 String password=cxPassL.getText();
 
+                if(app.tipoUtilizador(username)==1){
+                    app.loginCliente(username, password);
 
-                fPin.setVisible(true);
+                }else if(app.tipoUtilizador(username)==2){
+                    if(app.loginArtista(username, password) ==  true)
+                    fPin.setVisible(true);
+                    String pin = cxPinL.getText();
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
+
             }
         });
         painelLogin.add(usernameLegendaL);
