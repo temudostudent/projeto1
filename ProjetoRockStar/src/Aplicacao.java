@@ -78,17 +78,21 @@ public class Aplicacao implements Serializable {
 
     public boolean verificarPINArtista(String username,String pin){
         boolean login = false;
+        int cont=0;
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
-                if (a.getPin().equals(pin)) {
+                if (a.getUsername().equals(username) && a.getPin().equals(pin)) {
                     login = true;
-                    JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    cont++;
                 }
-                else {
-                    JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+            }
+            if (cont==1){
+                JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
         return login;
@@ -163,7 +167,5 @@ public class Aplicacao implements Serializable {
         }
         return tipo;
     }
-
-
 
 }
