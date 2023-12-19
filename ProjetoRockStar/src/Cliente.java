@@ -108,4 +108,8 @@ public class Cliente extends Utilizador implements Serializable {
         saldo += quantia;
     }
 
+    @Override
+    public int getTipo() {
+        return 1;
+    }
 }

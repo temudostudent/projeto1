@@ -133,4 +133,8 @@ public class Artista extends Utilizador implements Serializable {
     public String getPin() {
         return pin;
     }
+
+    public int getTipo(){
+        return 2;
+    }
 }

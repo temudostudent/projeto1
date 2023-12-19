@@ -19,29 +19,31 @@ public class Aplicacao implements Serializable {
     }
 
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
-    public void registarArtista(String username,String password,String pin){
-        if (procurarUserArtista(username)==false && procurarUserCliente(username)==false){
-            Artista novoA = new Artista(username,password,pin);
+    public void registarArtista(String username, String password, String pin) {
+        if (procurarUserArtista(username) == false && procurarUserCliente(username) == false) {
+            Artista novoA = new Artista(username, password, pin);
             artistas.add(novoA);
-            JOptionPane.showMessageDialog(null,"Registo de Artista com sucesso!","",
+            JOptionPane.showMessageDialog(null, "Registo de Artista com sucesso!", "",
                     JOptionPane.INFORMATION_MESSAGE);
-        }else JOptionPane.showMessageDialog(null,"O user '" + username + "' já existe",
-                "Aviso!",JOptionPane.INFORMATION_MESSAGE);;
+        } else JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+        ;
     }
 
-    public void registarCliente(String username,String password){
-        if (procurarUserCliente(username)==false && procurarUserArtista(username)==false){
-            Cliente novoC = new Cliente(username,password);
+    public void registarCliente(String username, String password) {
+        if (procurarUserCliente(username) == false && procurarUserArtista(username) == false) {
+            Cliente novoC = new Cliente(username, password);
             clientes.add(novoC);
-            JOptionPane.showMessageDialog(null,"Registo de Cliente com sucesso!","",
+            JOptionPane.showMessageDialog(null, "Registo de Cliente com sucesso!", "",
                     JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null,"O user '" + username + "' já existe",
-                    "Aviso!",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
+                    "Aviso!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    //Login Cliente - Verificar se todas as condições coincidem
+    //Login - Verificar se todas as condições coincidem
+
     public boolean loginCliente(String username, String password) {
         boolean login = false;
         if (procurarUserCliente(username)) {
@@ -58,20 +60,34 @@ public class Aplicacao implements Serializable {
         return login;
     }
 
-    //Método LoginArtista - Verificar se todas as condições coincidem
-
     public boolean loginArtista(String username, String password, String pin) {
         boolean login = false;
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
-                if (a.getPassword().equals(password) && a.getPin().equals(pin)) {
+                if (a.getPassword().equals(password)) {
                     login = true;
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Dados Incorretos. Tente novamente!", "",
+                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
 
+            }
+        }
+        return login;
+    }
+
+    public boolean verificarPINArtista(String username,String pin){
+        boolean login = false;
+        if (procurarUserArtista(username)) {
+            for (Artista a : artistas) {
+                if (a.getPin().equals(pin)) {
+                    login = true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
         return login;
@@ -119,34 +135,32 @@ public class Aplicacao implements Serializable {
                 existe=true;
             }
         }
-        return existe;}
+    return existe;}
 
     //Gerador automático PIN
     public String gerarPin(){
         String pin;
-        int num;
 
         Random random = new Random();
-        num= 1000 + random.nextInt(9000);
+        int num= 1000 + random.nextInt(9000);
 
         pin= String.valueOf(num);
 
     return pin;}
 
     public int tipoUtilizador(String username) {
-        int utilizador = 0;
+        int tipo=0;
         for (Cliente c : clientes) {
             if (c.getUsername().equals(username)) {
-                utilizador = 1;
+                tipo=c.getTipo();
             }
         }
         for (Artista a : artistas) {
             if (a.getUsername().equals(username)) {
-                utilizador = 2;
+                tipo=a.getTipo();
             }
         }
-
-        return utilizador;
+        return tipo;
     }
 
 
