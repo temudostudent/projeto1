@@ -15,7 +15,6 @@ public class TesteJanelaProj {
 
         Aplicacao app=new Aplicacao();
 
-
         //Criar Frame
         JFrame f = new JFrame("Rockstar Inc");
         JFrame fPin = new JFrame("PIN");
@@ -108,8 +107,6 @@ public class TesteJanelaProj {
         grupoBotoesRegistar.add(rbotaoArtista);
         grupoBotoesRegistar.add(rbotaoUser);
 
-
-
         JButton voltar = new JButton("Voltar ao início");
         voltar.setFont(new Font("Calibri",Font.BOLD,15));
         voltar.setBounds(1000,420,150,80);
@@ -159,6 +156,13 @@ public class TesteJanelaProj {
         });
 
         painelInicial.add(botaoLogin1);
+
+        botaoLogin1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         botaoLogin1.addActionListener(new ActionListener() {        //Segue para o painel de Login
             @Override
             public void actionPerformed(ActionEvent e) {
