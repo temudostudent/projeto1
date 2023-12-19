@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public class Aplicacao implements Serializable {
 
@@ -45,9 +42,34 @@ public class Aplicacao implements Serializable {
     }
 
     //Login - Verificar se todas as condições coincidem
+    public boolean loginArtista(String username,String password,String PIN){
+        boolean login=false;
+        int cont=0, a=0;
+        do {
+            artistas.get(a);
+                if (artistas.get(a).getUsername().equals(username) &&
+                        artistas.get(a).getPassword().equals(password) &&
+                        artistas.get(a).getPin() == PIN) {
+                    login = true;
+                    cont++;
+                }
+            a++;
+        }while (cont==0);
+    return login;}
 
-
-
+    public boolean loginCliente(String username, String password){
+        boolean login=false;
+        int cont=0, c=0;
+        do {
+            clientes.get(c);
+            if (artistas.get(c).getUsername().equals(username) &&
+                    artistas.get(c).getPassword().equals(password)) {
+                login = true;
+                cont++;
+            }
+            c++;
+        }while (cont==0);
+        return login;}
 
 
     //Listar músicas

@@ -11,10 +11,24 @@ public class Compra {
         this.id_compra  = ++ultimoID;
     }
 
-    public void totalCarrinho(){
+    public void criarCarrinho(){
+        Compra compra = new Compra();
+    }
+
+    public void totalCarrinhoCliente(){
         double valorTotal = 0;
         for(MusicaPaga m : carrinho){
             valorTotal += m.getPreco();
+        }
+    }
+
+    public void valorMusicaArtista(){
+        double valorMusica = 0;
+        double saldoArtista = 0;
+        Artista a;
+        for(MusicaPaga m : carrinho){
+            valorMusica = m.getPreco();
+
         }
     }
     public void limparCarrinho(){

@@ -85,13 +85,13 @@ public class InterfaceCliente {
         listaMusicasPlayList = new JTable();
         listaMusicasPlayList.setBounds(50,50,400,380);
         removerPlayList = new JButton("REMOVER PLAYLIST");
-        removerPlayList.setBounds(500, 50, 200,40);
+        removerPlayList.setBounds(500, 50, 220,40);
         alterarVisibilidade = new JButton("ALTERAR VISIBILIDADE");
-        alterarVisibilidade.setBounds(500,100,200,40);
+        alterarVisibilidade.setBounds(500,100,220,40);
         criarNovaPlayList = new JButton("CRIAR NOVA PLAYLIST");
-        criarNovaPlayList.setBounds(500, 150, 200,40);
+        criarNovaPlayList.setBounds(500, 150, 220,40);
         removerMusicaPlayList = new JButton("REMOVER MÚSICA PLAYLIST");
-        removerMusicaPlayList.setBounds(500, 200, 200,40);
+        removerMusicaPlayList.setBounds(500, 200, 220,40);
 
         //Adicionar componentes ao painel
         painelPlayList.add(caixaListarPlayLists);
