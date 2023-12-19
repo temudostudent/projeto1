@@ -127,6 +127,21 @@ public class Aplicacao implements Serializable {
 
     return pin;}
 
+    public int tipoUtilizador(String username) {
+        int utilizador = 0;
+        for (Cliente c : clientes) {
+            if (c.getUsername().equals(username)) {
+                utilizador = 1;
+            }
+        }
+        for (Artista a : artistas) {
+            if (a.getUsername().equals(username)) {
+                utilizador = 2;
+            }
+        }
+
+        return utilizador;
+    }
 
 
 
