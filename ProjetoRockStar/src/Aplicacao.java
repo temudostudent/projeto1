@@ -60,7 +60,7 @@ public class Aplicacao implements Serializable {
         return login;
     }
 
-    public boolean loginArtista(String username, String password, String pin) {
+    public boolean loginArtista(String username, String password) {
         boolean login = false;
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
@@ -83,6 +83,8 @@ public class Aplicacao implements Serializable {
             for (Artista a : artistas) {
                 if (a.getPin().equals(pin)) {
                     login = true;
+                    JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",

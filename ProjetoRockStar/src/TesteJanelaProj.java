@@ -185,23 +185,23 @@ public class TesteJanelaProj {
         botaoLogin2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username=cxUsernameL.getText();
-                String password=cxPassL.getText();
+                String username = cxUsernameL.getText();
+                String password = cxPassL.getText();
 
-                if(app.tipoUtilizador(username)==1){
+                if (app.tipoUtilizador(username) == 1) {
                     app.loginCliente(username, password);
 
-                }else if(app.tipoUtilizador(username)==2){
-                    if(app.loginArtista(username, password) ==  true)
-                    fPin.setVisible(true);
-                    String pin = cxPinL.getText();
+                } else if (app.tipoUtilizador(username) == 2) {
+                    if (app.loginArtista(username, password)) {
+                        fPin.setVisible(true);
 
-                }else{
-                    JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+
                 }
-
-
             }
         });
         painelLogin.add(usernameLegendaL);
@@ -285,6 +285,15 @@ public class TesteJanelaProj {
         fPin.add(pinL,BorderLayout.WEST);
         fPin.add(cxPinL,BorderLayout.CENTER);
         fPin.add(okPIN,BorderLayout.SOUTH);
+
+        okPIN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pin = cxPinL.getText();
+                String username = cxUsernameL.getText();
+                app.verificarPINArtista(username, pin);
+            }
+        });
 
 
         //Configurar frames
