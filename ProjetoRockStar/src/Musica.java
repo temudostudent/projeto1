@@ -66,6 +66,10 @@ public class Musica implements Serializable {
         this.estado = estado;
     }
 
+    public Artista getArtista() {
+        return artista;
+    }
+
     @Override
     public String toString() {
         return "Musica{" +

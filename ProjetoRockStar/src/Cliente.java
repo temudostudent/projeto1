@@ -75,7 +75,6 @@ public class Cliente extends Utilizador implements Serializable {
 
     }
 
-
     // Remover um playList dando o atributo nome
     public void removerPlayList(String nome) {
         for (PlayList play : playlists) {
@@ -91,11 +90,10 @@ public class Cliente extends Utilizador implements Serializable {
             System.out.println("Carrinho Vazio. Não é possível finalizar a compra.");
             return;
         }
-
         //Deduzir o preço do saldo do Cliente
         double saldoAtual;
-        saldoAtual =  getSaldo() - compra.totalCarrinho();
-        setSaldo(saldoAtual);
+        //saldoAtual =  getSaldo() - compra.totalCarrinho();
+        //setSaldo(saldoAtual);
 
         //Adicionar compra ao historico
         historicoCompras.add(compra);
@@ -104,7 +102,6 @@ public class Cliente extends Utilizador implements Serializable {
         compra.limparCarrinho();
 
     }
-
 
     // alterar saldo do cliente informando a quantidade
     public void alterarSaldo(double quantia) {
