@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class TesteJanelaProj {
     public static void main(String[] args) {
@@ -13,7 +15,8 @@ public class TesteJanelaProj {
         JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
         JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
 
-        Aplicacao app=new Aplicacao();
+        GestaoApp gestaoApp = new GestaoApp();
+        gestaoApp.run();
 
         //Criar Frame
         JFrame f = new JFrame("Rockstar Inc");
@@ -188,18 +191,17 @@ public class TesteJanelaProj {
                 String username = cxUsernameL.getText();
                 String password = cxPassL.getText();
 
-                if (app.tipoUtilizador(username) == 1) {
-                    app.loginCliente(username, password);
+                if (gestaoApp.rockstar.tipoUtilizador(username) == 1) {
+                    gestaoApp.rockstar.loginCliente(username, password);
 
-                } else if (app.tipoUtilizador(username) == 2) {
-                    if (app.loginArtista(username, password)) {
+                } else if (gestaoApp.rockstar.tipoUtilizador(username) == 2) {
+                    if (gestaoApp.rockstar.loginArtista(username, password)) {
                         fPin.setVisible(true);
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
-
 
                 }
             }
@@ -233,10 +235,10 @@ public class TesteJanelaProj {
                 String username=cxUsernameR.getText();
                 String password=cxPassR.getText();
                 if (rbotaoUser.isSelected()){
-                    app.registarCliente(username,password);
+                    gestaoApp.rockstar.registarCliente(username,password);
                 }else {
                     String pin= cxPinR.getText();
-                    app.registarArtista(username,password,pin);
+                    gestaoApp.rockstar.registarArtista(username,password,pin);
                 }
                 cxUsernameR.setText("");
                 cxPassR.setText("");
@@ -272,7 +274,7 @@ public class TesteJanelaProj {
         randomPIN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cxPinR.setText(app.gerarPin());
+                cxPinR.setText(gestaoApp.rockstar.gerarPin());
             }
         });
 
@@ -291,10 +293,9 @@ public class TesteJanelaProj {
             public void actionPerformed(ActionEvent e) {
                 String pin = cxPinL.getText();
                 String username = cxUsernameL.getText();
-                app.verificarPINArtista(username, pin);
+                gestaoApp.rockstar.verificarPINArtista(username, pin);
             }
         });
-
 
         //Configurar frames
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -302,6 +303,16 @@ public class TesteJanelaProj {
         f.setLocationRelativeTo(null);
         f.setResizable(false);
         f.setVisible(true);
+
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Salva os dados ao fechar a janela
+                gestaoApp.atualizaficheiro(gestaoApp.rockstar.getArtistas(),
+                        gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getPlaylists(), gestaoApp.rockstar.getMusicas());
+            }
+        });
+
 
         fPin.pack();
         fPin.setLocationRelativeTo(null);
