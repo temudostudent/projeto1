@@ -52,15 +52,14 @@ public class TesteJanelaProj {
 
         usernameLegendaR = new JLabel("Username");
         usernameLegendaR.setFont(new Font("Calibri",Font.BOLD,15));
-        usernameLegendaR.setBounds(440,135,100,30);
+        usernameLegendaR.setBounds(440,105,100,30);
 
         passLegendaR = new JLabel("Password");
         passLegendaR.setFont(new Font("Calibri",Font.BOLD,15));
-        passLegendaR.setBounds(695,135,100,30);
+        passLegendaR.setBounds(695,105,100,30);
 
         pinL = new JLabel("PIN");
         pinL.setFont(new Font("Calibri",Font.BOLD,15));
-        pinL.setBounds(590,340,100,30);
 
         pinR = new JLabel("PIN");
         pinR.setFont(new Font("Calibri",Font.BOLD,15));
@@ -87,19 +86,31 @@ public class TesteJanelaProj {
         JButton okPIN = new JButton("OK");
         okPIN.setFont(new Font("Calibri",Font.BOLD,10));
 
+        JButton randomPIN = new JButton("Gerar PIN");
+        randomPIN.setFont(new Font("Calibri",Font.BOLD,10));
+        randomPIN.setBounds(560,210,80,30);
+        randomPIN.setVisible(false);
+
         JRadioButton rbotaoArtista = new JRadioButton("Artista",false);
-        rbotaoArtista.setBounds(445,200,100,30);
+        rbotaoArtista.setBounds(445,170,100,30);
         rbotaoArtista.setContentAreaFilled(false);
         rbotaoArtista.setBorderPainted(false);
 
         JRadioButton rbotaoUser = new JRadioButton("Usuário",false);
-        rbotaoUser.setBounds(690,200,100,30);
+        rbotaoUser.setBounds(690,170,100,30);
         rbotaoUser.setContentAreaFilled(false);
         rbotaoUser.setBorderPainted(false);
 
         ButtonGroup grupoBotoesRegistar = new ButtonGroup();
         grupoBotoesRegistar.add(rbotaoArtista);
         grupoBotoesRegistar.add(rbotaoUser);
+
+
+
+        JButton voltar = new JButton("Voltar ao início");
+        voltar.setFont(new Font("Calibri",Font.BOLD,15));
+        voltar.setBounds(1000,420,150,80);
+
 
         //Caixas de texto
 
@@ -110,10 +121,10 @@ public class TesteJanelaProj {
         cxPassL.setBounds(650,100,150,30);
 
         JTextField cxUsernameR = new JTextField();
-        cxUsernameR.setBounds(400,100,150,30);
+        cxUsernameR.setBounds(400,70,150,30);
 
         JPasswordField cxPassR = new JPasswordField();
-        cxPassR.setBounds(650,100,150,30);
+        cxPassR.setBounds(650,70,150,30);
 
         JTextField cxPinL = new JTextField();
         cxPinL.setBounds(550,300,150,30);
@@ -155,6 +166,7 @@ public class TesteJanelaProj {
             }
         });
 
+
         //----------------------------------------------------------------------------------------------
 
         //Painel Login
@@ -171,6 +183,18 @@ public class TesteJanelaProj {
         painelLogin.add(usernameLegendaL);
         painelLogin.add(passLegendaL);
 
+
+        painelLogin.add(voltar);
+        voltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.remove(painelLogin);
+                f.add(painelInicial);
+                f.repaint();
+                f.revalidate();
+            }
+        });
+
         //----------------------------------------------------------------------------------------------
 
         //Painel Registar
@@ -182,9 +206,10 @@ public class TesteJanelaProj {
         botaoRegistar2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (rbotaoArtista.isSelected()){
-
-                }
+                f.remove(painelRegistar);
+                f.add(painelLogin);
+                f.repaint();
+                f.revalidate();
             }
         });
         painelRegistar.add(usernameLegendaR);
@@ -195,6 +220,7 @@ public class TesteJanelaProj {
             public void actionPerformed(ActionEvent e) {
                 pinR.setVisible(rbotaoArtista.isSelected());
                 cxPinR.setVisible(rbotaoArtista.isSelected());
+                randomPIN.setVisible(rbotaoArtista.isSelected());
             }
         });
         painelRegistar.add(rbotaoUser);
@@ -203,10 +229,12 @@ public class TesteJanelaProj {
             public void actionPerformed(ActionEvent e) {
                 pinR.setVisible(!rbotaoUser.isSelected());
                 cxPinR.setVisible(!rbotaoUser.isSelected());
+                randomPIN.setVisible(!rbotaoUser.isSelected());
             }
         });
         painelRegistar.add(pinR);
         painelRegistar.add(cxPinR);
+        painelRegistar.add(randomPIN);
 
         //----------------------------------------------------------------------------------------------
 
