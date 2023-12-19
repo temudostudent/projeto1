@@ -37,49 +37,52 @@ public class Aplicacao implements Serializable {
     //Login - Verificar se todas as condições coincidem
     public boolean loginArtista(String username,String password,int PIN){
         boolean login=false;
-        int cont=0;
+        int cont=0, a=0;
         do {
-            for (Artista a : artistas) {
-                if (a.getUsername().equals(username) && a.getPassword().equals(password) && a.getPin() == PIN) {
+            artistas.get(a);
+                if (artistas.get(a).getUsername().equals(username) &&
+                        artistas.get(a).getPassword().equals(password) &&
+                        artistas.get(a).getPin() == PIN) {
                     login = true;
                     cont++;
                 }
-            }
+            a++;
         }while (cont==0);
     return login;}
 
     public boolean loginCliente(String username, String password){
         boolean login=false;
-        int cont=0;
+        int cont=0, c=0;
         do {
-            for (Cliente c : clientes){
-                if (c.getUsername().equals(username) && c.getPassword().equals(password)){
-                    login=true;
-                    cont++;
-                }
+            clientes.get(c);
+            if (artistas.get(c).getUsername().equals(username) &&
+                    artistas.get(c).getPassword().equals(password)) {
+                login = true;
+                cont++;
             }
+            c++;
         }while (cont==0);
         return login;}
 
     //Verifica se o username já existe
     private boolean verificaSeExiste(String username){
         boolean existe=false;
-        int cont=0;
+        int cont=0, a=0, c=0;
         do {
-            for (Artista a : artistas) {
-                if (a.getUsername().equals(username)) {
+            artistas.get(a);
+                if (artistas.get(a).getUsername().equals(username)) {
                     existe = true;
                     cont++;
                 }
-            }
+            a++;
         }while (cont==0);
         do {
-            for (Cliente c : clientes) {
-                if (c.getUsername().equals(username)) {
+           clientes.get(c);
+                if (clientes.get(c).getUsername().equals(username)) {
                     existe = true;
                     cont++;
                 }
-            }
+            c++;
         } while (cont == 0);
     return existe;}
 
