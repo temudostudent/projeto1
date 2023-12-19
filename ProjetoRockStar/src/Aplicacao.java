@@ -57,19 +57,38 @@ public class Aplicacao implements Serializable {
         }while (cont==0);
     return login;}
 
-    public boolean loginCliente(String username, String password){
-        boolean login=false;
-        int cont=0, c=0;
-        do {
-            clientes.get(c);
-            if (artistas.get(c).getUsername().equals(username) &&
-                    artistas.get(c).getPassword().equals(password)) {
-                login = true;
-                cont++;
+    public boolean loginCliente(String username, String password) {
+        boolean login = false;
+        if (procurarUserCliente(username)) {
+            for (Cliente c : clientes) {
+                if (c.getPassword().equals(password)) {
+                    login = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
-            c++;
-        }while (cont==0);
-        return login;}
+        }
+        return login;
+    }
+
+    public boolean loginArtista(String username, String password, String pin) {
+        boolean login = false;
+        if (procurarUserArtista(username)) {
+            for (Artista a : artistas) {
+                if (a.getPassword().equals(password) && a.getPin().equals(pin)) {
+                    login = true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Dados Incorretos. Tente novamente!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+        }
+        return login;
+    }
 
 
     //Listar músicas
