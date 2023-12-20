@@ -6,7 +6,7 @@ import java.util.Date;
 public class Musica implements Serializable {
     //Atributos
     protected String titulo;
-    protected Artista artista;
+    protected String nomeArtista;
     protected LocalDate ano;
     protected double duracao;
     protected String genero;
@@ -15,9 +15,9 @@ public class Musica implements Serializable {
     protected boolean estado;
 
     //Construtor que recebe titulo,ano,duracao,genero,estado
-    public Musica(String titulo, Artista artista, int ano, int mes, int dia, double duracao, String genero, boolean estado) {
+    public Musica(String titulo, String nomeArtista, int ano, int mes, int dia, double duracao, String genero, boolean estado) {
         this.titulo = titulo;
-        this.artista = artista;
+        this.nomeArtista = nomeArtista;
         this.ano = LocalDate.of(ano,mes,dia);
         this.duracao = duracao;
         this.genero = genero;
@@ -66,15 +66,15 @@ public class Musica implements Serializable {
         this.estado = estado;
     }
 
-    public Artista getArtista() {
-        return artista;
+    public String getArtista() {
+        return nomeArtista;
     }
 
     @Override
     public String toString() {
         return "Musica{" +
                 "titulo='" + titulo + '\'' +
-                ", artista=" + artista +
+                ", artista=" + nomeArtista +
                 ", ano=" + ano +
                 ", duracao=" + duracao +
                 ", genero='" + genero + '\'' +
