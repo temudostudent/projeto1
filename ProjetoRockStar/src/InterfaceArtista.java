@@ -31,7 +31,6 @@ public class InterfaceArtista implements Serializable {
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
 
-
         public InterfaceArtista(){
             Artista va = new Artista();
 
@@ -126,7 +125,6 @@ public class InterfaceArtista implements Serializable {
             campoPesquisa = new JTextField("PESQUISA");
             campoPesquisa.setBounds(50,120,150,40);
 
-
             //Adicionar Componentes ao Painel Pesquisar
             painelPesquisar.add(caixaPesquisarMusica);
             painelPesquisar.add(pesquisa);
@@ -143,16 +141,13 @@ public class InterfaceArtista implements Serializable {
             painelPesquisar.add(selectMusica);
             painelPesquisar.add(selectAlbum);
 
-
             //Criar Painel Musicas
-
             painelMusicas = new JPanel();
             painelMusicas.setBackground(new Color(225,145,102));
             painelMusicas.setBounds(340,200,780,500);
             painelMusicas.setLayout(null);
 
             //Criar componentes do Painel Musicas
-
             criarMusica = new JButton("CRIAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
             editarDados = new JButton("EDITAR DADOS MUSICA"); editarDados.setBounds(250, 20, 180,40);
             menuAlbum = new JButton("ÁLBUM"); menuAlbum.setBounds(450,20,180,40);
@@ -265,8 +260,7 @@ public class InterfaceArtista implements Serializable {
 
                 }
             });
-            areaPesquisa =new JTextArea("RESULTADOS DA PESQUISA");
-            areaPesquisa.setBounds(50,60, 400,400);
+
             alterarTitulo = new JLabel("NOVO TÍTULO");
             alterarTitulo.setBounds(500, 60, 180, 40);
             caixaAlterarTitulo = new JTextField(); caixaAlterarTitulo.setBounds(500,100,180,40);
@@ -281,6 +275,8 @@ public class InterfaceArtista implements Serializable {
             guardarAlteracao = new JButton("GUARDAR ALTERAÇÕES");
             guardarAlteracao.setBounds(500,350,180,40);
             listarMusicas = new JButton("LISTAR MÚSICAS"); listarMusicas.setBounds(610,10,180,40);
+            tabelaListaMusicas = new JTable();
+            tabelaListaMusicas.setBounds(50,60, 400,400);
             listarMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -290,13 +286,12 @@ public class InterfaceArtista implements Serializable {
                             lista = va.getMusicas();
 
                     // Adicionar uma coluna à tabela
-                    listaMusicas.addColumn("Itens");
+                    listaMusicas.addColumn("Título");
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
-                        listaMusicas.addRow(new Object[]{musica});
+                        listaMusicas.addRow(new Object[]{musica.getTitulo()});
                     }
-
                     tabelaListaMusicas.setModel(listaMusicas);
 
                 }
@@ -304,12 +299,12 @@ public class InterfaceArtista implements Serializable {
 
             //Adicionar componentes ao painel
             painelEditarDados.add(pesquisaTitulo);painelEditarDados.add(inserirTitulo);painelEditarDados.add(pesquisarMusica);
-            painelEditarDados.add(areaPesquisa);painelEditarDados.add(alterarTitulo);
-            painelEditarDados.add(alterarTitulo); painelEditarDados.add(caixaAlterarTitulo);
+            painelEditarDados.add(alterarTitulo); painelEditarDados.add(alterarTitulo); painelEditarDados.add(caixaAlterarTitulo);
             painelEditarDados.add(alterarPreco); painelEditarDados.add(caixaAltearPreco);
             painelEditarDados.add(estadoAtivo1); painelEditarDados.add(estadoInativo1);
             painelEditarDados.add(alterarEstado); painelEditarDados.add(guardarAlteracao);
             painelEditarDados.add(listarMusicas); painelEditarDados.add(scrollListarMusicas);
+            painelEditarDados.add(tabelaListaMusicas);
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();
