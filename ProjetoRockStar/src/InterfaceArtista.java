@@ -1,10 +1,12 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class InterfaceArtista implements Serializable {
 
@@ -28,6 +30,7 @@ public class InterfaceArtista implements Serializable {
         private JTable tabelaListaMusicas, listaAlbumGenero1;
 
         public InterfaceArtista(){
+            Artista va = new Artista();
             // criar janela
             janelaArtista = new JFrame();
 
@@ -250,6 +253,15 @@ public class InterfaceArtista implements Serializable {
             inserirTitulo.setBounds(250,10,180,40);
             pesquisarMusica = new JButton("PESQUISAR");
             pesquisarMusica.setBounds(430,10,180,40);
+            pesquisarMusica.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+
+                    pesquisaTitulo.getText();
+
+                }
+            });
             areaPesquisa =new JTextArea("RESULTADOS DA PESQUISA");
             areaPesquisa.setBounds(50,60, 400,400);
             alterarTitulo = new JLabel("NOVO TÍTULO");
@@ -266,7 +278,25 @@ public class InterfaceArtista implements Serializable {
             guardarAlteracao = new JButton("GUARDAR ALTERAÇÕES");
             guardarAlteracao.setBounds(500,350,180,40);
             listarMusicas = new JButton("LISTAR MÚSICAS"); listarMusicas.setBounds(610,10,180,40);
+            listarMusicas.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
+                    DefaultTableModel listaMusicas = new DefaultTableModel();
+                    ArrayList<Musica> lista = va.getMusicas();
+
+                    // Adicionar uma coluna à tabela
+                    listaMusicas.addColumn("Itens");
+
+                    // Adicionar os elementos do ArrayList à tabela
+                    for (Musica musica : lista) {
+                        listaMusicas.addRow(new Object[]{musica});
+                    }
+
+                    tabelaListaMusicas.add(listaAlbumGenero);
+                    JScrollPane scrollPane = new JScrollPane(tabelaListaMusicas);
+                }
+            });
 
             //Adicionar componentes ao painel
             painelEditarDados.add(pesquisaTitulo);painelEditarDados.add(inserirTitulo);painelEditarDados.add(pesquisarMusica);
@@ -349,7 +379,7 @@ public class InterfaceArtista implements Serializable {
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
-           Artista va = new Artista();
+
             va.criarAlbum("Rock1", "Rock");
             va.criarAlbum("Rock2", "Pimba");
             va.criarAlbum("Rock2", "Pimba");
@@ -371,7 +401,7 @@ public class InterfaceArtista implements Serializable {
             painelEstatisticas.add(caixaTotalUtilizadores); painelEstatisticas.add(caixaTotalMusicas);
             painelEstatisticas.add(caixaValorTotalColecao); painelEstatisticas.add(caixaValorTotalVendas);
             painelEstatisticas.add(caixaMusicaMaisGravada); painelEstatisticas.add(caixaMusicaMaisComprada);
-            painelEstatisticas.add(totalAlbumGenero); painelEstatisticas.add(listaAlbumGenero);
+            painelEstatisticas.add(totalAlbumGenero); painelEstatisticas.add(listaAlbumGenero1);
             painelEstatisticas.add(tabela1);
 
             //Criar painel fixo Titulo  ----------------------------------------------
