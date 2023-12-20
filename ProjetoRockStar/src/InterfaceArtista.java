@@ -275,6 +275,7 @@ public class InterfaceArtista implements Serializable {
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.pesquisarMusica(titulo);
 
+
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
                     listaMusicas.addColumn("DATA");
@@ -284,6 +285,7 @@ public class InterfaceArtista implements Serializable {
 
                     // Adicionar os títulos das colunas como a primeira linha
                     listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
@@ -368,8 +370,6 @@ public class InterfaceArtista implements Serializable {
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
 
-                    // Adicionar os títulos das colunas Na primeira linha
-                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
 
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
@@ -378,7 +378,8 @@ public class InterfaceArtista implements Serializable {
                     listaMusicas.addColumn("GENERO");
                     listaMusicas.addColumn("ESTADO");
 
-
+                    // Adicionar os títulos das colunas Na primeira linha
+                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
