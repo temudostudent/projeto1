@@ -25,7 +25,7 @@ public class InterfaceArtista implements Serializable {
         private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
         private JTextArea areaPesquisa, listaMusicasAlbum, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1;
-        private JTable tabelaListaMusicas, listaAlbumGenero;
+        private JTable tabelaListaMusicas, listaAlbumGenero1;
 
         public InterfaceArtista(){
             // criar janela
@@ -357,8 +357,8 @@ public class InterfaceArtista implements Serializable {
             String [][] dados = va.matrizTotalAlbuns();
             // Criar a tabela com os dados e colunas
             String [] colunas = {"Género", "Total álbuns"};
-            listaAlbumGenero = new JTable(dados, colunas);
-            listaAlbumGenero.setBounds(500,100, 250,230);
+            listaAlbumGenero1 = new JTable(dados, colunas);
+            listaAlbumGenero1.setBounds(500,100, 250,230);
             JScrollPane tabela1 = new JScrollPane(listaAlbumGenero);
 
 
