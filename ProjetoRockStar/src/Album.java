@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Album extends ConjuntoMusicas{
+public class Album extends ConjuntoMusicas implements Serializable {
 
     private String genero;
     private Artista artista;

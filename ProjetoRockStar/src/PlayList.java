@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayList extends ConjuntoMusicas{
+public class PlayList extends ConjuntoMusicas implements Serializable {
    private  boolean visibilidade;
 
     public PlayList(String nome, boolean visibilidade) {

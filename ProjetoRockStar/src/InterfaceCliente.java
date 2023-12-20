@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class InterfaceCliente {
+public class InterfaceCliente implements Serializable {
     private JFrame janelaCliente;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel tituloCliente, username, pesquisaCliente, pesquisaPlaylist, pesquisacliente1,

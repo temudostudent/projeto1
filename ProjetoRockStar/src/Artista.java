@@ -10,17 +10,19 @@ public class Artista extends Utilizador implements Serializable {
 
     //Atributos
     private String pin;
-    private ArrayList<Album> albuns;
-    private ArrayList<Musica> musicas;
+    private ArrayList<Album> albuns = new ArrayList<>();
+    private ArrayList<Musica> musicas = new ArrayList<>();
 
     //Construtor que recebe username, password, pin
     public Artista(String username, String password, String pin) {
         super(username, password);
         this.pin = pin;
-        this.musicas = new ArrayList<>();
-        this.albuns = new ArrayList<>();
+        this.musicas = musicas;
+        this.albuns = albuns;
         super.saldo=0;
     }
+
+    public Artista (){}
 
     //Imprimir todos os albuns do artista
     @Override
@@ -129,6 +131,40 @@ public class Artista extends Utilizador implements Serializable {
         }
     return cont;
     }
+
+    //Método para criar uma lista com todos os generos do artista
+    private ArrayList listaGeneros(){
+        ArrayList<String> listaGeneros = new ArrayList<>();
+        for (Album album : albuns) {
+            String genero = album.getGenero();
+
+            // Verifica se o género ainda não está na lista e caso não estaja, adiciona
+            if (!listaGeneros.contains(genero)) {
+                listaGeneros.add(genero);
+            }
+        }
+        return listaGeneros;
+    }
+
+    //Método para devolver o numero de géneros de álbuns que o artista possui
+    private int numeroGeneros(){
+        ArrayList novaLista = listaGeneros();
+        return novaLista.size();
+    }
+
+    public String [][] matrizTotalAlbuns(){
+        int linhas = numeroGeneros();
+        String [][] nova = new String[linhas][2];
+        ArrayList <String> listaGeneros1 = listaGeneros();
+
+        for(int i = 0; i < nova.length; i++){
+                nova[i][0] = listaGeneros1.get(i);
+                nova [i][1] = String.valueOf(totalAlbunsGenero(listaGeneros1.get(i)));
+            }
+        return nova;
+    }
+
+
 
     public String getPin() {
         return pin;

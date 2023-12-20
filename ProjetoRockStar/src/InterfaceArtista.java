@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-public class InterfaceArtista {
+public class InterfaceArtista implements Serializable {
 
         private JFrame janelaArtista;
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
@@ -18,9 +21,9 @@ public class InterfaceArtista {
                 caixaMusicaMaisComprada, campoPesquisa;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1;
         private JComboBox caixaPesquisar, caixaPesquisarALbum, ordenarPor;
-        private JTextArea areaPesquisa, listaMusicasAlbum, listaAlbumGenero;
+        private JTextArea areaPesquisa, listaMusicasAlbum;
         private ButtonGroup botaoEstado, botaoEstado1;
-        private JTable tabelaListaMusicas;
+        private JTable tabelaListaMusicas, listaAlbumGenero;
 
         public InterfaceArtista(){
             // criar janela
@@ -253,6 +256,12 @@ public class InterfaceArtista {
             valorTotalVendas = new JLabel("VALOR TOTAL DE VENDAS");
             valorTotalVendas.setBounds(50,200,180,30);
             caixaValorTotalVendas = new JTextField(); caixaValorTotalVendas.setBounds(250,200,180,30);
+            caixaValorTotalVendas.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    caixaValorTotalVendas.setText(String.valueOf(valorTotalVendas));
+                }
+            });
             musicaMaisGravada = new JLabel("MUSICA MAIS GRAVADA");
             musicaMaisGravada.setBounds(50,250,180,30);
             caixaMusicaMaisGravada = new JTextField(); caixaMusicaMaisGravada.setBounds(250,250,180,30);
@@ -261,8 +270,19 @@ public class InterfaceArtista {
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
-            listaAlbumGenero = new JTextArea(); listaAlbumGenero.setColumns(2);
+           Artista va = new Artista();
+            va.criarAlbum("Rock1", "Rock");
+            va.criarAlbum("Rock2", "Pimba");
+            va.criarAlbum("Rock2", "Pimba");
+            va.criarAlbum("Rock3", "Jazz");
+            String [][] dados = va.matrizTotalAlbuns();
+            // Criar a tabela com os dados e colunas
+            String [] colunas = {"Género", "Total álbuns"};
+            listaAlbumGenero = new JTable(dados, colunas);
             listaAlbumGenero.setBounds(500,100, 250,230);
+            JScrollPane tabela1 = new JScrollPane(listaAlbumGenero);
+
+
 
 
             //Adicionar componentes do painel Estatísticas
@@ -273,6 +293,7 @@ public class InterfaceArtista {
             painelEstatisticas.add(caixaValorTotalColecao); painelEstatisticas.add(caixaValorTotalVendas);
             painelEstatisticas.add(caixaMusicaMaisGravada); painelEstatisticas.add(caixaMusicaMaisComprada);
             painelEstatisticas.add(totalAlbumGenero); painelEstatisticas.add(listaAlbumGenero);
+            painelEstatisticas.add(tabela1);
 
             //Criar painel fixo Titulo  ----------------------------------------------
             painelTitulo = new JPanel();

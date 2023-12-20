@@ -9,6 +9,7 @@ public abstract class Utilizador implements Serializable {
         this.username = username;
         this.password = password;
     }
+    public Utilizador (){}
 
     public abstract void verListas();
     public abstract int getTipo();
