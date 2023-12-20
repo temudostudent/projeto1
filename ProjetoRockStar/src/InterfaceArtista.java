@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 public class InterfaceArtista implements Serializable {
@@ -20,8 +22,8 @@ public class InterfaceArtista implements Serializable {
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
                 caixaMusicaMaisComprada, campoPesquisa;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1;
-        private JComboBox caixaPesquisar, caixaPesquisarALbum, ordenarPor;
-        private JTextArea areaPesquisa, listaMusicasAlbum;
+        private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
+        private JTextArea areaPesquisa, listaMusicasAlbum, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1;
         private JTable tabelaListaMusicas, listaAlbumGenero;
 
@@ -36,42 +38,88 @@ public class InterfaceArtista implements Serializable {
             painelPesquisar.setLayout(null);
 
             //Criar Componentes do Painel Pesquisar
-            caixaPesquisar = new JComboBox<>();
-            caixaPesquisar.addItem("TÍTULO");
-            caixaPesquisar.addItem("ÁLBUM");
-            caixaPesquisar.setBounds(50,60, 150,40);
+
+            //JLabel
             pesquisa = new JLabel("PESQUISAR MÚSICA POR: ");
-            pesquisa.setBounds(50, 10, 150, 40);
+            pesquisa.setBounds(250, 10, 150, 40);
             pesquisaAlbum = new JLabel("PESQUISAR ÁLBUM POR:");
             pesquisaAlbum.setBounds(250, 10, 150, 40);
+            pesquisaAlbum.setVisible(false);
+            ordenarMusicas = new JLabel("ORDENAR POR:");
+            ordenarMusicas.setBounds(450,10,150,40);
+
+            //JButton
+            JButton okPesquisa = new JButton("OK");
+            okPesquisa.setBounds(710,450,60,40);
+
+            //JComboBox
+            caixaPesquisarMusica = new JComboBox<>();
+            caixaPesquisarMusica.addItem("TÍTULO");
+            caixaPesquisarMusica.addItem("ÁLBUM");
+            caixaPesquisarMusica.setBounds(250,60, 150,40);
             caixaPesquisarALbum = new JComboBox<>();
             caixaPesquisarALbum.addItem("TÍTULO");
             caixaPesquisarALbum.addItem("GÉNERO");
             caixaPesquisarALbum.setBounds(250, 60, 150, 40);
-            ordenarMusicas = new JLabel("ORDENAR POR:");
-            ordenarMusicas.setBounds(450,10,150,40);
+            caixaPesquisarALbum.setVisible(false);
             ordenarPor = new JComboBox<>();
             ordenarPor.setBounds(450, 60, 150, 40);
             ordenarPor.addItem("TÍTULO");
             ordenarPor.addItem("DURAÇÃO");
-            botaoAscendente = new JRadioButton("Ascendente");
-            botaoAscendente.setBounds(650, 30, 100, 20);
-            botaoAscendente.setBackground(null);
-            botaoDescendente = new JRadioButton("Descendente");
-            botaoDescendente.setBounds(650,60,100,20);
-            botaoDescendente.setBackground(null);
-            botaoEstado = new ButtonGroup();
-            botaoEstado.add(botaoAscendente);
-            botaoEstado.add(botaoDescendente);
-            campoPesquisa = new JTextField("PESQUISA");
-            campoPesquisa.setBounds(50,100,150,40);
+
+            //JTable
             tabelaListaMusicas = new JTable();
             tabelaListaMusicas.setBounds(50,200,800,200);
             JScrollPane scrollPane = new JScrollPane(tabelaListaMusicas);
 
+            //JRadioButton
+            botaoAscendente = new JRadioButton("Ascendente");
+            botaoAscendente.setBounds(650, 30, 100, 20);
+            botaoAscendente.setBackground(null);
+            botaoAscendente.setSelected(true);
+            botaoDescendente = new JRadioButton("Descendente");
+            botaoDescendente.setBounds(650,60,100,20);
+            botaoDescendente.setBackground(null);
+            JRadioButton selectMusica = new JRadioButton("Pesquisar Música");
+            selectMusica.setBounds(50, 30, 200, 20);
+            selectMusica.setBackground(null);
+            selectMusica.setSelected(true);
+            selectMusica.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    caixaPesquisarALbum.setVisible(!selectMusica.isSelected());
+                    pesquisaAlbum.setVisible(!selectMusica.isSelected());
+                    caixaPesquisarMusica.setVisible(selectMusica.isSelected());
+                    pesquisa.setVisible(selectMusica.isSelected());
+                }
+            });
+            JRadioButton selectAlbum = new JRadioButton("Pesquisar Álbum");
+            selectAlbum.setBounds(50, 60, 200, 20);
+            selectAlbum.setBackground(null);
+            selectAlbum.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    caixaPesquisarMusica.setVisible(!selectAlbum.isSelected());
+                    pesquisa.setVisible(!selectAlbum.isSelected());
+                    caixaPesquisarALbum.setVisible(selectAlbum.isSelected());
+                    pesquisaAlbum.setVisible(selectAlbum.isSelected());
+                }
+            });
+
+            //ButtonGroup
+            botaoEstado = new ButtonGroup();
+            botaoEstado.add(botaoAscendente);
+            botaoEstado.add(botaoDescendente);
+            ButtonGroup botaoPesquisaMouA = new ButtonGroup();
+            botaoPesquisaMouA.add(selectAlbum);
+            botaoPesquisaMouA.add(selectMusica);
+
+            campoPesquisa = new JTextField("PESQUISA");
+            campoPesquisa.setBounds(50,120,150,40);
+
 
             //Adicionar Componentes ao Painel Pesquisar
-            painelPesquisar.add(caixaPesquisar);
+            painelPesquisar.add(caixaPesquisarMusica);
             painelPesquisar.add(pesquisa);
             painelPesquisar.add(pesquisaAlbum);
             painelPesquisar.add(caixaPesquisarALbum);
@@ -82,6 +130,11 @@ public class InterfaceArtista implements Serializable {
             painelPesquisar.add(campoPesquisa);
             painelPesquisar.add(tabelaListaMusicas);
             painelPesquisar.add(scrollPane, BorderLayout.CENTER);
+            painelPesquisar.add(okPesquisa);
+            painelPesquisar.add(selectMusica);
+            painelPesquisar.add(selectAlbum);
+
+
 
             //Criar Painel Musicas
 
@@ -92,7 +145,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar componentes do Painel Musicas
 
-            criarMusica = new JButton("ADICIONAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
+            criarMusica = new JButton("CRIAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
             editarDados = new JButton("EDITAR DADOS MUSICA"); editarDados.setBounds(250, 20, 180,40);
             menuAlbum = new JButton("ÁLBUM"); menuAlbum.setBounds(450,20,180,40);
 
@@ -114,7 +167,7 @@ public class InterfaceArtista implements Serializable {
 
             tituloMusica = new JLabel("TÍTULO");
             tituloMusica.setBounds(200, 50, 180,40);
-            ano = new JLabel("ANO");
+            ano = new JLabel("DATA");
             ano.setBounds(200, 100, 180,40);
             duracao = new JLabel("DURAÇÃO");
             duracao.setBounds(200, 150, 180, 40);
@@ -126,8 +179,12 @@ public class InterfaceArtista implements Serializable {
             estado.setBounds(200,300,180,40);
             caixaTituloMusica = new JTextField();
             caixaTituloMusica.setBounds(400, 50, 180, 40);
-            caixaAno = new JTextField();
-            caixaAno.setBounds(400, 100, 180,40);
+            caixaAno = new JTextField("Ano");
+            caixaAno.setBounds(400, 100, 80,40);
+            JTextField caixaMes=new JTextField("Mês");
+            caixaMes.setBounds(490,100,40,40);
+            JTextField caixaDia=new JTextField("Dia");
+            caixaDia.setBounds(540,100,40,40);
             caixaDuracao = new JTextField();
             caixaDuracao.setBounds(400,150,180,40);
             caixaGenero = new JTextField();
@@ -136,11 +193,31 @@ public class InterfaceArtista implements Serializable {
             caixaCusto.setBounds(400,250,180,40);
             estadoAtivo = new JRadioButton("ATIVO");
             estadoAtivo.setBackground(null); estadoAtivo.setBounds(400, 300, 100,40);
+            estadoAtivo.setSelected(true);
             estadoInativo = new JRadioButton("INATIVO");
             estadoInativo.setBounds(500, 300, 100 ,40);
             estadoInativo.setBackground(null);
             adicionarMusica = new JButton("ADICIONAR MÚSICA");
             adicionarMusica.setBounds(400, 350, 180, 40);
+            adicionarMusica.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    /*String titulo=;
+                    int ano=;
+                    int mes=;
+                    int dia=;
+                    double duracao=;
+                    String genero=;
+                    boolean estado=;
+                    double preco=;*/
+
+
+                }
+            });
+
+            ButtonGroup ativoOuInativo = new ButtonGroup();
+            ativoOuInativo.add(estadoAtivo);
+            ativoOuInativo.add(estadoInativo);
 
             //Adicionar componentes ao painel Adicionar Musicas
             painelAdicionarMusica.add(tituloMusica);
@@ -151,6 +228,8 @@ public class InterfaceArtista implements Serializable {
             painelAdicionarMusica.add(estado);
             painelAdicionarMusica.add(caixaTituloMusica);
             painelAdicionarMusica.add(caixaAno);
+            painelAdicionarMusica.add(caixaMes);
+            painelAdicionarMusica.add(caixaDia);
             painelAdicionarMusica.add(caixaDuracao);
             painelAdicionarMusica.add(caixaGenero);
             painelAdicionarMusica.add(caixaCusto);

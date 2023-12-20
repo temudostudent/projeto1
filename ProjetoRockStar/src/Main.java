@@ -2,8 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        new InterfaceArtista();
+        //new InterfaceArtista();
         //new InterfaceCliente();
 
     }
