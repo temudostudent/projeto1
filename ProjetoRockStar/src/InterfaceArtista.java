@@ -1,8 +1,9 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
@@ -26,9 +27,9 @@ public class InterfaceArtista implements Serializable {
                 caixaMusicaMaisComprada, campoPesquisa;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1;
         private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
-        private JTextArea areaPesquisa, listaMusicasAlbum, listaAlbumGenero;
+        private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1;
-        private JTable tabelaListaMusicas, listaAlbumGenero1;
+        private JTable tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
 
@@ -287,7 +288,8 @@ public class InterfaceArtista implements Serializable {
             botaoEstado1 = new ButtonGroup(); botaoEstado1.add(estadoAtivo1); botaoEstado1.add(estadoInativo1);
             guardarAlteracao = new JButton("GUARDAR ALTERAÇÕES");
             guardarAlteracao.setBounds(500,350,180,40);
-            listarMusicas = new JButton("LISTAR MÚSICAS"); listarMusicas.setBounds(610,10,180,40);
+            listarMusicas = new JButton("LISTAR MÚSICAS");
+            listarMusicas.setBounds(610,10,180,40);
             tabelaListaMusicas = new JTable();
             tabelaListaMusicas.setBounds(50,60, 400,400);
             listarMusicas.addActionListener(new ActionListener() {
@@ -350,18 +352,116 @@ public class InterfaceArtista implements Serializable {
             caixaGeneroAlgum.setBounds(50,250,180,40);
             criarListaMusicas = new JButton("LISTAR MÚSICAS");
             criarListaMusicas.setBounds(300, 20, 200, 30);
+            criarListaMusicas.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultTableModel listaMusicasPAlbum = new DefaultTableModel();
+                    ArrayList<Musica> listaMusicasPainelAlbum = new ArrayList<>();
+                    listaMusicasPainelAlbum = va.getMusicas();
 
-            listaMusicasAlbum = new JTextArea(); listaMusicasAlbum.setBounds(300, 80, 200,300);
-            adicionarMusicaAlbum = new JButton("ADICIONAR MUSICA ÁLBUM");
-            adicionarMusicaAlbum.setBounds(550, 80, 220,40);
-            caixaTextoAdicionarMusicaAlbum = new JTextField("Nome do Álbum");
-            caixaTextoAdicionarMusicaAlbum.setBounds(550,20,220,30);
+                    // Adicionar uma coluna à tabela
+                    listaMusicasPAlbum.addColumn("Título");
+
+                    // Adicionar os elementos do ArrayList à tabela
+                    for (Musica musica : listaMusicasPainelAlbum) {
+                        listaMusicasPAlbum.addRow(new Object[]{musica.getTitulo()});
+                    }
+                    listaMusicasAlbum.setModel(listaMusicasPAlbum);
+                }
+            });
+
+            listaMusicasAlbum = new JTable();
+            listaMusicasAlbum.setBounds(300, 80, 200,300);
+            listaMusicasAlbum.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        int linhaSelecionada = listaMusicasAlbum.getSelectedRow();
+                        if (linhaSelecionada != -1) {
+                            // Obtendo os dados da linha selecionada
+                            Object titulo = listaMusicasAlbum.getValueAt(linhaSelecionada, 0);
+
+                            // Exibindo os dados (você pode fazer o que quiser com eles)
+                            System.out.println("Título: " + titulo);
+                        }
+                    }
+                }
+            });
+
+            // Adicionando um ouvinte de clique do mouse à tabela
+            listaMusicasAlbum.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
+                        JTable target = (JTable) e.getSource();
+                        int row = target.getSelectedRow();
+                        int column = target.getSelectedColumn();
+                    }
+                }
+            });
+            JTable listaAlbuns = new JTable();
+            listaAlbuns.setBounds(550, 80, 200,300);
+
+            listaAlbuns.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        int linhaSelecionada = listaAlbuns.getSelectedRow();
+                    }
+                }
+            });
+
+            // Adicionando um ouvinte de clique do mouse à tabela
+            listaAlbuns.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 1) {
+                        JTable target = (JTable) e.getSource();
+                        int row = target.getSelectedRow();
+                        int column = target.getSelectedColumn();
+                    }
+                }
+            });
+
+            JButton criarListaAlbuns = new JButton("LISTAR ÁLBUNS");
+            criarListaAlbuns.setBounds(550,20,200,30);
+            criarListaAlbuns.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultTableModel listaAlbunsModel = new DefaultTableModel();
+                    ArrayList<Album> listaAlbumPainelAlbum = new ArrayList<>();
+                    listaAlbumPainelAlbum = va.getAlbuns();
+
+                    // Adicionar uma coluna à tabela
+                    listaAlbunsModel.addColumn("Título");
+
+                    // Adicionar os elementos do ArrayList à tabela
+                    for (Album album : listaAlbumPainelAlbum) {
+                        listaAlbunsModel.addRow(new Object[]{album.getNome()});
+                    }
+                    listaAlbuns.setModel(listaAlbunsModel);
+                }
+            });
+
+
+            adicionarMusicaAlbum = new JButton("ADICIONAR MÚSICA AO ÁLBUM");
+            adicionarMusicaAlbum.setBounds(410, 400, 220,40);
+            adicionarMusicaAlbum.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int indexAlbum = listaAlbuns.getSelectedRow();
+                    int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
+
+                    va.addMusica(indexAlbum,indexMusicaSelect);
+                }
+            });
 
             //Adicionar componentes ao Painel
             painelAlbum.add(nomeAlbum); painelAlbum.add(caixaNomeAlbum);
             painelAlbum.add(generoAlbum); painelAlbum.add(caixaGeneroAlgum);
             painelAlbum.add(criarAlbum); painelAlbum.add(criarListaMusicas); painelAlbum.add(listaMusicasAlbum);
-            painelAlbum.add(caixaTextoAdicionarMusicaAlbum); painelAlbum.add(adicionarMusicaAlbum);
+            painelAlbum.add(criarListaAlbuns); painelAlbum.add(adicionarMusicaAlbum);
+            painelAlbum.add(listaAlbuns);
 
 
             //Criar painel Estatisticas-------------------------------------------------------
