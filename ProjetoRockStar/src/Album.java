@@ -4,11 +4,11 @@ import java.util.ArrayList;
 public class Album extends ConjuntoMusicas implements Serializable {
 
     private String genero;
-    private Artista artista;
+    private String nomeArtista;
 
-    public Album(String nome, Artista artista, String genero) {
+    public Album(String nome, String nomeArtista, String genero) {
         super(nome);
-        this.artista=artista;
+        this.nomeArtista=nomeArtista;
         this.genero = genero;
         super.musicas=new ArrayList<>();
     }
@@ -49,4 +49,6 @@ public class Album extends ConjuntoMusicas implements Serializable {
     public String getGenero() {
         return genero;
     }
+
+    public String getNomeArtista() { return nomeArtista;}
 }

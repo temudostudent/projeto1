@@ -331,6 +331,18 @@ public class InterfaceArtista implements Serializable {
             //Criar componenentes do Painel
             criarAlbum = new JButton("CRIAR ÁLBUM");
             criarAlbum.setBounds(50,20,180,40);
+            criarAlbum.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String titulo = caixaNomeAlbum.getText();
+                    String genero = caixaGeneroAlgum.getText();
+
+                    va.criarAlbum(titulo,genero);
+
+                    caixaNomeAlbum.setText("");
+                    caixaGeneroAlgum.setText("");
+                }
+            });
             nomeAlbum = new JLabel("NOME DO ÁLBUM");
             nomeAlbum.setBounds(50, 100,180,40);
             caixaNomeAlbum = new JTextField();
@@ -339,10 +351,6 @@ public class InterfaceArtista implements Serializable {
             generoAlbum.setBounds(50,200,180,40);
             caixaGeneroAlgum = new JTextField();
             caixaGeneroAlgum.setBounds(50,250,180,40);
-            anoAlbum = new JLabel("ANO LANÇAMENTO");
-            anoAlbum.setBounds(50, 300,180,40);
-            caixaAnoAlbum = new JTextField();
-            caixaAnoAlbum.setBounds(50, 350,180,40);
             criarListaMusicas = new JButton("LISTAR MÚSICAS");
             criarListaMusicas.setBounds(300, 20, 200, 30);
 
@@ -355,10 +363,8 @@ public class InterfaceArtista implements Serializable {
             //Adicionar componentes ao Painel
             painelAlbum.add(nomeAlbum); painelAlbum.add(caixaNomeAlbum);
             painelAlbum.add(generoAlbum); painelAlbum.add(caixaGeneroAlgum);
-            painelAlbum.add(anoAlbum); painelAlbum.add(caixaAnoAlbum);
-            painelAlbum.add(criarAlbum); painelAlbum.add(criarListaMusicas);
-            painelAlbum.add(listaMusicasAlbum); painelAlbum.add(caixaTextoAdicionarMusicaAlbum);
-            painelAlbum.add(adicionarMusicaAlbum);
+            painelAlbum.add(criarAlbum); painelAlbum.add(criarListaMusicas); painelAlbum.add(listaMusicasAlbum);
+            painelAlbum.add(caixaTextoAdicionarMusicaAlbum); painelAlbum.add(adicionarMusicaAlbum);
 
 
             //Criar painel Estatisticas-------------------------------------------------------
