@@ -8,7 +8,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
 
-    private ArrayList<PlayList> playlists;
+    private ArrayList<PlayList> playlists= new ArrayList<>();
     private ArrayList<Compra> historicoCompras;
     private Compra compra;
 
@@ -17,7 +17,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     public Cliente(String username,String password) {
         super(username, password);
-        this.playlists = new ArrayList<>();
+        this.playlists = playlists;
         this.historicoCompras = new ArrayList<>();
         this.compra = new Compra();
         super.saldo = 0;

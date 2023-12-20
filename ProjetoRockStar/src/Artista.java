@@ -40,7 +40,7 @@ public class Artista extends Utilizador implements Serializable {
         if (preco<=0){
             novaM = new Musica(titulo,this.username,ano,mes,dia,duracao,genero,estado);
         }else {
-            novaM = new MusicaPaga(titulo,this,ano,mes,dia,duracao,genero,estado,preco);
+            novaM = new MusicaPaga(titulo,this.username,ano,mes,dia,duracao,genero,estado,preco);
         }
         musicas.add(novaM);
     }

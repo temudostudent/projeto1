@@ -142,7 +142,7 @@ public class InterfaceArtista {
 
             //Criar componentes do Painel Musicas
 
-            criarMusica = new JButton("ADICIONAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
+            criarMusica = new JButton("CRIAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
             editarDados = new JButton("EDITAR DADOS MUSICA"); editarDados.setBounds(250, 20, 180,40);
             menuAlbum = new JButton("ÁLBUM"); menuAlbum.setBounds(450,20,180,40);
 
@@ -164,7 +164,7 @@ public class InterfaceArtista {
 
             tituloMusica = new JLabel("TÍTULO");
             tituloMusica.setBounds(200, 50, 180,40);
-            ano = new JLabel("ANO");
+            ano = new JLabel("DATA");
             ano.setBounds(200, 100, 180,40);
             duracao = new JLabel("DURAÇÃO");
             duracao.setBounds(200, 150, 180, 40);
@@ -176,8 +176,12 @@ public class InterfaceArtista {
             estado.setBounds(200,300,180,40);
             caixaTituloMusica = new JTextField();
             caixaTituloMusica.setBounds(400, 50, 180, 40);
-            caixaAno = new JTextField();
-            caixaAno.setBounds(400, 100, 180,40);
+            caixaAno = new JTextField("Ano");
+            caixaAno.setBounds(400, 100, 80,40);
+            JTextField caixaMes=new JTextField("Mês");
+            caixaMes.setBounds(490,100,40,40);
+            JTextField caixaDia=new JTextField("Dia");
+            caixaDia.setBounds(540,100,40,40);
             caixaDuracao = new JTextField();
             caixaDuracao.setBounds(400,150,180,40);
             caixaGenero = new JTextField();
@@ -186,11 +190,31 @@ public class InterfaceArtista {
             caixaCusto.setBounds(400,250,180,40);
             estadoAtivo = new JRadioButton("ATIVO");
             estadoAtivo.setBackground(null); estadoAtivo.setBounds(400, 300, 100,40);
+            estadoAtivo.setSelected(true);
             estadoInativo = new JRadioButton("INATIVO");
             estadoInativo.setBounds(500, 300, 100 ,40);
             estadoInativo.setBackground(null);
             adicionarMusica = new JButton("ADICIONAR MÚSICA");
             adicionarMusica.setBounds(400, 350, 180, 40);
+            adicionarMusica.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    /*String titulo=;
+                    int ano=;
+                    int mes=;
+                    int dia=;
+                    double duracao=;
+                    String genero=;
+                    boolean estado=;
+                    double preco=;*/
+
+
+                }
+            });
+
+            ButtonGroup ativoOuInativo = new ButtonGroup();
+            ativoOuInativo.add(estadoAtivo);
+            ativoOuInativo.add(estadoInativo);
 
             //Adicionar componentes ao painel Adicionar Musicas
             painelAdicionarMusica.add(tituloMusica);
@@ -201,6 +225,8 @@ public class InterfaceArtista {
             painelAdicionarMusica.add(estado);
             painelAdicionarMusica.add(caixaTituloMusica);
             painelAdicionarMusica.add(caixaAno);
+            painelAdicionarMusica.add(caixaMes);
+            painelAdicionarMusica.add(caixaDia);
             painelAdicionarMusica.add(caixaDuracao);
             painelAdicionarMusica.add(caixaGenero);
             painelAdicionarMusica.add(caixaCusto);
