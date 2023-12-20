@@ -282,18 +282,15 @@ public class InterfaceArtista implements Serializable {
                     listaMusicas.addColumn("GENERO");
                     listaMusicas.addColumn("ESTADO");
 
+                    // Adicionar os títulos das colunas como a primeira linha
+                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
                         listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getData(), musica.getDuracao(),
                         musica.getGenero(), musica.getEstado()});
                     }
                     tabelaListaMusicas.setModel(listaMusicas);
-                }
-            });
-            pesquisarMusica.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    pesquisaTitulo.getText();
                 }
             });
 
@@ -310,6 +307,56 @@ public class InterfaceArtista implements Serializable {
             botaoEstado1 = new ButtonGroup(); botaoEstado1.add(estadoAtivo1); botaoEstado1.add(estadoInativo1);
             guardarAlteracao = new JButton("GUARDAR ALTERAÇÕES");
             guardarAlteracao.setBounds(500,350,180,40);
+            guardarAlteracao.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Verifica se uma linha está selecionada
+                    if (tabelaListaMusicas.getSelectedRowCount() == 1) {
+                        int selectedRow = tabelaListaMusicas.getSelectedRow();
+
+                        // Obtém os valores da linha selecionada
+                        String tituloAtual = (String) tabelaListaMusicas.getValueAt(selectedRow, 0);
+
+                        // Encontra o objeto Musica correspondente com base no título
+                        Musica musicaSelecionada = null;
+                        ArrayList<Musica> lista = new ArrayList<>();
+                        lista = va.pesquisarMusica(tituloAtual);
+                        for (Musica musica : lista) {
+                            if (musica.getTitulo().equals(tituloAtual)) {
+                                musicaSelecionada = musica;
+                                break;
+                            }
+                        }
+                        // Verifique se o objeto Musica foi encontrado
+                        if (musicaSelecionada != null) {
+                            if (!caixaAlterarTitulo.getText().equals(null)) {
+                                String novoTitulo = caixaAlterarTitulo.getText();
+
+                                // Faça a alteração no objeto Musica
+                                musicaSelecionada.setTitulo(novoTitulo);
+
+                                // Atualize a tabela com as alterações
+                                DefaultTableModel model = (DefaultTableModel) tabelaListaMusicas.getModel();
+                                model.setValueAt(novoTitulo, selectedRow, 0);
+
+                                // Limpe o JTextField
+                                caixaAlterarTitulo.setText("");
+
+                                // Mensagem informativa (pode ser removida se não for necessária)
+                                JOptionPane.showMessageDialog(null, "Alterações salvas com sucesso!");
+
+                            } else {
+                                // Caso o objeto Musica não seja encontrado
+                                JOptionPane.showMessageDialog(null, "Erro: Música não encontrada!");
+                            }
+                        } else {
+                            // Caso nenhuma linha esteja selecionada
+                            JOptionPane.showMessageDialog(null, "Selecione uma música para fazer alterações.");
+                        }
+                    }
+                }
+            });
+
             listarMusicas = new JButton("LISTAR MÚSICAS");
             listarMusicas.setBounds(610,10,180,40);
             tabelaListaMusicas = new JTable();
@@ -321,12 +368,22 @@ public class InterfaceArtista implements Serializable {
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
 
+                    // Adicionar os títulos das colunas Na primeira linha
+                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+
                     // Adicionar uma coluna à tabela
-                    listaMusicas.addColumn("Título");
+                    listaMusicas.addColumn("TÍTULO");
+                    listaMusicas.addColumn("DATA");
+                    listaMusicas.addColumn("DURACAO");
+                    listaMusicas.addColumn("GENERO");
+                    listaMusicas.addColumn("ESTADO");
+
+
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
-                        listaMusicas.addRow(new Object[]{musica.getTitulo()});
+                        listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getData(), musica.getDuracao(),
+                                musica.getGenero(), musica.getEstado()});
                     }
                     tabelaListaMusicas.setModel(listaMusicas);
                 }
@@ -503,8 +560,8 @@ public class InterfaceArtista implements Serializable {
             valorTotalVendas = new JLabel("VALOR TOTAL DE VENDAS");
             valorTotalVendas.setBounds(50,200,180,30);
             caixaValorTotalVendas = new JTextField(); caixaValorTotalVendas.setBounds(250,200,180,30);
-            botaorefresh = new JButton("REFRESH");
-            botaorefresh.setBounds(400,400,100,40);
+            botaorefresh = new JButton("ATUALIZAR");
+            botaorefresh.setBounds(400,400,200,40);
             listaAlbumGenero1 = new JTable();
             listaAlbumGenero1.setBounds(500,100,250,230);
             JScrollPane tabela1 = new JScrollPane(listaAlbumGenero);

@@ -58,10 +58,10 @@ public class Artista extends Utilizador implements Serializable {
 
     //Pesquisar musica pelo titulo
     public ArrayList<Musica> pesquisarMusica(String titulo){
-        ArrayList novaLista = new ArrayList<>();
+        ArrayList<Musica> novaLista = new ArrayList<>();
         for(Musica m : musicas){
             if(m.getTitulo().equalsIgnoreCase(titulo)){
-                novaLista.add(m.getTitulo());
+                novaLista.add(m);
             }
         }
         return novaLista;
@@ -105,6 +105,8 @@ public class Artista extends Utilizador implements Serializable {
     public int totalMusicas(){
         return musicas.size();
     }
+
+
 
     //Valor total das músicas que tem na coleção neste momento
     public double valorTotalColecao(){
