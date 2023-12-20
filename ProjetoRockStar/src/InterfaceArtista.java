@@ -28,11 +28,14 @@ public class InterfaceArtista implements Serializable {
         private JTextArea areaPesquisa, listaMusicasAlbum, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1;
         private JTable tabelaListaMusicas, listaAlbumGenero1;
+        private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
         public InterfaceArtista(){
             Artista va = new Artista();
             // criar janela
             janelaArtista = new JFrame();
+
+            va.novaMusica("musica1", 2023, 11, 8, 3.20, "rock", true, 0);
 
             //Criar Painel Pesquisar -------------------------------------------------
             painelPesquisar = new JPanel();
@@ -136,7 +139,6 @@ public class InterfaceArtista implements Serializable {
             painelPesquisar.add(okPesquisa);
             painelPesquisar.add(selectMusica);
             painelPesquisar.add(selectAlbum);
-
 
 
             //Criar Painel Musicas
@@ -256,8 +258,6 @@ public class InterfaceArtista implements Serializable {
             pesquisarMusica.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-
                     pesquisaTitulo.getText();
 
                 }
@@ -283,7 +283,8 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
 
                     DefaultTableModel listaMusicas = new DefaultTableModel();
-                    ArrayList<Musica> lista = va.getMusicas();
+                    ArrayList<Musica> lista = new ArrayList<>();
+                            lista = va.getMusicas();
 
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("Itens");
@@ -293,8 +294,8 @@ public class InterfaceArtista implements Serializable {
                         listaMusicas.addRow(new Object[]{musica});
                     }
 
-                    tabelaListaMusicas.add(listaAlbumGenero);
-                    JScrollPane scrollPane = new JScrollPane(tabelaListaMusicas);
+                    tabelaListaMusicas.setModel(listaMusicas);
+
                 }
             });
 
@@ -305,7 +306,7 @@ public class InterfaceArtista implements Serializable {
             painelEditarDados.add(alterarPreco); painelEditarDados.add(caixaAltearPreco);
             painelEditarDados.add(estadoAtivo1); painelEditarDados.add(estadoInativo1);
             painelEditarDados.add(alterarEstado); painelEditarDados.add(guardarAlteracao);
-            painelEditarDados.add(listarMusicas);
+            painelEditarDados.add(listarMusicas); painelEditarDados.add(scrollListarMusicas);
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();

@@ -39,7 +39,7 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
-    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado,double preco) {
+    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
         Musica novaM=null;
         if (preco<=0){
             novaM = new Musica(titulo,this.username,ano,mes,dia,duracao,genero,estado);
