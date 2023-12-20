@@ -18,7 +18,8 @@ public class InterfaceArtista implements Serializable {
                 totalUtilizadores, totalMusicas, valorTotalColecao, valorTotalVendas, musicaMaisGravada, musicaMaisComprada,
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
-                pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas, adicionarMusicaAlbum;
+                pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
+                adicionarMusicaAlbum, botaorefresh;
         private JTextField caixaTituloMusica, caixaAno, caixaDuracao, caixaGenero, caixaCusto, inserirTitulo,
                 caixaAlterarTitulo, caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum, caixaAnoAlbum, caixaTextoAdicionarMusicaAlbum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
@@ -382,6 +383,7 @@ public class InterfaceArtista implements Serializable {
             valorTotalVendas = new JLabel("VALOR TOTAL DE VENDAS");
             valorTotalVendas.setBounds(50,200,180,30);
             caixaValorTotalVendas = new JTextField(); caixaValorTotalVendas.setBounds(250,200,180,30);
+            botaorefresh = new JButton();
             caixaValorTotalVendas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -407,7 +409,6 @@ public class InterfaceArtista implements Serializable {
             listaAlbumGenero1 = new JTable(dados, colunas);
             listaAlbumGenero1.setBounds(500,100, 250,230);
             JScrollPane tabela1 = new JScrollPane(listaAlbumGenero);
-
 
 
 
