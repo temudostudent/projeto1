@@ -30,8 +30,11 @@ public class InterfaceArtista implements Serializable {
         private JTable tabelaListaMusicas, listaAlbumGenero1;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
+
+
         public InterfaceArtista(){
             Artista va = new Artista();
+
             // criar janela
             janelaArtista = new JFrame();
 
@@ -380,7 +383,6 @@ public class InterfaceArtista implements Serializable {
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
-
             va.criarAlbum("Rock1", "Rock");
             va.criarAlbum("Rock2", "Pimba");
             va.criarAlbum("Rock2", "Pimba");
