@@ -7,7 +7,7 @@ public class Musica implements Serializable {
     //Atributos
     protected String titulo;
     protected String nomeArtista;
-    protected LocalDate ano;
+    protected LocalDate data;
     protected double duracao;
     protected String genero;
     protected ArrayList<Integer> rating;
@@ -18,7 +18,7 @@ public class Musica implements Serializable {
     public Musica(String titulo, String nomeArtista, int ano, int mes, int dia, double duracao, String genero, boolean estado) {
         this.titulo = titulo;
         this.nomeArtista = nomeArtista;
-        this.ano = LocalDate.of(ano,mes,dia);
+        this.data = LocalDate.of(ano,mes,dia);
         this.duracao = duracao;
         this.genero = genero;
         this.estado = estado;
@@ -50,6 +50,7 @@ public class Musica implements Serializable {
     public String getTitulo() {
         return titulo;
     }
+    public LocalDate getData(){return data;}
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
@@ -57,6 +58,7 @@ public class Musica implements Serializable {
     public String getGenero() {
         return genero;
     }
+    public Double getDuracao(){return duracao;}
 
     public boolean isEstado() {
         return estado;
@@ -65,6 +67,8 @@ public class Musica implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    public boolean getEstado(){ return estado;}
+
 
     public String getArtista() {
         return nomeArtista;
@@ -75,7 +79,7 @@ public class Musica implements Serializable {
         return "Musica{" +
                 "titulo='" + titulo + '\'' +
                 ", artista=" + nomeArtista +
-                ", ano=" + ano +
+                ", ano=" + data +
                 ", duracao=" + duracao +
                 ", genero='" + genero + '\'' +
                 ", rating=" + rating +
