@@ -31,6 +31,8 @@ public class Artista extends Utilizador implements Serializable {
         albuns.forEach(System.out::println);
     }
 
+
+
     //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
     public void criarAlbum(String nomeDoAlbum, String genero) {
         Album novoA = new Album(nomeDoAlbum, this, genero);
@@ -177,5 +179,13 @@ public class Artista extends Utilizador implements Serializable {
 
     public int getTipo(){
         return 2;
+    }
+
+    public ArrayList<Album> getAlbuns() {
+        return albuns;
+    }
+
+    public ArrayList<Musica> getMusicas() {
+        return musicas;
     }
 }
