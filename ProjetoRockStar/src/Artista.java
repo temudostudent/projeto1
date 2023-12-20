@@ -20,18 +20,17 @@ public class Artista extends Utilizador implements Serializable {
         this.pin = pin;
         this.musicas = musicas;
         this.albuns = albuns;
-        super.saldo=0;
+        super.saldo = 0;
     }
 
-    public Artista (){}
+    public Artista() {
+    }
 
     //Imprimir todos os albuns do artista
     @Override
     public void verListas() {
         albuns.forEach(System.out::println);
     }
-
-
 
     //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
     public void criarAlbum(String nomeDoAlbum, String genero) {
@@ -43,17 +42,29 @@ public class Artista extends Utilizador implements Serializable {
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
     public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
-        Musica novaM=null;
-        if (preco<=0){
-            novaM = new Musica(titulo,this.username,ano,mes,dia,duracao,genero,estado);
+        Musica novaM = null;
+        if (preco <= 0) {
+            novaM = new Musica(titulo, this.username, ano, mes, dia, duracao, genero, estado);
             JOptionPane.showMessageDialog(null, "Musica gratis criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
-        }else {
-            novaM = new MusicaPaga(titulo,this.username,ano,mes,dia,duracao,genero,estado,preco);
+        } else {
+            novaM = new MusicaPaga(titulo, this.username, ano, mes, dia, duracao, genero, estado, preco);
             JOptionPane.showMessageDialog(null, "Musica com o preço " + preco + " criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
         musicas.add(novaM);
+    }
+
+
+    //Pesquisar musica pelo titulo
+    public ArrayList<Musica> pesquisarMusica(String titulo){
+        ArrayList novaLista = new ArrayList<>();
+        for(Musica m : musicas){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
+                novaLista.add(m.getTitulo());
+            }
+        }
+        return novaLista;
     }
 
     //Adiciona música a Album
@@ -139,7 +150,7 @@ public class Artista extends Utilizador implements Serializable {
             String genero = album.getGenero();
 
             // Verifica se o género ainda não está na lista e caso não estaja, adiciona
-            if (!listaGeneros.contains(genero)) {
+            if (!listaGeneros.stream().anyMatch(g -> g.equalsIgnoreCase(genero))) {
                 listaGeneros.add(genero);
             }
         }
@@ -163,7 +174,6 @@ public class Artista extends Utilizador implements Serializable {
             }
         return nova;
     }
-
 
 
     public String getPin() {

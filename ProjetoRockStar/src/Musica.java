@@ -50,6 +50,7 @@ public class Musica implements Serializable {
     public String getTitulo() {
         return titulo;
     }
+    public LocalDate getData(){return data;}
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
@@ -57,6 +58,7 @@ public class Musica implements Serializable {
     public String getGenero() {
         return genero;
     }
+    public Double getDuracao(){return duracao;}
 
     public boolean isEstado() {
         return estado;
@@ -65,6 +67,8 @@ public class Musica implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    public boolean getEstado(){ return estado;}
+
 
     public String getArtista() {
         return nomeArtista;
