@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -41,8 +42,12 @@ public class Artista extends Utilizador implements Serializable {
         Musica novaM=null;
         if (preco<=0){
             novaM = new Musica(titulo,this.username,ano,mes,dia,duracao,genero,estado);
+            JOptionPane.showMessageDialog(null, "Musica gratis criada!", "",
+                    JOptionPane.INFORMATION_MESSAGE);
         }else {
             novaM = new MusicaPaga(titulo,this.username,ano,mes,dia,duracao,genero,estado,preco);
+            JOptionPane.showMessageDialog(null, "Musica com o preço " + preco + " criada!", "",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         musicas.add(novaM);
     }

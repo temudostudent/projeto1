@@ -27,7 +27,12 @@ public class InterfaceArtista implements Serializable {
         private ButtonGroup botaoEstado, botaoEstado1;
         private JTable tabelaListaMusicas, listaAlbumGenero1;
 
+
+
         public InterfaceArtista(){
+
+            Artista va = new Artista();
+
             // criar janela
             janelaArtista = new JFrame();
 
@@ -202,16 +207,27 @@ public class InterfaceArtista implements Serializable {
             adicionarMusica.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    /*String titulo=;
-                    int ano=;
-                    int mes=;
-                    int dia=;
-                    double duracao=;
-                    String genero=;
-                    boolean estado=;
-                    double preco=;*/
+                    String titulo=caixaTituloMusica.getText();
+                    int ano= Integer.parseInt(caixaAno.getText());
+                    int mes= Integer.parseInt(caixaMes.getText());
+                    int dia= Integer.parseInt(caixaDia.getText());
+                    double duracao= Double.parseDouble(caixaDuracao.getText());
+                    String genero=caixaGenero.getText();
+                    boolean estadoMusica=true;
+                    if (estadoInativo.isSelected()){
+                        estadoMusica = false;
+                    }
+                    double preco= Double.parseDouble(caixaCusto.getText());
 
+                    va.novaMusica(titulo,ano,mes,dia,duracao,genero,estadoMusica,preco);
 
+                    caixaTituloMusica.setText("");
+                    caixaAno.setText("");
+                    caixaMes.setText("");
+                    caixaDia.setText("");
+                    caixaDuracao.setText("");
+                    caixaGenero.setText("");
+                    caixaCusto.setText("");
                 }
             });
 
@@ -349,7 +365,6 @@ public class InterfaceArtista implements Serializable {
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
-           Artista va = new Artista();
             va.criarAlbum("Rock1", "Rock");
             va.criarAlbum("Rock2", "Pimba");
             va.criarAlbum("Rock2", "Pimba");
@@ -371,7 +386,7 @@ public class InterfaceArtista implements Serializable {
             painelEstatisticas.add(caixaTotalUtilizadores); painelEstatisticas.add(caixaTotalMusicas);
             painelEstatisticas.add(caixaValorTotalColecao); painelEstatisticas.add(caixaValorTotalVendas);
             painelEstatisticas.add(caixaMusicaMaisGravada); painelEstatisticas.add(caixaMusicaMaisComprada);
-            painelEstatisticas.add(totalAlbumGenero); painelEstatisticas.add(listaAlbumGenero);
+            painelEstatisticas.add(totalAlbumGenero); painelEstatisticas.add(listaAlbumGenero1);
             painelEstatisticas.add(tabela1);
 
             //Criar painel fixo Titulo  ----------------------------------------------
