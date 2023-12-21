@@ -80,6 +80,10 @@ public class Musica implements Serializable {
         return dataCriacao.format(dataFormatada);
     }
 
+    public String getNomeArtista() {
+        return nomeArtista;
+    }
+
     @Override
     public String toString() {
         return "Musica{" +

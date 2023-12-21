@@ -26,10 +26,10 @@ public class InterfaceArtista implements Serializable {
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
                 caixaMusicaMaisComprada, campoPesquisa,  inserirTitulo;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
-                alterarPreco1, alterarEstado, alterarTituloMusica;
+                botaoListaMusicas, botaoListaAlbuns;
         private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
-        private ButtonGroup botaoEstado, botaoEstado1, botaogeral;
+        private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa;
         private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
@@ -58,9 +58,93 @@ public class InterfaceArtista implements Serializable {
             //JButton
             JButton okPesquisa = new JButton("OK");
             okPesquisa.setBounds(710,450,60,40);
+            okPesquisa.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultTableModel listarItems = new DefaultTableModel();
+                    String selecao = (String) ordenarPor.getSelectedItem();
 
-            JButton botaoListaMusicas = new JButton("Ver todas as minhas músicas");
+                    if (botaoListaMusicas.isSelected()){
+                        ArrayList<Musica> listaM = new ArrayList<>();
+                        listaM.addAll(va.getMusicas());
+
+                        if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
+                            va.ordenarMusicasCrescentePorTitulo(listaM);
+                        } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
+                            va.ordendarMusicasDecrescentePorTitulo(listaM);
+                        } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
+                            va.ordenarMusicasCrescentePorGenero(listaM);
+                        } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
+                            va.ordenarMusicasDecrescentePorGenero(listaM);
+                        }
+                        // Adicionar uma coluna à tabela
+                        listarItems.addColumn("TÍTULO");
+                        listarItems.addColumn("DATA");
+                        listarItems.addColumn("DURACAO");
+                        listarItems.addColumn("GENERO");
+                        listarItems.addColumn("ESTADO");
+
+                        // Adicionar os títulos das colunas Na primeira linha
+                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+
+                        // Adicionar os elementos do ArrayList à tabela
+                        for (Musica musica : listaM) {
+                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado()});
+                        }
+
+
+                    } else if (botaoListaAlbuns.isSelected()) {
+                        ArrayList<Album> listaA = new ArrayList<>();
+                        listaA.addAll(va.getAlbuns());
+
+                            if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
+                                va.ordenarAlbunsCrescentePorTitulo(listaA);
+                            } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
+                                va.ordendarAlbunsDecrescentePorTitulo(listaA);
+                            } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
+                                va.ordenarAlbunsCrescentePorGenero(listaA);
+                            } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
+                                va.ordenarAlbunsDecrescentePorGenero(listaA);
+                            }
+
+                        // Adicionar uma coluna à tabela
+                        listarItems.addColumn("TÍTULO");
+                        listarItems.addColumn("DATA");
+                        listarItems.addColumn("GÉNERO");
+
+                        // Adicionar os títulos das colunas Na primeira linha
+                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "GÉNERO"});
+
+                        // Adicionar os elementos do ArrayList à tabela
+                        for (Album a : listaA) {
+                            listarItems.addRow(new Object[]{a.getNome(), a.getDataCriacao(), a.getGenero()});
+                        }
+
+                    }
+
+                    tabelaListaMusicasPesquisar.setModel(listarItems);
+
+                }
+            });
+
+
+            //JComboBox
+            ordenarPor = new JComboBox<>();
+            ordenarPor.setBounds(350, 60, 150, 40);
+            ordenarPor.addItem("TÍTULO");
+            ordenarPor.addItem("GÉNERO");
+
+            //JTable
+            tabelaListaMusicasPesquisar = new JTable();
+            tabelaListaMusicasPesquisar.setBounds(50,200,800,200);
+            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar);
+
+            //JRadioButton
+            botaoListaMusicas = new JRadioButton("Ver todas as minhas músicas");
             botaoListaMusicas.setBounds(50, 20, 220, 40);
+            botaoListaMusicas.setBackground(null);
+            botaoListaMusicas.setSelected(true);
             botaoListaMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -88,8 +172,9 @@ public class InterfaceArtista implements Serializable {
                 }
             });
 
-            JButton botaoListaAlbuns = new JButton("Ver todos os meus álbuns");
+            botaoListaAlbuns = new JRadioButton("Ver todos os meus álbuns");
             botaoListaAlbuns.setBounds(50,70,220,40);
+            botaoListaAlbuns.setBackground(null);
             botaoListaAlbuns.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -101,10 +186,10 @@ public class InterfaceArtista implements Serializable {
                     // Adicionar uma coluna à tabela
                     listarAlbuns.addColumn("TÍTULO");
                     listarAlbuns.addColumn("DATA");
-                    listarAlbuns.addColumn("GENERO");
+                    listarAlbuns.addColumn("GÉNERO");
 
                     // Adicionar os títulos das colunas Na primeira linha
-                    listarAlbuns.addRow(new Object[]{"TÍTULO", "DATA", "GENERO"});
+                    listarAlbuns.addRow(new Object[]{"TÍTULO", "DATA", "GÉNERO"});
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Album a : listaA) {
@@ -113,21 +198,6 @@ public class InterfaceArtista implements Serializable {
                     tabelaListaMusicasPesquisar.setModel(listarAlbuns);
                 }
             });
-
-
-            //JComboBox
-
-            ordenarPor = new JComboBox<>();
-            ordenarPor.setBounds(350, 60, 150, 40);
-            ordenarPor.addItem("TÍTULO");
-            ordenarPor.addItem("DURAÇÃO");
-
-            //JTable
-            tabelaListaMusicasPesquisar = new JTable();
-            tabelaListaMusicasPesquisar.setBounds(50,200,800,200);
-            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar);
-
-            //JRadioButton
             botaoAscendente = new JRadioButton("Ascendente");
             botaoAscendente.setBounds(550, 35, 100, 20);
             botaoAscendente.setBackground(null);
@@ -136,12 +206,10 @@ public class InterfaceArtista implements Serializable {
             botaoDescendente.setBounds(550,65,130,20);
             botaoDescendente.setBackground(null);
 
-
-            JRadioButton selectAlbum = new JRadioButton("Pesquisar Álbum");
-            selectAlbum.setBounds(50, 60, 200, 20);
-            selectAlbum.setBackground(null);
-
             //ButtonGroup
+            grupoPesquisa = new ButtonGroup();
+            grupoPesquisa.add(botaoListaMusicas);
+            grupoPesquisa.add(botaoListaAlbuns);
             botaoEstado = new ButtonGroup();
             botaoEstado.add(botaoAscendente);
             botaoEstado.add(botaoDescendente);
@@ -355,6 +423,7 @@ public class InterfaceArtista implements Serializable {
 
                     }
 
+
                 }
             });
 
@@ -426,6 +495,7 @@ public class InterfaceArtista implements Serializable {
                     DefaultTableModel listaMusicas = new DefaultTableModel();
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
+
 
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
