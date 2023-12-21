@@ -67,6 +67,28 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
+    //Pesquisar Musica por Género
+    public ArrayList<Musica> pesquisarMusicaGenero(String genero) {
+        ArrayList<Musica> novaLista = new ArrayList<>();
+        for (Musica m : musicas) {
+            if (m.getGenero().equalsIgnoreCase(genero)) {
+                novaLista.add(m);
+            }
+        }
+        return novaLista;
+    }
+
+    //Pesquisar um álbum e listar todas as músicas
+    public ArrayList<Musica> pesquisaMusicaAlbum(String tituloAlbum){
+        ArrayList<Musica> novaLista = new ArrayList<>();
+        for(Album album : albuns){
+            novaLista.addAll(album.getMusicas());
+
+        }
+        return novaLista;
+    }
+
+
     //Adiciona música a Album
     //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
     public void addMusica(int indexAlbum, int indexMusica) {

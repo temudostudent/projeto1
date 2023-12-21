@@ -16,6 +16,10 @@ public abstract class ConjuntoMusicas {
 
     public abstract void imprimirLista();
 
+    public ArrayList<Musica> getMusicas() {
+        return musicas;
+    }
+
     public String getNome() {
         return nome;
     }
