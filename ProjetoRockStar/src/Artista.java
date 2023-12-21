@@ -88,12 +88,22 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
+    //Posicao no aarayLista a partir do nome da musica
+    public int encontrarPosicao(Musica m){
+        int posicao = 0;
+        for(Musica musica : musicas){
+            if(musica.equals(m)){
+                posicao = musicas.indexOf(musica);
+            }
+        }
+        return posicao;
+    }
+
     //Pesquisar um álbum e listar todas as músicas
     public ArrayList<Musica> pesquisaMusicaAlbum(String tituloAlbum){
         ArrayList<Musica> novaLista = new ArrayList<>();
         for(Album album : albuns){
             novaLista.addAll(album.getMusicas());
-
         }
         return novaLista;
     }

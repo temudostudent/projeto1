@@ -477,6 +477,17 @@ public class InterfaceArtista implements Serializable {
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
                                 }
                             }
+                            else if(alterarPreco1.isSelected()){
+                                if(object instanceof MusicaPaga){
+                                    ((MusicaPaga) object).setPreco(Double.parseDouble(caixaAltearPreco.getText()));
+
+                                }else{
+                                    MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(),
+                                            object.getNomeArtista(), object.getDuracao(), object.getGenero(),
+                                            object.getEstado(), Double.parseDouble(caixaAltearPreco.getText()));
+                                    va.getMusicas().set(va.encontrarPosicao(object),musicaPaga);
+                                }
+                            }
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Preencha o campo!");
