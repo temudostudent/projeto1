@@ -14,20 +14,20 @@ public class InterfaceArtista implements Serializable {
         private JFrame janelaArtista;
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
                 painelEditarDados, painelAlbum;
-        private JLabel titulo, pesquisa, pesquisaAlbum, ordenarMusicas, tituloMusica, ano, duracao, genero, custo, estado, username,
-                pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum, anoAlbum,
+        private JLabel titulo, ordenarMusicas, tituloMusica, duracao, genero, custo, estado, username,
+                pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum,
                 totalUtilizadores, totalMusicas, valorTotalColecao, valorTotalVendas, musicaMaisGravada, musicaMaisComprada,
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
                 pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
                 adicionarMusicaAlbum, botaorefresh, historicoPreco;
-        private JTextField caixaTituloMusica, caixaAno, caixaDuracao, caixaGenero, caixaCusto,
-                caixaAlterarTitulo, caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum, caixaAnoAlbum, caixaTextoAdicionarMusicaAlbum,
+        private JTextField caixaTituloMusica, caixaDuracao, caixaGenero, caixaCusto,
+                caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
-                caixaMusicaMaisComprada, campoPesquisa,  inserirTitulo;
+                caixaMusicaMaisComprada,  inserirTitulo;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
                 botaoListaMusicas, botaoListaAlbuns, alterarTituloMusica, alterarPreco1, alterarEstado;
-        private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
+        private JComboBox caixaPesquisarMusica, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
         private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
@@ -83,14 +83,20 @@ public class InterfaceArtista implements Serializable {
                         listarItems.addColumn("DURACAO");
                         listarItems.addColumn("GENERO");
                         listarItems.addColumn("ESTADO");
+                        listarItems.addColumn("PREÇO (€)");
 
                         // Adicionar os títulos das colunas Na primeira linha
-                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)"});
 
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : listaM) {
-                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado()});
+                            if (musica instanceof MusicaPaga) {
+                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                        musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                            }else {
+                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                        musica.getGenero(), musica.getEstado(), "0"});
+                            }
                         }
 
 
@@ -138,13 +144,12 @@ public class InterfaceArtista implements Serializable {
             //JTable
             tabelaListaMusicasPesquisar = new JTable();
             tabelaListaMusicasPesquisar.setBounds(50,200,800,200);
-            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar);
+            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
             //JRadioButton
             botaoListaMusicas = new JRadioButton("Ver todas as minhas músicas");
             botaoListaMusicas.setBounds(50, 20, 220, 40);
             botaoListaMusicas.setBackground(null);
-            botaoListaMusicas.setSelected(true);
             botaoListaMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -159,14 +164,20 @@ public class InterfaceArtista implements Serializable {
                     listarMusicas.addColumn("DURACAO");
                     listarMusicas.addColumn("GENERO");
                     listarMusicas.addColumn("ESTADO");
+                    listarMusicas.addColumn("PREÇO (€)");
 
                     // Adicionar os títulos das colunas Na primeira linha
-                    listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                    listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO (€)"});
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : listaM) {
-                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado()});
+                        if (musica instanceof MusicaPaga) {
+                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                        }else {
+                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), "0"});
+                        }
                     }
                     tabelaListaMusicasPesquisar.setModel(listarMusicas);
                 }
@@ -446,6 +457,14 @@ public class InterfaceArtista implements Serializable {
             botaogeral.add(alterarEstado);
             historicoPreco = new JButton("HISTÓRICO DE PREÇO");
             historicoPreco.setBounds(500,400,180,40);
+            historicoPreco.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+
+
+                }
+            });
 
             String tituloMusica;
 
@@ -507,6 +526,7 @@ public class InterfaceArtista implements Serializable {
                     DefaultTableModel listaMusicas = new DefaultTableModel();
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
+
 
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
