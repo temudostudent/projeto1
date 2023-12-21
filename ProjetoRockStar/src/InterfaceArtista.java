@@ -14,20 +14,20 @@ public class InterfaceArtista implements Serializable {
         private JFrame janelaArtista;
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
                 painelEditarDados, painelAlbum;
-        private JLabel titulo, pesquisa, pesquisaAlbum, ordenarMusicas, tituloMusica, ano, duracao, genero, custo, estado, username,
-                pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum, anoAlbum,
+        private JLabel titulo, ordenarMusicas, tituloMusica, duracao, genero, custo, estado, username,
+                pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum,
                 totalUtilizadores, totalMusicas, valorTotalColecao, valorTotalVendas, musicaMaisGravada, musicaMaisComprada,
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
                 pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
                 adicionarMusicaAlbum, botaorefresh;
-        private JTextField caixaTituloMusica, caixaAno, caixaDuracao, caixaGenero, caixaCusto,
-                caixaAlterarTitulo, caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum, caixaAnoAlbum, caixaTextoAdicionarMusicaAlbum,
+        private JTextField caixaTituloMusica, caixaDuracao, caixaGenero, caixaCusto,
+                caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
-                caixaMusicaMaisComprada, campoPesquisa,  inserirTitulo;
+                caixaMusicaMaisComprada,  inserirTitulo;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
                 botaoListaMusicas, botaoListaAlbuns, alterarTituloMusica, alterarPreco1, alterarEstado;
-        private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
+        private JComboBox caixaPesquisarMusica, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
         private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
