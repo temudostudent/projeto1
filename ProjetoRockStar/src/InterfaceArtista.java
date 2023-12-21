@@ -20,7 +20,7 @@ public class InterfaceArtista implements Serializable {
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
                 pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
-                adicionarMusicaAlbum, botaorefresh;
+                adicionarMusicaAlbum, botaorefresh, historicoPreco;
         private JTextField caixaTituloMusica, caixaDuracao, caixaGenero, caixaCusto,
                 caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
@@ -457,6 +457,14 @@ public class InterfaceArtista implements Serializable {
             botaogeral.add(alterarEstado);
             historicoPreco = new JButton("HISTÓRICO DE PREÇO");
             historicoPreco.setBounds(500,400,180,40);
+            historicoPreco.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+
+
+                }
+            });
 
             String tituloMusica;
 
