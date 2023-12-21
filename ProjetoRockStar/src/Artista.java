@@ -67,6 +67,16 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
+    public Musica pesquisaObjetoTitulo(String titulo){
+        Musica objeto = new Musica();
+        for(Musica m : musicas){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
+                objeto = m;
+            }
+        }
+        return objeto;
+    }
+
     //Pesquisar Musica por Género
     public ArrayList<Musica> pesquisarMusicaGenero(String genero) {
         ArrayList<Musica> novaLista = new ArrayList<>();

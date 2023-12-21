@@ -71,7 +71,7 @@ public class Musica implements Serializable {
     public boolean getEstado(){ return estado;}
 
 
-    public String getArtista() {
+    public String getNomeArtista() {
         return nomeArtista;
     }
 

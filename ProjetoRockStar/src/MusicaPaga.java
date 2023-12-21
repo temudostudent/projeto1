@@ -15,6 +15,13 @@ public class MusicaPaga extends Musica implements Serializable {
         this.preco = preco;
         this.historicoPreco = new ArrayList<>();
     }
+    public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
+        super(titulo, nomeArtista, duracao, genero, estado);
+        this.dataCriacao = LocalDateTime.parse(dataCriacao);
+        this.preco = preco;
+        this.historicoPreco = new ArrayList<>();
+    }
+
 
     public double getPreco() {return preco;}
 

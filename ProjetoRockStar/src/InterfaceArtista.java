@@ -15,7 +15,7 @@ public class InterfaceArtista implements Serializable {
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
                 painelEditarDados, painelAlbum;
         private JLabel titulo, pesquisa, pesquisaAlbum, ordenarMusicas, tituloMusica, ano, duracao, genero, custo, estado, username,
-                pesquisaTitulo, alterarTitulo, alterarPreco, alterarEstado, nomeAlbum, generoAlbum, anoAlbum,
+                pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum, anoAlbum,
                 totalUtilizadores, totalMusicas, valorTotalColecao, valorTotalVendas, musicaMaisGravada, musicaMaisComprada,
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
@@ -25,10 +25,11 @@ public class InterfaceArtista implements Serializable {
                 caixaAlterarTitulo, caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum, caixaAnoAlbum, caixaTextoAdicionarMusicaAlbum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
                 caixaMusicaMaisComprada, campoPesquisa,  inserirTitulo;
-        private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1;
+        private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
+                alterarPreco1, alterarEstado, alterarTituloMusica;
         private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
-        private ButtonGroup botaoEstado, botaoEstado1;
+        private ButtonGroup botaoEstado, botaoEstado1, botaogeral;
         private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
@@ -354,16 +355,18 @@ public class InterfaceArtista implements Serializable {
 
                     }
 
-
                 }
             });
 
-            alterarTitulo = new JLabel("NOVO TÍTULO");
+            alterarTitulo = new JLabel("O QUE PRETENDE ALTERAR?");
             alterarTitulo.setBounds(500, 60, 180, 40);
-            caixaAlterarTitulo = new JTextField(); caixaAlterarTitulo.setBounds(500,100,180,40);
-            alterarPreco =  new JLabel("NOVO PREÇO"); alterarPreco.setBounds(500,150,180,40);
+            alterarTituloMusica = new JRadioButton("TÍTULO"); alterarTituloMusica.setBackground(null);
+            alterarTituloMusica.setBounds(500,100,180,40);
+            alterarPreco1 =  new JRadioButton("PREÇO"); alterarPreco1.setBounds(500,150,180,40);
+            alterarPreco1.setBackground(null);
+            alterarEstado = new JRadioButton("ESTADO"); alterarEstado.setBounds(500,250,180,40);
+            alterarEstado.setBackground(null);
             caixaAltearPreco = new JTextField(); caixaAltearPreco.setBounds(500,200,180,40);
-            alterarEstado = new JLabel("NOVO ESTADO"); alterarEstado.setBounds(500,250,180,40);
             estadoAtivo1 = new JRadioButton("ATIVO"); estadoAtivo1.setBackground(null);
             estadoAtivo1.setBounds(500, 300, 100,40);
             estadoInativo1 = new JRadioButton("INATIVO"); estadoInativo1.setBackground(null);
@@ -371,54 +374,46 @@ public class InterfaceArtista implements Serializable {
             botaoEstado1 = new ButtonGroup(); botaoEstado1.add(estadoAtivo1); botaoEstado1.add(estadoInativo1);
             guardarAlteracao = new JButton("GUARDAR ALTERAÇÕES");
             guardarAlteracao.setBounds(500,350,180,40);
+            botaogeral = new ButtonGroup(); botaogeral.add(alterarTituloMusica); botaogeral.add(alterarPreco1);
+            botaogeral.add(alterarEstado);
+
+            String tituloMusica;
+
             guardarAlteracao.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Verifica se uma linha está selecionada
-                    if (tabelaListaMusicas.getSelectedRowCount() == 1) {
-                        int selectedRow = tabelaListaMusicas.getSelectedRow();
+                    int linhaSelecionada = tabelaListaMusicas.getSelectedRow();
+                    if (linhaSelecionada >= 0) {
 
-                        // Obtém os valores da linha selecionada
-                        String tituloAtual = (String) tabelaListaMusicas.getValueAt(selectedRow, 0);
+                        String valorTituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
+                        Musica object = va.pesquisaObjetoTitulo(valorTituloMusica);
 
-                        // Encontra o objeto Musica correspondente com base no título
-                        Musica musicaSelecionada = null;
-                        ArrayList<Musica> lista = new ArrayList<>();
-                        lista = va.pesquisarMusica(tituloAtual);
-                        for (Musica musica : lista) {
-                            if (musica.getTitulo().equals(tituloAtual)) {
-                                musicaSelecionada = musica;
-                                break;
+                        if (!caixaAltearPreco.equals(null)) {
+
+                            if (alterarTituloMusica.isSelected()) {
+                                if (!caixaAltearPreco.equals(null)) {
+                                    object.setTitulo(caixaAltearPreco.getText());
+                                    JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
+                                }else {
+                                    JOptionPane.showMessageDialog(null, "Música não encontrada!");
+
+                                }
+                            }else if (alterarEstado.isSelected()) {
+                                if (estadoAtivo1.isSelected()) {
+                                    object.setEstado(true);
+                                    JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
+                                } else {
+                                    object.setEstado(false);
+                                    JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
+                                }
                             }
-                        }
-                        // Verifica se o objeto Musica foi encontrado
-                        if (musicaSelecionada != null) {
-                            if (!caixaAlterarTitulo.getText().equals(null)) {
-                                String novoTitulo = caixaAlterarTitulo.getText();
 
-                                // Faz a alteração no objeto Musica
-                                musicaSelecionada.setTitulo(novoTitulo);
-
-                                // Atualiza a tabela com as alterações
-                                DefaultTableModel model = (DefaultTableModel) tabelaListaMusicas.getModel();
-                                model.setValueAt(novoTitulo, selectedRow, 0);
-
-                                // Limpe o JTextField
-                                caixaAlterarTitulo.setText("");
-
-                                // Mensagem informativa (pode ser removida se não for necessária)
-                                JOptionPane.showMessageDialog(null, "Alterações salvas com sucesso!");
-
-                            } else {
-                                // Caso o objeto Musica não seja encontrado
-                                JOptionPane.showMessageDialog(null, "Erro: Música não encontrada!");
-                            }
                         } else {
-                            // Caso nenhuma linha esteja selecionada
-                            JOptionPane.showMessageDialog(null, "Selecione uma música para fazer alterações.");
+                            JOptionPane.showMessageDialog(null, "Preencha o campo!");
                         }
                     }
                 }
+
             });
 
             listarMusicas = new JButton("LISTAR MÚSICAS");
@@ -431,7 +426,6 @@ public class InterfaceArtista implements Serializable {
                     DefaultTableModel listaMusicas = new DefaultTableModel();
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
-
 
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
@@ -454,12 +448,13 @@ public class InterfaceArtista implements Serializable {
 
             //Adicionar componentes ao painel
             painelEditarDados.add(pesquisaTitulo);painelEditarDados.add(inserirTitulo);painelEditarDados.add(pesquisarMusica);
-            painelEditarDados.add(alterarTitulo); painelEditarDados.add(alterarTitulo); painelEditarDados.add(caixaAlterarTitulo);
-            painelEditarDados.add(alterarPreco); painelEditarDados.add(caixaAltearPreco);
+            painelEditarDados.add(alterarTitulo); painelEditarDados.add(alterarTitulo);
+            painelEditarDados.add(alterarPreco1); painelEditarDados.add(caixaAltearPreco);
             painelEditarDados.add(estadoAtivo1); painelEditarDados.add(estadoInativo1);
             painelEditarDados.add(alterarEstado); painelEditarDados.add(guardarAlteracao);
             painelEditarDados.add(listarMusicas); painelEditarDados.add(scrollListarMusicas);
             painelEditarDados.add(tabelaListaMusicas); painelEditarDados.add(caixaPesquisarMusica);
+            painelEditarDados.add(alterarTituloMusica);
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();
@@ -648,6 +643,8 @@ public class InterfaceArtista implements Serializable {
                     }
 
                     listaAlbumGenero1.setModel(listaMusicas);
+                    caixaTotalMusicas.setText(String.valueOf(va.totalMusicas()));
+                    caixaValorTotalColecao.setText(String.valueOf(va.valorTotalColecao()+" €"));
 
                 }
             });
