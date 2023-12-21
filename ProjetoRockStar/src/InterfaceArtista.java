@@ -83,14 +83,20 @@ public class InterfaceArtista implements Serializable {
                         listarItems.addColumn("DURACAO");
                         listarItems.addColumn("GENERO");
                         listarItems.addColumn("ESTADO");
+                        listarItems.addColumn("PREÇO (€)");
 
                         // Adicionar os títulos das colunas Na primeira linha
-                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                        listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)"});
 
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : listaM) {
-                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado()});
+                            if (musica instanceof MusicaPaga) {
+                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                        musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                            }else {
+                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                        musica.getGenero(), musica.getEstado(), "0"});
+                            }
                         }
 
 
@@ -138,13 +144,12 @@ public class InterfaceArtista implements Serializable {
             //JTable
             tabelaListaMusicasPesquisar = new JTable();
             tabelaListaMusicasPesquisar.setBounds(50,200,800,200);
-            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar);
+            JScrollPane scrollPane = new JScrollPane(tabelaListaMusicasPesquisar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
             //JRadioButton
             botaoListaMusicas = new JRadioButton("Ver todas as minhas músicas");
             botaoListaMusicas.setBounds(50, 20, 220, 40);
             botaoListaMusicas.setBackground(null);
-            botaoListaMusicas.setSelected(true);
             botaoListaMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -159,14 +164,20 @@ public class InterfaceArtista implements Serializable {
                     listarMusicas.addColumn("DURACAO");
                     listarMusicas.addColumn("GENERO");
                     listarMusicas.addColumn("ESTADO");
+                    listarMusicas.addColumn("PREÇO (€)");
 
                     // Adicionar os títulos das colunas Na primeira linha
-                    listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                    listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO (€)"});
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : listaM) {
-                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado()});
+                        if (musica instanceof MusicaPaga) {
+                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                        }else {
+                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), "0"});
+                        }
                     }
                     tabelaListaMusicasPesquisar.setModel(listarMusicas);
                 }
