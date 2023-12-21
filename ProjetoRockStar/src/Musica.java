@@ -1,5 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +9,7 @@ public class Musica implements Serializable {
     //Atributos
     protected String titulo;
     protected String nomeArtista;
-    protected LocalDate data;
+    protected LocalDateTime dataCriacao;
     protected double duracao;
     protected String genero;
     protected ArrayList<Integer> rating;
@@ -15,10 +17,10 @@ public class Musica implements Serializable {
     protected boolean estado;
 
     //Construtor que recebe titulo,ano,duracao,genero,estado
-    public Musica(String titulo, String nomeArtista, int ano, int mes, int dia, double duracao, String genero, boolean estado) {
+    public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
         this.titulo = titulo;
         this.nomeArtista = nomeArtista;
-        this.data = LocalDate.of(ano,mes,dia);
+        this.dataCriacao = LocalDateTime.now();
         this.duracao = duracao;
         this.genero = genero;
         this.estado = estado;
@@ -50,7 +52,6 @@ public class Musica implements Serializable {
     public String getTitulo() {
         return titulo;
     }
-    public LocalDate getData(){return data;}
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
@@ -74,12 +75,17 @@ public class Musica implements Serializable {
         return nomeArtista;
     }
 
+    public String getDataCriacao() {
+        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dataCriacao.format(dataFormatada);
+    }
+
     @Override
     public String toString() {
         return "Musica{" +
                 "titulo='" + titulo + '\'' +
                 ", artista=" + nomeArtista +
-                ", ano=" + data +
+                ", ano=" + dataCriacao +
                 ", duracao=" + duracao +
                 ", genero='" + genero + '\'' +
                 ", rating=" + rating +

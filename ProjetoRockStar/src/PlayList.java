@@ -1,14 +1,16 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas implements Serializable {
    private  boolean visibilidade;
 
-    public PlayList(String nome, boolean visibilidade) {
-        super(nome);
+    public PlayList(String nomeAlbum, boolean visibilidade) {
+        super(nomeAlbum);
+        this.dataCriacao= LocalDateTime.now();
         this.visibilidade = visibilidade;
-        super.musicas = new ArrayList<>();
+        this.musicas = new ArrayList<>();
     }
 
     //Adiciona música
