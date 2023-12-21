@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Album extends ConjuntoMusicas implements Serializable {
@@ -6,12 +7,14 @@ public class Album extends ConjuntoMusicas implements Serializable {
     private String genero;
     private String nomeArtista;
 
-    public Album(String nome, String nomeArtista, String genero) {
-        super(nome);
+    public Album(String nomeAlbum, String nomeArtista, String genero) {
+        super(nomeAlbum);
+        this.dataCriacao= LocalDateTime.now();
         this.nomeArtista=nomeArtista;
         this.genero = genero;
-        super.musicas=new ArrayList<>();
+        this.musicas=new ArrayList<>();
     }
+
 
     //Adiciona música a Playlist
     @Override

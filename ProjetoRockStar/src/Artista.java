@@ -41,14 +41,14 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
-    public void novaMusica(String titulo, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
+    public void novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {
         Musica novaM = null;
         if (preco <= 0) {
-            novaM = new Musica(titulo, this.username, ano, mes, dia, duracao, genero, estado);
+            novaM = new Musica(titulo, this.username, duracao, genero, estado);
             JOptionPane.showMessageDialog(null, "Musica gratis criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
-            novaM = new MusicaPaga(titulo, this.username, ano, mes, dia, duracao, genero, estado, preco);
+            novaM = new MusicaPaga(titulo, this.username, duracao, genero, estado, preco);
             JOptionPane.showMessageDialog(null, "Musica com o preço " + preco + " criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -56,7 +56,7 @@ public class Artista extends Utilizador implements Serializable {
     }
 
 
-    //Pesquisar musica pelo titulo
+    //Pesquisar música pelo titulo
     public ArrayList<Musica> pesquisarMusica(String titulo){
         ArrayList<Musica> novaLista = new ArrayList<>();
         for(Musica m : musicas){

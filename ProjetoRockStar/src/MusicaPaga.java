@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MusicaPaga extends Musica implements Serializable {
@@ -8,8 +9,9 @@ public class MusicaPaga extends Musica implements Serializable {
 
    private  ArrayList <Double> historicoPreco;
 
-    public MusicaPaga(String titulo, String nomeArtista, int ano, int mes, int dia, double duracao, String genero, boolean estado, double preco) {
-        super(titulo, nomeArtista, ano, mes, dia, duracao, genero, estado);
+    public MusicaPaga(String titulo, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
+        super(titulo, nomeArtista, duracao, genero, estado);
+        this.dataCriacao = LocalDateTime.now();
         this.preco = preco;
         this.historicoPreco = new ArrayList<>();
     }
