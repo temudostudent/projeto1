@@ -26,10 +26,10 @@ public class InterfaceArtista implements Serializable {
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
                 caixaMusicaMaisComprada, campoPesquisa,  inserirTitulo;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
-                botaoListaMusicas, botaoListaAlbuns;
+                botaoListaMusicas, botaoListaAlbuns, alterarTituloMusica, alterarPreco1, alterarEstado;
         private JComboBox caixaPesquisarMusica, caixaPesquisarALbum, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
-        private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa;
+        private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
         private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
