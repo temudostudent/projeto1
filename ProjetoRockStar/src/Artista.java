@@ -129,7 +129,6 @@ public class Artista extends Utilizador implements Serializable {
     }
 
 
-
     //Valor total das músicas que tem na coleção neste momento
     public double valorTotalColecao(){
         double soma=0;
@@ -199,6 +198,55 @@ public class Artista extends Utilizador implements Serializable {
         return nova;
     }
 
+    public void ordenarMusicasCrescentePorTitulo(ArrayList lista){
+
+        //Criar um comparador
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo);
+        //Ordenar lista usando o comparador
+        lista.sort(comparador);
+    }
+
+    public void ordendarMusicasDecrescentePorTitulo(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
+        lista.sort(comparador);
+    }
+
+    public void ordenarMusicasCrescentePorGenero(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero);
+        lista.sort(comparador);
+    }
+
+    public void ordenarMusicasDecrescentePorGenero(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero).reversed();
+        lista.sort(comparador);
+    }
+
+    public void ordenarAlbunsCrescentePorTitulo(ArrayList lista){
+
+        Comparator<Album> comparador = Comparator.comparing(Album::getNome);
+        lista.sort(comparador);
+    }
+
+    public void ordendarAlbunsDecrescentePorTitulo(ArrayList lista){
+
+        Comparator<Album> comparador = Comparator.comparing(Album::getNome).reversed();
+        lista.sort(comparador);
+    }
+
+    public void ordenarAlbunsCrescentePorGenero(ArrayList lista){
+
+        Comparator<Album> comparador = Comparator.comparing(Album::getGenero);
+        lista.sort(comparador);
+    }
+
+    public void ordenarAlbunsDecrescentePorGenero(ArrayList lista){
+
+        Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
+        lista.sort(comparador);
+    }
 
     public String getPin() {
         return pin;
