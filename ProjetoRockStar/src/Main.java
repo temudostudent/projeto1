@@ -5,6 +5,5 @@ public class Main {
 
         new InterfaceArtista();
         //new InterfaceCliente();
-
     }
 }
