@@ -294,7 +294,7 @@ public class InterfaceArtista implements Serializable {
 
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getData(), musica.getDuracao(),
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                     musica.getGenero(), musica.getEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
@@ -319,7 +319,7 @@ public class InterfaceArtista implements Serializable {
 
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getData(), musica.getDuracao(),
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                     musica.getGenero(), musica.getEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
@@ -344,7 +344,7 @@ public class InterfaceArtista implements Serializable {
 
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getData(), musica.getDuracao(),
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                     musica.getGenero(), musica.getEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
