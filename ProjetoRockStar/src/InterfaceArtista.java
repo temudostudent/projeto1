@@ -20,7 +20,7 @@ public class InterfaceArtista implements Serializable {
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
                 pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
-                adicionarMusicaAlbum, botaorefresh;
+                adicionarMusicaAlbum, botaorefresh, historicoPreco;
         private JTextField caixaTituloMusica, caixaAno, caixaDuracao, caixaGenero, caixaCusto,
                 caixaAlterarTitulo, caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum, caixaAnoAlbum, caixaTextoAdicionarMusicaAlbum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
@@ -368,7 +368,6 @@ public class InterfaceArtista implements Serializable {
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
 
-
                     } else if ("GÉNERO".equals(selecao)) {
                         String genero = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
@@ -445,6 +444,8 @@ public class InterfaceArtista implements Serializable {
             guardarAlteracao.setBounds(500,350,180,40);
             botaogeral = new ButtonGroup(); botaogeral.add(alterarTituloMusica); botaogeral.add(alterarPreco1);
             botaogeral.add(alterarEstado);
+            historicoPreco = new JButton("HISTÓRICO DE PREÇO");
+            historicoPreco.setBounds(500,400,180,40);
 
             String tituloMusica;
 
@@ -496,21 +497,26 @@ public class InterfaceArtista implements Serializable {
                     ArrayList<Musica> lista = new ArrayList<>();
                             lista = va.getMusicas();
 
-
                     // Adicionar uma coluna à tabela
                     listaMusicas.addColumn("TÍTULO");
                     listaMusicas.addColumn("DATA");
                     listaMusicas.addColumn("DURACAO");
                     listaMusicas.addColumn("GENERO");
                     listaMusicas.addColumn("ESTADO");
+                    listaMusicas.addColumn("PREÇO");
 
                     // Adicionar os títulos das colunas Na primeira linha
-                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO"});
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : lista) {
-                        listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado()});
+                        if(musica instanceof MusicaPaga) {
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                        }else{
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), "0"});
+                        }
                     }
                     tabelaListaMusicas.setModel(listaMusicas);
                 }
@@ -524,7 +530,7 @@ public class InterfaceArtista implements Serializable {
             painelEditarDados.add(alterarEstado); painelEditarDados.add(guardarAlteracao);
             painelEditarDados.add(listarMusicas); painelEditarDados.add(scrollListarMusicas);
             painelEditarDados.add(tabelaListaMusicas); painelEditarDados.add(caixaPesquisarMusica);
-            painelEditarDados.add(alterarTituloMusica);
+            painelEditarDados.add(alterarTituloMusica); painelEditarDados.add(historicoPreco);
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();

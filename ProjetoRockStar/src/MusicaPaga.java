@@ -29,10 +29,4 @@ public class MusicaPaga extends Musica implements Serializable {
             this.preco=0;
         }else this.preco = preco;
     }
-
-
-
-
-
-
 }
