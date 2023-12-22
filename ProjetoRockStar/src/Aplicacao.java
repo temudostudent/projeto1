@@ -169,6 +169,34 @@ public class Aplicacao implements Serializable {
         return tipo;
     }
 
+    //Métodos de ORDENAÇÃO
+
+    public void ordenarMusicasCrescentePorTitulo(ArrayList lista){
+
+        //Criar um comparador
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo);
+        //Ordenar lista usando o comparador
+        lista.sort(comparador);
+    }
+
+    public void ordendarMusicasDecrescentePorTitulo(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
+        lista.sort(comparador);
+    }
+
+    public void ordenarMusicasCrescentePorGenero(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero);
+        lista.sort(comparador);
+    }
+
+    public void ordenarMusicasDecrescentePorGenero(ArrayList lista){
+
+        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero).reversed();
+        lista.sort(comparador);
+    }
+
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }

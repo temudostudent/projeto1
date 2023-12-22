@@ -1,22 +1,27 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class InterfaceCliente implements Serializable {
     private JFrame janelaCliente;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
-    private JLabel tituloCliente, username, pesquisaCliente, pesquisaPlaylist, pesquisacliente1,
-            ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
+    private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList,
             removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
             removerMusicaCarrinho, carregarSaldo, finalizarPagamento;
-    private JComboBox caixaPesquisarCliente, caixaPesquisarPlayList, ordenarPorCliente, caixaListarPlayLists;
-    private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente;
-    private ButtonGroup botaoEstado1;
+    private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
+    private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
+    private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
 
     public InterfaceCliente() {
+
+        Aplicacao app=new Aplicacao();
 
         //Criar janela
         janelaCliente = new JFrame();
@@ -27,52 +32,191 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.setBounds(340, 200, 780, 500);
         painelPesquisarCliente.setLayout(null);
 
-        //Criar componentes do Painel Pesquisar
-        pesquisacliente1 = new JLabel("PESQUISAR POR:");
-        pesquisacliente1.setBounds(50,60, 180,40);
-        caixaPesquisarCliente = new JComboBox<>();
-        caixaPesquisarCliente.addItem("MÚSICA");
-        caixaPesquisarCliente.addItem("PLAYLIST");
-        caixaPesquisarCliente.setBounds(50,60, 180,40);
-        pesquisaCliente = new JLabel("PESQUISAR POR: ");
-        pesquisaCliente.setBounds(50, 10, 150, 40);
-        pesquisaPlaylist = new JLabel("PESQUISAR PLAYLIST POR:");
-        pesquisaPlaylist.setBounds(250, 10, 180, 40);
-        caixaPesquisarPlayList = new JComboBox<>();
-        caixaPesquisarPlayList.addItem("TÍTULO");
-        caixaPesquisarPlayList.addItem("ARTISTA");
-        caixaPesquisarPlayList.setBounds(250, 60, 180, 40);
+        //Criar Componentes do Painel Pesquisar
+
+        //JLabel
         ordenarMusicasCliente = new JLabel("ORDENAR POR:");
         ordenarMusicasCliente.setBounds(450,10,150,40);
-        ordenarPorCliente = new JComboBox<>();
-        ordenarPorCliente.setBounds(450, 60, 150, 40);
-        ordenarPorCliente.addItem("TÍTULO");
-        ordenarPorCliente.addItem("DURAÇÃO");
-        botaoAscendenteCliente = new JRadioButton("Ascendente");
-        botaoAscendenteCliente.setBounds(650, 50, 100, 20);
-        botaoAscendenteCliente.setBackground(null);
-        botaoDescendenteCliente = new JRadioButton("Descendente");
-        botaoDescendenteCliente.setBounds(650,80,100,20);
-        botaoDescendenteCliente.setBackground(null);
-        botaoEstado1 = new ButtonGroup();
-        botaoEstado1.add(botaoAscendenteCliente);
-        botaoEstado1.add(botaoDescendenteCliente);
-        caixaTextoPesquisa = new JTextField();
-        caixaTextoPesquisa.setBounds(50,120,180,40);
-        tabelaResultadoPesquisa = new JTable();
-        tabelaResultadoPesquisa.setBounds(50,170, 600,180);
-        adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
-        adicionarCarrinho.setBounds(80,400 ,200,40);
-        adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
-        adicionarPlayList.setBounds(350,400,200,40);
+        atributoPesquisarLegenda = new JLabel("PESQUISAR POR:");
+        atributoPesquisarLegenda.setBounds(250,10,150,40);
+        atributoPesquisarLegenda.setVisible(false);
 
-        //Adicionar componentes ao painel Pesquisar
-        painelPesquisarCliente.add(caixaPesquisarCliente);painelPesquisarCliente.add(pesquisaPlaylist);
-        painelPesquisarCliente.add(caixaPesquisarPlayList);painelPesquisarCliente.add(pesquisaCliente);
-        painelPesquisarCliente.add(ordenarMusicasCliente); painelPesquisarCliente.add(ordenarPorCliente);
-        painelPesquisarCliente.add(botaoAscendenteCliente); painelPesquisarCliente.add(botaoDescendenteCliente);
-        painelPesquisarCliente.add(caixaTextoPesquisa); painelPesquisarCliente.add(tabelaResultadoPesquisa);
-        painelPesquisarCliente.add(adicionarCarrinho); painelPesquisarCliente.add(adicionarPlayList);
+
+        //JTextField
+        caixaTextoPesquisa = new JTextField("pesquisa");
+        caixaTextoPesquisa.setBounds(50,120,180,40);
+        caixaTextoPesquisa.setVisible(false);
+
+        //JButton
+        adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
+        adicionarPlayList.setBounds(410,450,200,40);
+        adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
+        adicionarCarrinho.setBounds(180,450 ,200,40);
+        JButton ordenarPesquisa = new JButton("ORDENAR");
+        ordenarPesquisa.setBounds(650,100,100,30);
+        ordenarPesquisa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultTableModel listarItems = new DefaultTableModel();
+                String selecao = (String) ordenarMusicaPor.getSelectedItem();
+                ArrayList<Musica> listaM = new ArrayList<>();
+                listaM.addAll(app.getMusicas());
+
+                if (botaoTodasAsMusicas.isSelected()){
+
+                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.ordenarMusicasCrescentePorTitulo(listaM);
+                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.ordendarMusicasDecrescentePorTitulo(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.ordenarMusicasCrescentePorGenero(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()){
+                        app.ordenarMusicasDecrescentePorGenero(listaM);
+                    }
+
+                } else if (botaoParaPesquisarMusicas.isSelected()) {
+
+                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        //app.ordenarAlbunsCrescentePorTitulo(listaA);
+                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        //app.ordendarAlbunsDecrescentePorTitulo(listaA);
+                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        //app.ordenarAlbunsCrescentePorGenero(listaA);
+                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()){
+                        //app.ordenarAlbunsDecrescentePorGenero(listaA);
+                    }
+
+                }
+                // Adicionar uma coluna à tabela
+                listarItems.addColumn("TÍTULO");
+                listarItems.addColumn("DATA");
+                listarItems.addColumn("DURACAO");
+                listarItems.addColumn("GENERO");
+                listarItems.addColumn("ESTADO");
+                listarItems.addColumn("PREÇO (€)");
+
+                // Adicionar os títulos das colunas Na primeira linha
+                listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)"});
+
+                // Adicionar os elementos do ArrayList à tabela
+                for (Musica musica : listaM) {
+                    if (musica instanceof MusicaPaga) {
+                        listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                    }else {
+                        listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.getEstado(), "0"});
+                    }
+                }
+
+                tabelaResultadoPesquisa.setModel(listarItems);
+
+            }
+        });
+
+
+        //JComboBox
+        ordenarMusicaPor = new JComboBox<>();
+        ordenarMusicaPor.setBounds(450, 60, 150, 40);
+        ordenarMusicaPor.addItem("TÍTULO");
+        ordenarMusicaPor.addItem("GÉNERO");
+        atributoPesquisa = new JComboBox<>();
+        atributoPesquisa.setBounds(250, 60, 150, 40);
+        atributoPesquisa.addItem("TÍTULO");
+        atributoPesquisa.addItem("ARTISTA");
+        atributoPesquisa.setVisible(false);
+
+        //JTable
+        tabelaResultadoPesquisa = new JTable();
+        tabelaResultadoPesquisa.setBounds(50,200,800,200);
+        JScrollPane scrollPane = new JScrollPane(tabelaResultadoPesquisa, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        //JRadioButton
+        botaoTodasAsMusicas = new JRadioButton("Ver todas as músicas");
+        botaoTodasAsMusicas.setBounds(50, 20, 150, 40);
+        botaoTodasAsMusicas.setBackground(null);
+        botaoTodasAsMusicas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                caixaTextoPesquisa.setVisible(!botaoTodasAsMusicas.isSelected());
+                atributoPesquisa.setVisible(!botaoTodasAsMusicas.isSelected());
+                atributoPesquisarLegenda.setVisible(!botaoTodasAsMusicas.isSelected());
+
+                DefaultTableModel listarMusicas = new DefaultTableModel();
+                ArrayList<Musica> listaM = new ArrayList<>();
+                listaM = app.getMusicas();
+
+
+                // Adicionar uma coluna à tabela
+                listarMusicas.addColumn("TÍTULO");
+                listarMusicas.addColumn("DATA");
+                listarMusicas.addColumn("DURACAO");
+                listarMusicas.addColumn("GENERO");
+                listarMusicas.addColumn("ESTADO");
+                listarMusicas.addColumn("PREÇO (€)");
+
+                // Adicionar os títulos das colunas Na primeira linha
+                listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO (€)"});
+
+                // Adicionar os elementos do ArrayList à tabela
+                for (Musica musica : listaM) {
+                    if (musica instanceof MusicaPaga) {
+                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                    }else {
+                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.getEstado(), "0"});
+                    }
+                }
+                tabelaResultadoPesquisa.setModel(listarMusicas);
+            }
+        });
+
+        botaoParaPesquisarMusicas = new JRadioButton("Pesquisar música");
+        botaoParaPesquisarMusicas.setBounds(50,70,150,40);
+        botaoParaPesquisarMusicas.setBackground(null);
+        botaoParaPesquisarMusicas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                caixaTextoPesquisa.setVisible(botaoParaPesquisarMusicas.isSelected());
+                atributoPesquisa.setVisible(botaoParaPesquisarMusicas.isSelected());
+                atributoPesquisarLegenda.setVisible(botaoParaPesquisarMusicas.isSelected());
+
+            }
+        });
+        botaoAscendenteCliente = new JRadioButton("Ascendente");
+        botaoAscendenteCliente.setBounds(650, 15, 100, 20);
+        botaoAscendenteCliente.setBackground(null);
+        botaoAscendenteCliente.setSelected(true);
+        botaoDescendenteCliente = new JRadioButton("Descendente");
+        botaoDescendenteCliente.setBounds(650,45,130,20);
+        botaoDescendenteCliente.setBackground(null);
+
+        //ButtonGroup
+        grupoPesquisa = new ButtonGroup();
+        grupoPesquisa.add(botaoTodasAsMusicas);
+        grupoPesquisa.add(botaoParaPesquisarMusicas);
+        botaoOrdem = new ButtonGroup();
+        botaoOrdem.add(botaoAscendenteCliente);
+        botaoOrdem.add(botaoDescendenteCliente);
+
+        //Adicionar Componentes ao Painel Pesquisar
+
+        painelPesquisarCliente.add(ordenarMusicasCliente);
+        painelPesquisarCliente.add(ordenarMusicaPor);
+        painelPesquisarCliente.add(botaoDescendenteCliente);
+        painelPesquisarCliente.add(botaoAscendenteCliente);
+        painelPesquisarCliente.add(tabelaResultadoPesquisa);
+        painelPesquisarCliente.add(scrollPane, BorderLayout.CENTER);
+        painelPesquisarCliente.add(ordenarPesquisa);
+        painelPesquisarCliente.add(botaoParaPesquisarMusicas);
+        painelPesquisarCliente.add(botaoTodasAsMusicas);
+        painelPesquisarCliente.add(adicionarCarrinho);
+        painelPesquisarCliente.add(adicionarPlayList);
+        painelPesquisarCliente.add(caixaTextoPesquisa);
+        painelPesquisarCliente.add(atributoPesquisa);
+        painelPesquisarCliente.add(atributoPesquisarLegenda);
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();

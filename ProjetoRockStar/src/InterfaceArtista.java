@@ -26,7 +26,7 @@ public class InterfaceArtista implements Serializable {
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
                 caixaMusicaMaisComprada,  inserirTitulo;
         private JRadioButton botaoAscendente, botaoDescendente, estadoAtivo, estadoInativo, estadoAtivo1, estadoInativo1,
-                botaoListaMusicas, botaoListaAlbuns, alterarTituloMusica, alterarPreco1, alterarEstado;
+                botaoListaMusicas, botaoParaPesquisarMusicas, alterarTituloMusica, alterarPreco1, alterarEstado;
         private JComboBox caixaPesquisarMusica, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
@@ -100,7 +100,7 @@ public class InterfaceArtista implements Serializable {
                         }
 
 
-                    } else if (botaoListaAlbuns.isSelected()) {
+                    } else if (botaoParaPesquisarMusicas.isSelected()) {
                         ArrayList<Album> listaA = new ArrayList<>();
                         listaA.addAll(va.getAlbuns());
 
@@ -183,10 +183,10 @@ public class InterfaceArtista implements Serializable {
                 }
             });
 
-            botaoListaAlbuns = new JRadioButton("Ver todos os meus álbuns");
-            botaoListaAlbuns.setBounds(50,70,220,40);
-            botaoListaAlbuns.setBackground(null);
-            botaoListaAlbuns.addActionListener(new ActionListener() {
+            botaoParaPesquisarMusicas = new JRadioButton("Ver todos os meus álbuns");
+            botaoParaPesquisarMusicas.setBounds(50,70,220,40);
+            botaoParaPesquisarMusicas.setBackground(null);
+            botaoParaPesquisarMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listarAlbuns = new DefaultTableModel();
@@ -220,7 +220,7 @@ public class InterfaceArtista implements Serializable {
             //ButtonGroup
             grupoPesquisa = new ButtonGroup();
             grupoPesquisa.add(botaoListaMusicas);
-            grupoPesquisa.add(botaoListaAlbuns);
+            grupoPesquisa.add(botaoParaPesquisarMusicas);
             botaoEstado = new ButtonGroup();
             botaoEstado.add(botaoAscendente);
             botaoEstado.add(botaoDescendente);
@@ -234,7 +234,7 @@ public class InterfaceArtista implements Serializable {
             painelPesquisar.add(tabelaListaMusicasPesquisar);
             painelPesquisar.add(scrollPane, BorderLayout.CENTER);
             painelPesquisar.add(okPesquisa);
-            painelPesquisar.add(botaoListaAlbuns);
+            painelPesquisar.add(botaoParaPesquisarMusicas);
             painelPesquisar.add(botaoListaMusicas);
 
             //Criar Painel Musicas
