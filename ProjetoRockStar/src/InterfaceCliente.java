@@ -133,7 +133,7 @@ public class InterfaceCliente implements Serializable {
 
         //JRadioButton
         botaoTodasAsMusicas = new JRadioButton("Ver todas as músicas");
-        botaoTodasAsMusicas.setBounds(50, 20, 150, 40);
+        botaoTodasAsMusicas.setBounds(50, 15, 150, 40);
         botaoTodasAsMusicas.setBackground(null);
         botaoTodasAsMusicas.addActionListener(new ActionListener() {
             @Override
