@@ -2,197 +2,260 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GestaoApp implements Serializable {
-
+    //meti privado em vez de publico como no banco
     Aplicacao rockstar;
-
     private File fileClientes;
     private File fileArtistas;
-    private File fileMusicas;
     private File filePlayLists;
+    private File fileMusicas;
     private ObjectInputStream iS;
     private ObjectOutputStream oS;
 
-    //Construtor
+    // Construtor:
     public GestaoApp() {
+        // INICIALIZA O A LIVRARIA:
         this.rockstar = new Aplicacao();
         iS = null;
-
-        //Cria ficheiros
+        // CRIA FICHEIROS:
+        this.fileClientes = new File("fileClientes.dat");
         this.fileArtistas = new File("fileArtistas.dat");
-        this.fileClientes = new File("fileclientes.dat");
         this.fileMusicas = new File("fileMusicas.dat");
-        this.filePlayLists = new File("filePlayists.dat");
+        this.filePlayLists = new File("filePlaylists.dat");
     }
 
-    protected void run() {
-        //Criar ficheiros de utilizador
 
-        //Caso não exista um ficheiro de utilizadores serão criados 2 user por defeito
-        if (!this.fileArtistas.exists()) {
-            rockstar.registarArtista("vania", "1234", "0000");
+    public Aplicacao getRockstar() {
+        return rockstar;
+    }
 
-            try {
-                this.fileArtistas.createNewFile();
-                oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
-                oS.writeObject(rockstar.getArtistas());
-                oS.close();
-            } catch (IOException e) {
-            }
 
-        }
-        //Caso ja exista o ficheiro faz-se a transferencia de dados
-        else {
-            try {
-                this.iS = new ObjectInputStream(new FileInputStream(this.fileArtistas));
-                try {
-                    this.rockstar.setArtistas((ArrayList<Artista>) iS.readObject());
-                    iS.close();
-                } catch (ClassNotFoundException y) {
+    public void setRockstar(Aplicacao rockstar) {
+        this.rockstar = rockstar;
+    }
 
-                }
-            } catch (IOException e) {
 
-            }
-        }
+    //METODO RUN()  INCLUI AUTOMATICAMENTE LEITURA E CRIACAO DOS FICHEIROS
+    @SuppressWarnings("unchecked")
+    protected void run()
+    {
 
-        if (!this.fileClientes.exists()) {
-            rockstar.registarCliente("Cesar", "1234");
-            try {
+        //UTILIZADORES
+        // CASO 1--> � criado 1 admin e 1 funcionario
+        if(!this.fileClientes.exists())
+        {
+            Cliente cliente = new Cliente("vania", "1234");
+
+            // De seguida � efectuada a cria�ao do ficheiro:
+            try
+            {
                 this.fileClientes.createNewFile();
                 oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
                 oS.writeObject(rockstar.getClientes());
                 oS.close();
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
 
             }
-        } else {
-            try {
+        }
+        //CASO 2:FICHEIRO EXISTE ---> ler o ficheiro existente
+        else
+        {
+            try
+            {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileClientes));
-                try {
+                try
+                {
                     this.rockstar.setClientes((ArrayList<Cliente>) iS.readObject());
                     iS.close();
-                } catch (ClassNotFoundException y) {
+                }
+                catch(ClassNotFoundException y)
+                {
 
                 }
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
 
             }
         }
 
-        //Caso não exista ficheiro criado
-        if (!this.fileMusicas.exists()) {
+        // CARRINHOS
+        // CASO 1: FICHEIRO NAO EXISTE--->crio um novo ficheiro
+        if(!this.fileArtistas.exists())
+        {
+            Artista artista = new Artista("cesar", "1234", "0000");
 
-            try {
+            //	c1.updateCarrinho(1, 2);
+            rockstar.adicionarArtista(artista);
+
+
+            try
+            {
+                this.fileArtistas.createNewFile();
+                this.oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
+                oS.writeObject(rockstar.getArtistas());
+                oS.close();
+            }
+            catch(IOException e)
+            {
+
+            }
+        }
+        //CASO 2:FICHEIRO EXISTE --> ler o ficheiro
+        else
+        {
+
+            try
+            {
+                this.iS = new ObjectInputStream(new FileInputStream(this.fileArtistas));
+                try
+                {
+                    this.rockstar.setArtistas((ArrayList<Artista>) iS.readObject());
+                    iS.close();
+                }
+                catch(ClassNotFoundException y)
+                {
+
+                }
+            }
+            catch(IOException e)
+            {
+
+            }
+
+        }
+        //LIVROS
+        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+        if(!this.fileMusicas.exists())
+        {
+            Musica musica = new Musica("Hero", "beyonce", 3.4, "rock", true);
+            rockstar.adicionarMusica(musica);
+
+            try
+            {
                 this.fileMusicas.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
                 oS.writeObject(rockstar.getMusicas());
                 oS.close();
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
 
             }
         }
-        // caso ja exista vou passar a informa�ao do ficheiro para a classe:
-        else {
+        //CASO 2:FICHEIRO EXISTE -- > l� o ficheiro existente
+        else
+        {
 
-            try {
+            try
+            {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileMusicas));
-                try {
+                try
+                {
                     this.rockstar.setMusicas((ArrayList<Musica>) iS.readObject());
                     iS.close();
-                } catch (ClassNotFoundException y) {
-
                 }
-            } catch (IOException e) {
-
-            }
-
-            // Playlist
-            if (!this.filePlayLists.exists()) {
-
-                try {
-                    this.filePlayLists.createNewFile();
-                    this.oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
-                    oS.writeObject(rockstar.getPlaylists());
-                    oS.close();
-                } catch (IOException e) {
+                catch(ClassNotFoundException y)
+                {
 
                 }
             }
-            // caso ja exista vou passar a informa�ao do ficheiro para a classe:
-            else {
+            catch(IOException e)
+            {
 
-                try {
-                    this.iS = new ObjectInputStream(new FileInputStream(this.filePlayLists));
-                    try {
-                        this.rockstar.setPlaylists((ArrayList<PlayList>) iS.readObject());
-                        iS.close();
-                    } catch (ClassNotFoundException y) {
+            }
 
-                    }
-                } catch (IOException e) {
+        }
 
-                }
+        //VENDAS
+        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+        if(!this.filePlayLists.exists())
+        {
+            try
+            {
+                this.filePlayLists.createNewFile();
+                this.oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
+                oS.writeObject(rockstar.getPlaylists());
+                oS.close();
+            }
+            catch(IOException e)
+            {
 
             }
         }
+        //CASO 2:FICHEIRO EXISTE -- > l� o ficheiro existente
+        else
+        {
+
+            try
+            {
+                this.iS = new ObjectInputStream(new FileInputStream(this.filePlayLists));
+                try
+                {
+                    this.rockstar.setPlaylists((ArrayList<PlayList>) iS.readObject());
+                    iS.close();
+                }
+                catch(ClassNotFoundException y)
+                {
+
+                }
+            }
+            catch(IOException e)
+            {
+
+            }
+
+        }
+
     }
-            // metodo que guarda os ficheiros:
-            // este metedo � chamado quando qualquer uma das janelas tipo adm/clt/fun sao
-            // fechadas ou efectuado logout.
 
-            protected void atualizaficheiro(ArrayList < Artista > artistas, ArrayList < Cliente > clientes, ArrayList < PlayList > playlists,
-                    ArrayList < Musica > musicas){
-                try {
-                    oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
-                    oS.writeObject(artistas);
-                    oS.close();
-                } catch (IOException e) {
+    //GUARDAR OS FICHEIROS
+    //CHAMADO em caso de logOut / fecho janela
+    protected void atualizaficheiro(ArrayList<Cliente> clientes, ArrayList<Artista> artistas,ArrayList <Musica> musicas,ArrayList <PlayList>playLists)
+    {
+        try
+        {
+            oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
+            oS.writeObject(clientes);
+            oS.close();
+        }
+        catch(IOException e)
+        {
 
-                }
+        }
 
-                try {
-                    oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
-                    oS.writeObject(clientes);
-                    oS.close();
+        try
+        {
+            oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
+            oS.writeObject(artistas);
+            oS.close();
+        }
+        catch(IOException e)
+        {
 
-                } catch (IOException e) {
+        }
+        try
+        {
+            oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
+            oS.writeObject(musicas);
+            oS.close();
+        }
+        catch(IOException e)
+        {
 
-                }
-
-                try {
-                    oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
-                    oS.writeObject(playlists);
-                    oS.close();
-
-                } catch (IOException e) {
-
-                }
-                try {
-                    oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
-                    oS.writeObject(musicas);
-                    oS.close();
-
-                } catch (IOException e) {
-
-                }
+        }
+        try
+        {
+            oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
+            oS.writeObject(playLists);
+            oS.close();
+        }
+        catch(IOException e)
+        {
 
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

@@ -4,6 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class TesteJanelaProj {
     public static void main(String[] args) {
@@ -192,7 +202,11 @@ public class TesteJanelaProj {
                 String password = cxPassL.getText();
 
                 if (gestaoApp.rockstar.tipoUtilizador(username) == 1) {
-                    gestaoApp.rockstar.loginCliente(username, password);
+                    Cliente c = gestaoApp.rockstar.loginCliente(username, password);
+                    GestaoApp gestaoApp1 = new GestaoApp();
+                    if(c != null){
+                        new InterfaceCliente(c, gestaoApp1);
+                    }
 
                 } else if (gestaoApp.rockstar.tipoUtilizador(username) == 2) {
                     if (gestaoApp.rockstar.loginArtista(username, password)) {
@@ -202,7 +216,6 @@ public class TesteJanelaProj {
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
-
                 }
             }
         });
@@ -235,7 +248,8 @@ public class TesteJanelaProj {
                 String username=cxUsernameR.getText();
                 String password=cxPassR.getText();
                 if (rbotaoUser.isSelected()){
-                    gestaoApp.rockstar.registarCliente(username,password);
+                    Cliente c = gestaoApp.rockstar.registarCliente(username,password);
+
                 }else {
                     String pin= cxPinR.getText();
                     gestaoApp.rockstar.registarArtista(username,password,pin);
@@ -308,8 +322,9 @@ public class TesteJanelaProj {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Salva os dados ao fechar a janela
-                gestaoApp.atualizaficheiro(gestaoApp.rockstar.getArtistas(),
-                        gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getPlaylists(), gestaoApp.rockstar.getMusicas());
+                GestaoApp gestaoApp = new GestaoApp();
+                gestaoApp.atualizaficheiro(gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getArtistas(),
+                        gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists());
             }
         });
 

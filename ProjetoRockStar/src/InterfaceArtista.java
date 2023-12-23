@@ -14,7 +14,7 @@ public class InterfaceArtista implements Serializable {
         private JFrame janelaArtista;
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
                 painelEditarDados, painelAlbum;
-        private JLabel titulo, ordenarMusicas, tituloMusica, duracao, genero, custo, estado, username,
+        private JLabel titulo, ordenarMusicas, tituloMusica, duracao, genero, custo, estado, username1,
                 pesquisaTitulo, alterarTitulo, nomeAlbum, generoAlbum,
                 totalUtilizadores, totalMusicas, valorTotalColecao, valorTotalVendas, musicaMaisGravada, musicaMaisComprada,
                 totalAlbumGenero ;
@@ -34,7 +34,7 @@ public class InterfaceArtista implements Serializable {
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
 
-        public InterfaceArtista(){
+        public InterfaceArtista(String username, String Password, String pin){
 
             Artista va = new Artista();
 
@@ -803,14 +803,23 @@ public class InterfaceArtista implements Serializable {
             botaoEstatisticas = new JButton("ESTATÍSTICAS");
             botaoEstatisticas.setBounds(70,400, 250,100);
             botaoEstatisticas.setFont(new Font("Arial", Font.BOLD, 20));
-            username = new JLabel("USERNAME");
-            username.setBounds(70, 70, 250, 20);
+            username1 =new JLabel("USERNAME");
+            username1.setBounds(70, 70, 250, 20);
 
             //Adicional componentes ao painel
             painelMenu.add(botaoPesquisar);
             painelMenu.add(botaoMusicas);
             painelMenu.add(botaoEstatisticas);
-            painelMenu.add(username);
+            painelMenu.add(username1);
+            janelaArtista.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // Salva os dados ao fechar a janela
+                    GestaoApp gestaoApp = new GestaoApp();
+                    gestaoApp.atualizaficheiro(gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getArtistas(),
+                            gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists());
+                }
+            });
 
 
             //Adicionar à janela os paineis

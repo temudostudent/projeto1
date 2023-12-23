@@ -9,6 +9,7 @@ public class Aplicacao implements Serializable {
     private ArrayList<Artista> artistas;
     private ArrayList<Musica> musicas;
     private ArrayList<PlayList> playlists;
+    private ArrayList<Compra> compras;
 
     //Construtor
     public Aplicacao() {
@@ -16,6 +17,8 @@ public class Aplicacao implements Serializable {
         this.artistas = new ArrayList<Artista>();
         this.musicas = new ArrayList<Musica>();
         this.playlists = new ArrayList<PlayList>();
+        this.compras = new ArrayList<Compra>();
+
     }
 
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
@@ -30,26 +33,29 @@ public class Aplicacao implements Serializable {
         ;
     }
 
-    public void registarCliente(String username, String password) {
+    public Cliente registarCliente(String username, String password) {
         if (procurarUserCliente(username) == false && procurarUserArtista(username) == false) {
             Cliente novoC = new Cliente(username, password);
             clientes.add(novoC);
+
             JOptionPane.showMessageDialog(null, "Registo de Cliente com sucesso!", "",
                     JOptionPane.INFORMATION_MESSAGE);
+            return novoC;
         } else {
             JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
                     "Aviso!", JOptionPane.INFORMATION_MESSAGE);
         }
+        return null;
     }
 
     //Login - Verificar se todas as condições coincidem
 
-    public boolean loginCliente(String username, String password) {
+    public Cliente loginCliente(String username, String password) {
         boolean login = false;
         if (procurarUserCliente(username)) {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
-                    login = true;
+                    return c;
                 } else {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -57,7 +63,7 @@ public class Aplicacao implements Serializable {
 
             }
         }
-        return login;
+        return null;
     }
 
     public boolean loginArtista(String username, String password) {
@@ -213,6 +219,10 @@ public class Aplicacao implements Serializable {
         return playlists;
     }
 
+    public ArrayList<Compra> getCompras() {
+        return compras;
+    }
+
     public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
     }
@@ -228,4 +238,23 @@ public class Aplicacao implements Serializable {
     public void setPlaylists(ArrayList<PlayList> playlists) {
         this.playlists = playlists;
     }
+
+    public void setCompras(ArrayList<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public void adicionarCliente(Cliente c){
+        clientes.add(c);
+    }
+    public void adicionarMusica(Musica m){
+        musicas.add(m);
+    }
+    public void adicionarPlayList(PlayList p){
+        playlists.add(p);
+    }
+    public void adicionarArtista(Artista a){
+        artistas.add(a);
+    }
+    public void adicionarCompra(Compra com) {compras.add(com);}
+
 }

@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public abstract class ConjuntoMusicas {
+public abstract class ConjuntoMusicas implements Serializable {
 
     protected String nome;
     protected ArrayList<Musica> musicas=new ArrayList<>();
@@ -19,7 +20,6 @@ public abstract class ConjuntoMusicas {
 
     public abstract void removeMusica(Musica m);
 
-    public abstract void imprimirLista();
 
     public ArrayList<Musica> getMusicas() {
         return musicas;

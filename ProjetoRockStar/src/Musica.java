@@ -28,6 +28,10 @@ public class Musica implements Serializable {
     //Construtor abstrato
     public Musica() {}
 
+    public void adicionarMusica(){
+        Musica m = new Musica();
+    }
+
     //adicionar Rating à respetiva
     public void addRating(int valor){
         rating.add(valor);

@@ -8,7 +8,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
 
-    private ArrayList<PlayList> playlists= new ArrayList<>();
+    private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
     private Compra compra;
 
@@ -17,11 +17,13 @@ public class Cliente extends Utilizador implements Serializable {
 
     public Cliente(String username,String password) {
         super(username, password);
-        this.playlists = playlists;
+        this.playlists = new ArrayList<>();;
         this.historicoCompras = new ArrayList<>();
         this.compra = new Compra();
         super.saldo = 0;
     }
+
+    public Cliente(){}
 
     @Override
     public void verListas() {
@@ -30,9 +32,15 @@ public class Cliente extends Utilizador implements Serializable {
         }
 
     }
+
+
     public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
+    }
+
+    public ArrayList<PlayList> verPlayListCliente(){
+        return playlists;
     }
 
     // Método para adicionar músicas a uma determinada PlayList
@@ -84,6 +92,11 @@ public class Cliente extends Utilizador implements Serializable {
         }
     }
 
+    //Remover playList através do objeto
+    public void removerPlaylist(PlayList playlist) {
+        playlists.remove(playlist);
+    }
+
     //Método para finalizar a compra
     public void finalizarcompra(){
         if(compra.getCarrinho().isEmpty()){
@@ -112,4 +125,8 @@ public class Cliente extends Utilizador implements Serializable {
     public int getTipo() {
         return 1;
     }
+
+    public void verPlayListCliente(int indiceSelecionado) {
+    }
 }
+

@@ -6,11 +6,17 @@ import java.util.Random;
 public class PlayList extends ConjuntoMusicas implements Serializable {
    private  boolean visibilidade;
 
-    public PlayList(String nomeAlbum, boolean visibilidade) {
-        super(nomeAlbum);
-        this.dataCriacao= LocalDateTime.now();
+
+    public PlayList(String nome, boolean visibilidade) {
+        super(nome);
         this.visibilidade = visibilidade;
-        this.musicas = new ArrayList<>();
+    }
+    public String toString() {
+        if (visibilidade) {
+            return nome + ",   PÚBLICA";
+        } else {
+            return nome + ",   PRIVADA";
+        }
     }
 
     //Adiciona música
@@ -23,11 +29,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
     @Override
     public  void removeMusica(Musica m){
         this.musicas.remove(m);
-    }
-
-    @Override
-    public void imprimirLista() {
-        musicas.forEach(System.out::println);
     }
 
 

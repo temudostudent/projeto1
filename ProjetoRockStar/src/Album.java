@@ -28,11 +28,6 @@ public class Album extends ConjuntoMusicas implements Serializable {
         this.musicas.remove(m);
     }
 
-    //Imprime todos os items da Playlist
-    @Override
-    public void imprimirLista() {
-        this.musicas.forEach(System.out::println);
-    }
 
     //Procura música no álbum pelo título da música
     public Musica encontraMusica(String tituloMusica){
