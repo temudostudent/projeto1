@@ -10,7 +10,7 @@ public class InterfaceCliente implements Serializable {
     private JFrame janelaCliente;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
-    private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList,
+    private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
             removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists;
     private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
@@ -53,10 +53,12 @@ public class InterfaceCliente implements Serializable {
         caixaTextoPesquisa.setVisible(false);
 
         //JButton
+        adicionarRating = new JButton("ADICIONAR RATING");
+        adicionarRating.setBounds(540,450,200,40);
         adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
-        adicionarPlayList.setBounds(410,450,200,40);
+        adicionarPlayList.setBounds(310,450,200,40);
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
-        adicionarCarrinho.setBounds(180,450 ,200,40);
+        adicionarCarrinho.setBounds(80,450 ,200,40);
         JButton ordenarPesquisa = new JButton("ORDENAR");
         ordenarPesquisa.setBounds(650,100,100,30);
         ordenarPesquisa.addActionListener(new ActionListener() {
@@ -99,18 +101,19 @@ public class InterfaceCliente implements Serializable {
                 listarItems.addColumn("GENERO");
                 listarItems.addColumn("ESTADO");
                 listarItems.addColumn("PREÇO (€)");
+                listarItems.addColumn("RATING");
 
                 // Adicionar os títulos das colunas Na primeira linha
-                listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)"});
+                listarItems.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)","RATING"});
 
                 // Adicionar os elementos do ArrayList à tabela
                 for (Musica musica : listaM) {
                     if (musica instanceof MusicaPaga) {
                         listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                     }else {
                         listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), "0"});
+                                musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
                     }
                 }
 
@@ -160,18 +163,19 @@ public class InterfaceCliente implements Serializable {
                 listarMusicas.addColumn("GENERO");
                 listarMusicas.addColumn("ESTADO");
                 listarMusicas.addColumn("PREÇO (€)");
+                listarMusicas.addColumn("RATING");
 
                 // Adicionar os títulos das colunas Na primeira linha
-                listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO (€)"});
+                listarMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO (€)","RATING"});
 
                 // Adicionar os elementos do ArrayList à tabela
                 for (Musica musica : listaM) {
                     if (musica instanceof MusicaPaga) {
                         listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                     }else {
                         listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), "0"});
+                                musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
                     }
                 }
                 tabelaResultadoPesquisa.setModel(listarMusicas);
@@ -222,6 +226,7 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.add(caixaTextoPesquisa);
         painelPesquisarCliente.add(atributoPesquisa);
         painelPesquisarCliente.add(atributoPesquisarLegenda);
+        painelPesquisarCliente.add(adicionarRating);
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();

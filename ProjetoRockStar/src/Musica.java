@@ -48,8 +48,12 @@ public class Musica implements Serializable {
 
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
-    public void getRatingMedia(){
+    private void setRatingMedia(){
         this.ratingMedia=(double)(somaRatings()/rating.size());
+    }
+
+    public double getRatingMedia() {
+        return ratingMedia;
     }
 
     //get título
@@ -73,7 +77,6 @@ public class Musica implements Serializable {
         this.estado = estado;
     }
     public boolean getEstado(){ return estado;}
-
 
     public String getNomeArtista() {
         return nomeArtista;
