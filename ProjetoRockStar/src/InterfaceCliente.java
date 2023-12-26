@@ -16,7 +16,7 @@ public class InterfaceCliente implements Serializable {
     private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
-    private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente;
+    private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
 
     Cliente cli;
@@ -348,27 +348,43 @@ public class InterfaceCliente implements Serializable {
 
 
         //Criar componentes do Painel Carrinho
+
+        //JLabel
         listacompras = new JLabel ("LISTA DE MUSICAS DENTRO DO CARRINHO");
         listacompras.setBounds(50,0,280,40);
+        saldoCliente = new JLabel("SALDO");
+        saldoCliente.setBounds(550,200, 250, 40);
+
+        //JTabel
         listaMusicasCarrinho = new JTable();
         listaMusicasCarrinho.setBounds(50, 50,250,300);
+
+        //JButton
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA CARRINHO");
         removerMusicaCarrinho.setBounds(400, 50, 250,40);
         carregarSaldo = new JButton("CARREGAR SALDO");
         carregarSaldo.setBounds(400,100,250,40);
+        carregarSaldo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double valor= Double.parseDouble(valorACarregar.getText());
+                 cli.alterarSaldo(valor);
+            }
+        });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
         finalizarPagamento.setBounds(400,150,250,40);
         valorTotalPagar = new JLabel("VALOR TOTAL");
         valorTotalPagar.setBounds(400, 200, 250,40);
+
+        //JTextField
         mostrarValorPagar = new JTextField();
         mostrarValorPagar.setBounds(400,250,100,40);
         mostrarValorPagar.setEditable(false);
         mostrarSaldoCliente = new JTextField();
         mostrarSaldoCliente.setBounds(550,250,100,40);
         mostrarSaldoCliente.setEditable(false);
-        saldoCliente = new JLabel("SALDO");
-        saldoCliente.setBounds(550,200, 250, 40);
-
+        valorACarregar = new JTextField("€ a carregar");
+        valorACarregar.setBounds(660,100,100,40);
 
 
         //Adicionar Componentes ao Carrinho
@@ -382,6 +398,7 @@ public class InterfaceCliente implements Serializable {
         painelCarrinho.add(mostrarValorPagar);
         painelCarrinho.add(mostrarSaldoCliente);
         painelCarrinho.add(saldoCliente);
+        painelCarrinho.add(valorACarregar);
 
 
         //Criar painel fixo Titulo  ----------------------------------------------
