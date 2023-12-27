@@ -31,7 +31,7 @@ public class Album extends ConjuntoMusicas implements Serializable {
 
     //Procura música no álbum pelo título da música
     public Musica encontraMusica(String tituloMusica){
-        Musica musica=new Musica();
+        Musica musica=null;
         for (Musica mVariavel : this.musicas){
             if (mVariavel.getTitulo().equalsIgnoreCase(tituloMusica)){
                 return musica=mVariavel;

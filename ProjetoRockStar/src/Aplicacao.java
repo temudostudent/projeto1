@@ -51,7 +51,6 @@ public class Aplicacao implements Serializable {
     //Login - Verificar se todas as condições coincidem
 
     public Cliente loginCliente(String username, String password) {
-        boolean login = false;
         if (procurarUserCliente(username)) {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
@@ -60,27 +59,22 @@ public class Aplicacao implements Serializable {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
         }
         return null;
     }
 
     public Artista loginArtista(String username, String password) {
-        boolean login = false;
         Artista artista = null;
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getPassword().equals(password)) {
-                    login = true;
-
                     artista=a;
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
         }
         return artista;
@@ -106,6 +100,10 @@ public class Aplicacao implements Serializable {
             }
         }
         return login;
+    }
+
+    public void addMusica(Musica m){
+        musicas.add(m);
     }
 
 
@@ -143,14 +141,13 @@ public class Aplicacao implements Serializable {
         }
     return existe;}
 
-    private boolean procurarUserCliente(String username){
-        boolean existe=false;
+    public boolean procurarUserCliente(String username){
         for (Cliente c : clientes){
             if (c.getUsername().equals(username)) {
-                existe=true;
+                return true;
             }
         }
-    return existe;}
+    return false;}
 
     //Gerador automático PIN
     public String gerarPin(){

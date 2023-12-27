@@ -25,12 +25,7 @@ public class Musica implements Serializable {
         this.genero = genero;
         this.estado = estado;
     }
-    //Construtor abstrato
-    public Musica() {}
 
-    public void adicionarMusica(){
-        Musica m = new Musica();
-    }
 
     //adicionar Rating à respetiva
     public void addRating(int valor){

@@ -207,10 +207,11 @@ public class JanelaInicial {
 
                 if (gestaoApp.rockstar.tipoUtilizador(username) == 1) {
                     Cliente c = gestaoApp.rockstar.loginCliente(username, password);
-                    GestaoApp gestaoApp1 = new GestaoApp();
                     if(c != null){
-                        new InterfaceCliente(c, gestaoApp1);
-                    }else {
+                        InterfaceCliente ic = new InterfaceCliente(c, gestaoApp);
+                        ic.run();
+                        f.setVisible(false);
+                    }else if (c == null){
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -324,6 +325,7 @@ public class JanelaInicial {
                     GestaoApp gestaoApp1 = new GestaoApp();
                     if(artista != null){
                         new InterfaceArtista(artista, gestaoApp1);
+                        f.setVisible(false);
                     }else {
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
                                 JOptionPane.INFORMATION_MESSAGE);
