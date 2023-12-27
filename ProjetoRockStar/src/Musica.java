@@ -74,7 +74,16 @@ public class Musica implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    public boolean getEstado(){ return estado;}
+    public boolean getEstado(){
+        return estado;}
+
+    public String tipoEstado(){
+        if(getEstado() == true){
+            return "ATIVA";
+        }else{
+            return "INATIVA";
+        }
+    }
 
     public String getNomeArtista() {
         return nomeArtista;

@@ -35,14 +35,19 @@ public class Aplicacao implements Serializable {
 
     public Cliente registarCliente(String username, String password) {
         if (procurarUserCliente(username) == false && procurarUserArtista(username) == false) {
-            Cliente novoC = new Cliente(username, password);
-            clientes.add(novoC);
+            if (validarPassword(password)) {
+                Cliente novoC = new Cliente(username, password);
+                clientes.add(novoC);
 
-            JOptionPane.showMessageDialog(null, "Registo de Cliente com sucesso!", "",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return novoC;
-        } else {
-            JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
+                JOptionPane.showMessageDialog(null, "Registo de Cliente com sucesso!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return novoC;
+            } else {
+                JOptionPane.showMessageDialog(null, "A senha não atende aos critérios de segurança.",
+                        "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "O usuário '" + username + "' já existe",
                     "Aviso!", JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
@@ -54,12 +59,14 @@ public class Aplicacao implements Serializable {
         if (procurarUserCliente(username)) {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
+                    //Password correta
                     return c;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+            //Password incorreta
+                JOptionPane.showMessageDialog(null, "Credencias inválidas. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
+
         }
         return null;
     }
@@ -100,6 +107,28 @@ public class Aplicacao implements Serializable {
             }
         }
         return login;
+    }
+
+    public void addMusica(Musica m){
+        musicas.add(m);
+    }
+    public boolean validarPassword(String password){
+        //Tamanho entre 4 e 6 caracteres
+        if(password.length() < 4 || password.length() > 6){
+            return false;
+        }
+        //Tem de ter pelo menos uma letra e um numero
+        boolean temLetra = false;
+        boolean temNumero = false;
+
+        for(char c : password.toCharArray()){
+            if(!Character.isLetter(c)){
+                temLetra = true;
+            }else if(!Character.isDigit(c)){
+                temNumero  =true;
+            }
+        }
+        return temLetra && temNumero;
     }
 
 
