@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class InterfaceCliente implements Serializable {
+    private Cliente cliente;
+    private GestaoApp app;
     private JFrame janelaCliente;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
@@ -19,14 +21,23 @@ public class InterfaceCliente implements Serializable {
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
 
-    Cliente cli;
-    public InterfaceCliente(Cliente c, GestaoApp gestaoApp) {
 
-        Aplicacao app=new Aplicacao();
-        GestaoApp gestaoApp1 = new GestaoApp();
-        gestaoApp1.run();
-        cli = c;
+    public void run(){
+        try{
+            InterfaceCliente janela = new InterfaceCliente(cliente, app);
+            janelaCliente.setVisible(true);
+        }catch (Exception e){
 
+        }
+    }
+
+    public InterfaceCliente(Cliente c, GestaoApp app) {
+        this.cliente = c;
+        this.app = app;
+        initialize();
+    }
+
+    protected void initialize(){
 
         //Criar janela
         janelaCliente = new JFrame();
@@ -67,18 +78,18 @@ public class InterfaceCliente implements Serializable {
                 DefaultTableModel listarItems = new DefaultTableModel();
                 String selecao = (String) ordenarMusicaPor.getSelectedItem();
                 ArrayList<Musica> listaM = new ArrayList<>();
-                listaM.addAll(app.getMusicas());
+                listaM.addAll(app.rockstar.getMusicas());
 
                 if (botaoTodasAsMusicas.isSelected()){
 
                     if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.ordenarMusicasCrescentePorTitulo(listaM);
+                        app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
                     } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.ordendarMusicasDecrescentePorTitulo(listaM);
+                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.ordenarMusicasCrescentePorGenero(listaM);
+                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()){
-                        app.ordenarMusicasDecrescentePorGenero(listaM);
+                        app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
 
                 } else if (botaoParaPesquisarMusicas.isSelected()) {
@@ -153,7 +164,7 @@ public class InterfaceCliente implements Serializable {
 
                 DefaultTableModel listarMusicas = new DefaultTableModel();
                 ArrayList<Musica> listaM = new ArrayList<>();
-                listaM = app.getMusicas();
+                listaM = app.rockstar.getMusicas();
 
 
                 // Adicionar uma coluna à tabela
@@ -245,7 +256,7 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ver as playLists do Cliente
-                ArrayList<PlayList> playList = cli.verPlayListCliente();
+                ArrayList<PlayList> playList = cliente.verPlayListCliente();
 
                 // Crie um array de objetos PlayList
                 PlayList[] playlistsArray = playList.toArray(new PlayList[0]);
@@ -264,7 +275,7 @@ public class InterfaceCliente implements Serializable {
 
                 // Verifica se alguma playlist está selecionada
                 if (playlistSelecionada != null) {
-                    cli.removerPlaylist(playlistSelecionada);
+                    cliente.removerPlaylist(playlistSelecionada);
 
                     //Obter o modelo da JComboBox
                     DefaultComboBoxModel<PlayList> model = (DefaultComboBoxModel<PlayList>) caixaListarPlayLists.getModel();
@@ -272,7 +283,7 @@ public class InterfaceCliente implements Serializable {
                     //Remover a playlist do modelo da JComBox
                     model.removeElement(playlistSelecionada);
 
-                        JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
+                    JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
 
                 } else {
                     JOptionPane.showMessageDialog( null, "Nenhuma playlist selecionada para remover.");
@@ -321,7 +332,7 @@ public class InterfaceCliente implements Serializable {
 
                 if (nomeNovaPlaylist != null && !nomeNovaPlaylist.isEmpty()) {
                     // Cria a nova playlist no cliente
-                    cli.criarPlaylist(nomeNovaPlaylist, true);
+                    cliente.criarPlaylist(nomeNovaPlaylist, true);
 
                     // Atualiza a  JComboBox
                     atualizaListaPlayList();
@@ -368,7 +379,7 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 double valor= Double.parseDouble(valorACarregar.getText());
-                 cli.alterarSaldo(valor);
+                cliente.alterarSaldo(valor);
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
@@ -457,6 +468,17 @@ public class InterfaceCliente implements Serializable {
 
     }
 
+
+    /*public InterfaceCliente(Cliente c, GestaoApp gestaoApp) {
+
+        Aplicacao app=new Aplicacao();
+        GestaoApp gestaoApp1 = new GestaoApp();
+        gestaoApp1.run();
+        cli = c;*/
+
+
+
+
     //Método para efetuar a troca de painéis
 
     private void trocarPainel(JPanel novoPainel) {
@@ -471,7 +493,7 @@ public class InterfaceCliente implements Serializable {
     private void atualizaListaPlayList() {
         // Ver as playLists do Cliente
 
-        ArrayList<PlayList> playList = cli.verPlayListCliente();
+        ArrayList<PlayList> playList = cliente.verPlayListCliente();
 
         // Cria um array de objetos PlayList
         PlayList[] playlistsArray = playList.toArray(new PlayList[0]);

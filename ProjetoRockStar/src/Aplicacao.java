@@ -66,12 +66,15 @@ public class Aplicacao implements Serializable {
         return null;
     }
 
-    public boolean loginArtista(String username, String password) {
+    public Artista loginArtista(String username, String password) {
         boolean login = false;
+        Artista artista = null;
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getPassword().equals(password)) {
                     login = true;
+
+                    artista=a;
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
@@ -80,7 +83,7 @@ public class Aplicacao implements Serializable {
 
             }
         }
-        return login;
+        return artista;
     }
 
     public boolean verificarPINArtista(String username,String pin){

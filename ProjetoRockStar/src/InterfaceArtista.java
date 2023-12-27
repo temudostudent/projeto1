@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 public class InterfaceArtista implements Serializable {
 
-        private JFrame janelaArtista;
+    private Artista artista;
+    private GestaoApp app;
+    private JFrame janelaArtista;
         private JPanel painelTitulo, painelPesquisar, painelMenu, painelMusicas, painelEstatisticas, painelAdicionarMusica,
                 painelEditarDados, painelAlbum;
         private JLabel titulo, ordenarMusicas, tituloMusica, duracao, genero, custo, estado, username1,
@@ -34,14 +36,26 @@ public class InterfaceArtista implements Serializable {
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
 
 
-        public InterfaceArtista(String username, String Password, String pin){
+        public void run(){
+            try{
+                InterfaceArtista janela = new InterfaceArtista(artista, app);
+                janelaArtista.setVisible(true);
+            }catch (Exception e){
 
-            Artista va = new Artista();
+            }
+        }
 
+        public InterfaceArtista(Artista a, GestaoApp app) {
+            this.artista = a;
+            this.app = app;
+            initialize();
+        }
+
+        protected void initialize(){
             // criar janela
             janelaArtista = new JFrame();
 
-            va.novaMusica("musica1", 3.20, "rock", true, 0);
+            artista.novaMusica("musica1", 3.20, "rock", true, 0);
 
             //Criar Painel Pesquisar -------------------------------------------------
             painelPesquisar = new JPanel();
@@ -66,16 +80,16 @@ public class InterfaceArtista implements Serializable {
 
                     if (botaoListaMusicas.isSelected()){
                         ArrayList<Musica> listaM = new ArrayList<>();
-                        listaM.addAll(va.getMusicas());
+                        listaM.addAll(artista.getMusicas());
 
                         if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
-                            va.ordenarMusicasCrescentePorTitulo(listaM);
+                            artista.ordenarMusicasCrescentePorTitulo(listaM);
                         } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
-                            va.ordendarMusicasDecrescentePorTitulo(listaM);
+                            artista.ordendarMusicasDecrescentePorTitulo(listaM);
                         } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
-                            va.ordenarMusicasCrescentePorGenero(listaM);
+                            artista.ordenarMusicasCrescentePorGenero(listaM);
                         } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
-                            va.ordenarMusicasDecrescentePorGenero(listaM);
+                            artista.ordenarMusicasDecrescentePorGenero(listaM);
                         }
                         // Adicionar uma coluna à tabela
                         listarItems.addColumn("TÍTULO");
@@ -102,16 +116,16 @@ public class InterfaceArtista implements Serializable {
 
                     } else if (botaoParaPesquisarMusicas.isSelected()) {
                         ArrayList<Album> listaA = new ArrayList<>();
-                        listaA.addAll(va.getAlbuns());
+                        listaA.addAll(artista.getAlbuns());
 
                             if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
-                                va.ordenarAlbunsCrescentePorTitulo(listaA);
+                                artista.ordenarAlbunsCrescentePorTitulo(listaA);
                             } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
-                                va.ordendarAlbunsDecrescentePorTitulo(listaA);
+                                artista.ordendarAlbunsDecrescentePorTitulo(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
-                                va.ordenarAlbunsCrescentePorGenero(listaA);
+                                artista.ordenarAlbunsCrescentePorGenero(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
-                                va.ordenarAlbunsDecrescentePorGenero(listaA);
+                                artista.ordenarAlbunsDecrescentePorGenero(listaA);
                             }
 
                         // Adicionar uma coluna à tabela
@@ -155,7 +169,7 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listarMusicas = new DefaultTableModel();
                     ArrayList<Musica> listaM = new ArrayList<>();
-                    listaM = va.getMusicas();
+                    listaM = artista.getMusicas();
 
 
                     // Adicionar uma coluna à tabela
@@ -191,7 +205,7 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listarAlbuns = new DefaultTableModel();
                     ArrayList<Album> listaA = new ArrayList<>();
-                    listaA = va.getAlbuns();
+                    listaA = artista.getAlbuns();
 
 
                     // Adicionar uma coluna à tabela
@@ -302,7 +316,7 @@ public class InterfaceArtista implements Serializable {
                     }
                     double preco= Double.parseDouble(caixaCusto.getText());
 
-                    va.novaMusica(titulo,duracao,genero,estadoMusica,preco);
+                    artista.novaMusica(titulo,duracao,genero,estadoMusica,preco);
 
                     caixaTituloMusica.setText("");
                     caixaDuracao.setText("");
@@ -359,7 +373,7 @@ public class InterfaceArtista implements Serializable {
                         String titulo = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
                         ArrayList<Musica> lista = new ArrayList<>();
-                        lista = va.pesquisarMusica(titulo);
+                        lista = artista.pesquisarMusica(titulo);
 
                         // Adicionar uma coluna à tabela
                         listaMusicas.addColumn("TÍTULO");
@@ -383,7 +397,7 @@ public class InterfaceArtista implements Serializable {
                         String genero = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
                         ArrayList<Musica> lista = new ArrayList<>();
-                        lista = va.pesquisarMusicaGenero(genero);
+                        lista = artista.pesquisarMusicaGenero(genero);
 
                         // Adicionar uma coluna à tabela
                         listaMusicas.addColumn("TÍTULO");
@@ -408,7 +422,7 @@ public class InterfaceArtista implements Serializable {
                         String tituloAlbum = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
                         ArrayList<Musica> lista = new ArrayList<>();
-                        lista = va.pesquisaMusicaAlbum(tituloAlbum);
+                        lista = artista.pesquisaMusicaAlbum(tituloAlbum);
 
                         // Adicionar uma coluna à tabela
                         listaMusicas.addColumn("TÍTULO");
@@ -475,7 +489,7 @@ public class InterfaceArtista implements Serializable {
                     if (linhaSelecionada >= 0) {
 
                         String valorTituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
-                        Musica object = va.pesquisaObjetoTitulo(valorTituloMusica);
+                        Musica object = artista.pesquisaObjetoTitulo(valorTituloMusica);
 
                         if (!caixaAltearPreco.equals(null)) {
 
@@ -504,7 +518,7 @@ public class InterfaceArtista implements Serializable {
                                     MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(),
                                             object.getNomeArtista(), object.getDuracao(), object.getGenero(),
                                             object.getEstado(), Double.parseDouble(caixaAltearPreco.getText()));
-                                    va.getMusicas().set(va.encontrarPosicao(object),musicaPaga);
+                                    artista.getMusicas().set(artista.encontrarPosicao(object),musicaPaga);
                                 }
                             }
 
@@ -525,7 +539,7 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listaMusicas = new DefaultTableModel();
                     ArrayList<Musica> lista = new ArrayList<>();
-                            lista = va.getMusicas();
+                            lista = artista.getMusicas();
 
 
                     // Adicionar uma coluna à tabela
@@ -578,7 +592,7 @@ public class InterfaceArtista implements Serializable {
                     String titulo = caixaNomeAlbum.getText();
                     String genero = caixaGeneroAlgum.getText();
 
-                    va.criarAlbum(titulo,genero);
+                    artista.criarAlbum(titulo,genero);
 
                     caixaNomeAlbum.setText("");
                     caixaGeneroAlgum.setText("");
@@ -599,7 +613,7 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listaMusicasPAlbum = new DefaultTableModel();
                     ArrayList<Musica> listaMusicasPainelAlbum = new ArrayList<>();
-                    listaMusicasPainelAlbum = va.getMusicas();
+                    listaMusicasPainelAlbum = artista.getMusicas();
 
                     // Adicionar uma coluna à tabela
                     listaMusicasPAlbum.addColumn("Título");
@@ -672,7 +686,7 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listaAlbunsModel = new DefaultTableModel();
                     ArrayList<Album> listaAlbumPainelAlbum = new ArrayList<>();
-                    listaAlbumPainelAlbum = va.getAlbuns();
+                    listaAlbumPainelAlbum = artista.getAlbuns();
 
                     // Adicionar uma coluna à tabela
                     listaAlbunsModel.addColumn("Título");
@@ -694,7 +708,7 @@ public class InterfaceArtista implements Serializable {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
 
-                    va.addMusica(indexAlbum,indexMusicaSelect);
+                    artista.addMusica(indexAlbum,indexMusicaSelect);
                 }
             });
 
@@ -735,7 +749,7 @@ public class InterfaceArtista implements Serializable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     DefaultTableModel listaMusicas = new DefaultTableModel();
-                    String [][] dados = va.matrizTotalAlbuns();
+                    String [][] dados = artista.matrizTotalAlbuns();
                     String [] colunas = {"Género", "Total álbuns"};
 
 
@@ -750,8 +764,8 @@ public class InterfaceArtista implements Serializable {
                     }
 
                     listaAlbumGenero1.setModel(listaMusicas);
-                    caixaTotalMusicas.setText(String.valueOf(va.totalMusicas()));
-                    caixaValorTotalColecao.setText(String.valueOf(va.valorTotalColecao()+" €"));
+                    caixaTotalMusicas.setText(String.valueOf(artista.totalMusicas()));
+                    caixaValorTotalColecao.setText(String.valueOf(artista.valorTotalColecao()+" €"));
 
                 }
             });
@@ -764,10 +778,10 @@ public class InterfaceArtista implements Serializable {
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
 
-            va.criarAlbum("Rock1", "Rock");
-            va.criarAlbum("Rock2", "Pimba");
-            va.criarAlbum("Rock2", "Pimba");
-            va.criarAlbum("Rock3", "Jazz");
+            artista.criarAlbum("Rock1", "Rock");
+            artista.criarAlbum("Rock2", "Pimba");
+            artista.criarAlbum("Rock2", "Pimba");
+            artista.criarAlbum("Rock3", "Jazz");
 
 
             //Adicionar componentes do painel Estatísticas
