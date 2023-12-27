@@ -36,8 +36,6 @@ public class Artista extends Utilizador implements Serializable {
     public void criarAlbum(String nomeDoAlbum, String genero) {
         Album novoA = new Album(nomeDoAlbum, this.username, genero);
         albuns.add(novoA);
-        JOptionPane.showMessageDialog(null, "Álbum criado!", "",
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista

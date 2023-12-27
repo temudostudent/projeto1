@@ -25,7 +25,6 @@ public class GestaoApp implements Serializable {
         this.fileCompras = new File("fileCompras.dat");
     }
 
-
     public Aplicacao getRockstar() {
         return rockstar;
     }

@@ -108,7 +108,7 @@ public class InterfaceArtista implements Serializable {
                                         musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
                             }else {
                                 listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                        musica.getGenero(), musica.getEstado(), "0"});
+                                        musica.getGenero(), musica.tipoEstado(), "0"});
                             }
                         }
 
@@ -189,7 +189,7 @@ public class InterfaceArtista implements Serializable {
                                     musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
                         }else {
                             listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), "0"});
+                                    musica.getGenero(), musica.tipoEstado(), "0"});
                         }
                     }
                     tabelaListaMusicasPesquisar.setModel(listarMusicas);
@@ -391,7 +391,7 @@ public class InterfaceArtista implements Serializable {
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado()});
+                                    musica.getGenero(), musica.tipoEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
 
@@ -415,7 +415,7 @@ public class InterfaceArtista implements Serializable {
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado()});
+                                    musica.getGenero(), musica.tipoEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
 
@@ -440,7 +440,7 @@ public class InterfaceArtista implements Serializable {
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : lista) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado()});
+                                    musica.getGenero(), musica.tipoEstado()});
                         }
                         tabelaListaMusicas.setModel(listaMusicas);
 
@@ -562,7 +562,7 @@ public class InterfaceArtista implements Serializable {
                                     musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
                         }else{
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), "0"});
+                                    musica.getGenero(), musica.tipoEstado(), "0"});
                         }
                     }
                     tabelaListaMusicas.setModel(listaMusicas);
@@ -593,11 +593,14 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     String titulo = caixaNomeAlbum.getText();
                     String genero = caixaGeneroAlgum.getText();
-
-                    artista.criarAlbum(titulo,genero);
-
-                    caixaNomeAlbum.setText("");
-                    caixaGeneroAlgum.setText("");
+                    if(!titulo.equals("") || !genero.equals("")) {
+                        artista.criarAlbum(titulo, genero);
+                        JOptionPane.showMessageDialog(null, "Álbum criado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+                        caixaNomeAlbum.setText("");
+                        caixaGeneroAlgum.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Por favor preencha os campos!");
+                    }
                 }
             });
             nomeAlbum = new JLabel("NOME DO ÁLBUM");

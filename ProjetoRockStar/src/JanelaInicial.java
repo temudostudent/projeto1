@@ -11,7 +11,7 @@ public class JanelaInicial {
         SwingUtilities.invokeLater(() -> createAndShowGUI());
     }*/
     JPanel painelTitulo,painelInicial,painelRegistar,painelLogin;
-    JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
+    JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR, segurancaPassword;
     JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
     JFrame f;
     public void run(){
@@ -75,6 +75,9 @@ public class JanelaInicial {
         passLegendaR = new JLabel("Password");
         passLegendaR.setFont(new Font("Calibri",Font.BOLD,15));
         passLegendaR.setBounds(695,105,100,30);
+        segurancaPassword = new JLabel();
+        segurancaPassword.setText("<html>Entre 4 e 6 caracteres<br>Pelo menos um número e uma letra");
+        segurancaPassword.setBounds(820,40,200,120);
 
         pinL = new JLabel("PIN");
         pinL.setFont(new Font("Calibri",Font.BOLD,15));
@@ -235,6 +238,7 @@ public class JanelaInicial {
         painelLogin.add(passLegendaL);
 
 
+
         painelLogin.add(voltar);
         voltar.addActionListener(new ActionListener() {
             @Override
@@ -280,6 +284,7 @@ public class JanelaInicial {
         rbotaoArtista.addActionListener(new ActionListener() {  //Aparece PIN
             @Override
             public void actionPerformed(ActionEvent e) {
+                cxPinR.setEditable(false);
                 pinR.setVisible(rbotaoArtista.isSelected());
                 cxPinR.setVisible(rbotaoArtista.isSelected());
                 randomPIN.setVisible(rbotaoArtista.isSelected());
@@ -297,6 +302,7 @@ public class JanelaInicial {
         painelRegistar.add(pinR);
         painelRegistar.add(cxPinR);
         painelRegistar.add(randomPIN);
+        painelRegistar.add(segurancaPassword);
         randomPIN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
