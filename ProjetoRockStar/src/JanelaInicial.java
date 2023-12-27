@@ -322,9 +322,9 @@ public class JanelaInicial {
 
                 if (gestaoApp.rockstar.verificarPINArtista(username, pin)==true){
                     Artista artista = gestaoApp.rockstar.loginArtista(username, password);
-                    GestaoApp gestaoApp1 = new GestaoApp();
+
                     if(artista != null){
-                        new InterfaceArtista(artista, gestaoApp1);
+                        new InterfaceArtista(artista, gestaoApp);
                         f.setVisible(false);
                     }else {
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
@@ -346,7 +346,6 @@ public class JanelaInicial {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Salva os dados ao fechar a janela
-                GestaoApp gestaoApp = new GestaoApp();
                 gestaoApp.atualizaficheiro(gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getArtistas(),
                         gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists(), gestaoApp.rockstar.getCompras());
             }

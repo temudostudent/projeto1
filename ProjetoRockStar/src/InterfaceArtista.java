@@ -828,15 +828,6 @@ public class InterfaceArtista implements Serializable {
             painelMenu.add(botaoMusicas);
             painelMenu.add(botaoEstatisticas);
             painelMenu.add(username1);
-            janelaArtista.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    // Salva os dados ao fechar a janela
-                    GestaoApp gestaoApp = new GestaoApp();
-                    gestaoApp.atualizaficheiro(gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getArtistas(),
-                            gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists(), gestaoApp.rockstar.getCompras());
-                }
-            });
 
 
             //Adicionar à janela os paineis
@@ -861,6 +852,16 @@ public class InterfaceArtista implements Serializable {
             menuAlbum.addActionListener(e->trocarPainel(painelAlbum));
             botaoEstatisticas.addActionListener(e-> trocarPainel(painelEstatisticas));
 
+            janelaArtista.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // Salva os dados ao fechar a janela
+
+                    app.atualizaficheiro(app.rockstar.getClientes(), app.rockstar.getArtistas(),
+                            app.rockstar.getMusicas(), app.rockstar.getPlaylists(), app.rockstar.getCompras());
+                }
+            });
+
 
             //Caracteristicas janela
             janelaArtista.setSize(1200, 800);
@@ -868,7 +869,7 @@ public class InterfaceArtista implements Serializable {
             janelaArtista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             janelaArtista.setLocationRelativeTo(null);
             janelaArtista.setResizable(false);
-            janelaArtista.setVisible(true);
+            janelaArtista.setVisible(false);
         }
 
         //Método para efetuar a troca de painéis

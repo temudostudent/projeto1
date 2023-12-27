@@ -51,6 +51,7 @@ public class GestaoApp implements Serializable {
                 oS.writeObject(rockstar.getClientes());
                 oS.close();
             } catch (IOException e) {
+                System.out.println(e);
 
             }
         }
@@ -62,9 +63,11 @@ public class GestaoApp implements Serializable {
                     this.rockstar.setClientes((ArrayList<Cliente>) iS.readObject());
                     iS.close();
                 } catch (ClassNotFoundException y) {
+                    System.out.println(y);
 
                 }
             } catch (IOException e) {
+                System.out.println(e);
 
             }
         }
@@ -76,16 +79,17 @@ public class GestaoApp implements Serializable {
 
             rockstar.adicionarArtista(artista);
 
-
             try {
                 this.fileArtistas.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
                 oS.writeObject(rockstar.getArtistas());
                 oS.close();
             } catch (IOException e) {
+                System.out.println(e);
 
             }
         }
+        //CASO 2:FICHEIRO EXISTE --> ler o ficheiro
         else {
 
             try {
@@ -97,6 +101,7 @@ public class GestaoApp implements Serializable {
 
                 }
             } catch (IOException e) {
+                System.out.println(e);
 
             }
 
@@ -115,6 +120,7 @@ public class GestaoApp implements Serializable {
 
             }
         }
+        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
         else {
 
             try {
@@ -143,6 +149,7 @@ public class GestaoApp implements Serializable {
 
             }
         }
+        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
         else {
 
             try {
@@ -161,6 +168,8 @@ public class GestaoApp implements Serializable {
 
        //File Compras
         if (!this.fileCompras.exists()) {
+
+
             try {
                 this.fileCompras.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileCompras));

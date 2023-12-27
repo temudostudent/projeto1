@@ -3,6 +3,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class InterfaceCliente implements Serializable {
             InterfaceCliente janela = new InterfaceCliente(cliente, app);
             janelaCliente.setVisible(true);
         }catch (Exception e){
+            System.out.println(e);
 
         }
     }
@@ -457,6 +460,14 @@ public class InterfaceCliente implements Serializable {
         botaoPlayList.addActionListener(e->trocarPainel(painelPlayList));
         botaoPesquisar.addActionListener(e->trocarPainel(painelPesquisarCliente));
         botaoCarrinho.addActionListener(e->trocarPainel(painelCarrinho));
+        janelaCliente.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Salva os dados ao fechar a janela
+                app.atualizaficheiro(app.rockstar.getClientes(), app.rockstar.getArtistas(),
+                        app.rockstar.getMusicas(), app.rockstar.getPlaylists(), app.rockstar.getCompras());
+            }
+        });
 
         //Caracteristicas janela
         janelaCliente.setSize(1200, 800);
@@ -464,7 +475,7 @@ public class InterfaceCliente implements Serializable {
         janelaCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janelaCliente.setLocationRelativeTo(null);
         janelaCliente.setResizable(false);
-        janelaCliente.setVisible(true);
+        janelaCliente.setVisible(false);
 
     }
 
