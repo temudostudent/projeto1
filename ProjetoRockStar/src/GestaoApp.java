@@ -14,7 +14,7 @@ public class GestaoApp implements Serializable {
 
     // Construtor:
     public GestaoApp() {
-        // INICIALIZA O A LIVRARIA:
+        // INICIALIZA A APP:
         this.rockstar = new Aplicacao();
         iS = null;
         // CRIA FICHEIROS:
@@ -40,12 +40,11 @@ public class GestaoApp implements Serializable {
     @SuppressWarnings("unchecked")
     protected void run() {
 
-        //UTILIZADORES
-        // CASO 1--> É criado 1 admin e 1 funcionario
+        //File Clientes
         if (!this.fileClientes.exists()) {
             Cliente cliente = new Cliente("vania", "1234");
 
-            // De seguida � efectuada a cria�ao do ficheiro:
+            // De seguida � efectuada a criação do ficheiro:
             try {
                 this.fileClientes.createNewFile();
                 oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
@@ -55,7 +54,7 @@ public class GestaoApp implements Serializable {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE ---> ler o ficheiro existente
+        //FICHEIRO EXISTE ---> ler o ficheiro existente
         else {
             try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileClientes));
@@ -71,7 +70,7 @@ public class GestaoApp implements Serializable {
         }
 
 
-        // CASO 1: FICHEIRO NAO EXISTE--->crio um novo ficheiro
+        // File Artistas
         if (!this.fileArtistas.exists()) {
             Artista artista = new Artista("cesar", "1234", "0000");
 
@@ -87,7 +86,6 @@ public class GestaoApp implements Serializable {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE --> ler o ficheiro
         else {
 
             try {
@@ -103,7 +101,7 @@ public class GestaoApp implements Serializable {
             }
 
         }
-        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+        //File Músicas
         if (!this.fileMusicas.exists()) {
             Musica musica = new Musica("Hero", "beyonce", 3.4, "rock", true);
             rockstar.adicionarMusica(musica);
@@ -117,7 +115,6 @@ public class GestaoApp implements Serializable {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
         else {
 
             try {
@@ -134,7 +131,8 @@ public class GestaoApp implements Serializable {
 
         }
 
-        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+        //File Playlist
+
         if (!this.filePlayLists.exists()) {
             try {
                 this.filePlayLists.createNewFile();
@@ -145,7 +143,6 @@ public class GestaoApp implements Serializable {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
         else {
 
             try {
@@ -162,10 +159,8 @@ public class GestaoApp implements Serializable {
 
         }
 
-        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+       //File Compras
         if (!this.fileCompras.exists()) {
-
-
             try {
                 this.fileCompras.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileCompras));
@@ -175,9 +170,7 @@ public class GestaoApp implements Serializable {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
         else {
-
             try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileCompras));
                 try {
@@ -187,11 +180,8 @@ public class GestaoApp implements Serializable {
 
                 }
             } catch (IOException e) {
-
             }
-
         }
-
     }
 
     //GUARDAR OS FICHEIROS
@@ -233,7 +223,5 @@ public class GestaoApp implements Serializable {
             oS.close();
         } catch (IOException e) {
         }
-
-
     }
 }

@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Compra {
+public class Compra implements Serializable{
     private Integer ultimoID = 0;
 
     private Integer id_compra;

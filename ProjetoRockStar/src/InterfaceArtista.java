@@ -316,7 +316,10 @@ public class InterfaceArtista implements Serializable {
                     }
                     double preco= Double.parseDouble(caixaCusto.getText());
 
-                    artista.novaMusica(titulo,duracao,genero,estadoMusica,preco);
+                    Musica m = artista.novaMusica(titulo,duracao,genero,estadoMusica,preco);
+
+                    artista.addMusica(m);
+                    app.rockstar.addMusica(m);
 
                     caixaTituloMusica.setText("");
                     caixaDuracao.setText("");
@@ -817,7 +820,7 @@ public class InterfaceArtista implements Serializable {
             botaoEstatisticas = new JButton("ESTATÍSTICAS");
             botaoEstatisticas.setBounds(70,400, 250,100);
             botaoEstatisticas.setFont(new Font("Arial", Font.BOLD, 20));
-            username1 =new JLabel("USERNAME");
+            username1 =new JLabel("Olá " + artista.getUsername());
             username1.setBounds(70, 70, 250, 20);
 
             //Adicional componentes ao painel

@@ -434,7 +434,7 @@ public class InterfaceCliente implements Serializable {
         botaoCarrinho = new JButton("CARRINHO");
         botaoCarrinho.setBounds(70, 400, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
-        username = new JLabel("USERNAME");
+        username = new JLabel(cliente.getUsername());
         username.setBounds(70, 70, 250, 20);
 
         //Adicional componentes ao painel
