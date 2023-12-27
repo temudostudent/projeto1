@@ -7,9 +7,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class JanelaInicial {
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> createAndShowGUI());
-    }*/
     JPanel painelTitulo,painelInicial,painelRegistar,painelLogin;
     JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR, segurancaPassword;
     JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;

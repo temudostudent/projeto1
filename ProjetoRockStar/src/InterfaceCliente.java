@@ -16,7 +16,7 @@ public class InterfaceCliente implements Serializable {
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
-            removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists;
+            removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists, criarPlaylistPreenchida;
     private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
@@ -347,6 +347,27 @@ public class InterfaceCliente implements Serializable {
         });
         removerMusicaPlayList = new JButton("REMOVER MÚSICA PLAYLIST");
         removerMusicaPlayList.setBounds(500, 250, 220,40);
+        criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
+
+        criarPlaylistPreenchida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                String nomeNovaPlaylist = JOptionPane.showInputDialog(frame, "Indique o género da nova playlist:");
+                String tamanho = JOptionPane.showInputDialog(frame, "Indique o tamanho da nova playlist:");
+                if (tamanho != null && !tamanho.isEmpty()) {
+                        // Tenta converter a string para um inteiro
+                        int tamanho1 = Integer.parseInt(tamanho);
+
+
+                        //  Cria a playlist com genero e tamanho pretendido.
+
+                } else {
+
+
+                }
+            }
+        });
 
         //Adicionar componentes ao painel
         painelPlayList.add(caixaListarPlayLists);painelPlayList.add(listaMusicasPlayList);
