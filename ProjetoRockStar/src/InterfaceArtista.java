@@ -817,7 +817,7 @@ public class InterfaceArtista implements Serializable {
                     // Salva os dados ao fechar a janela
                     GestaoApp gestaoApp = new GestaoApp();
                     gestaoApp.atualizaficheiro(gestaoApp.rockstar.getClientes(), gestaoApp.rockstar.getArtistas(),
-                            gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists());
+                            gestaoApp.rockstar.getMusicas(), gestaoApp.rockstar.getPlaylists(), gestaoApp.rockstar.getCompras());
                 }
             });
 

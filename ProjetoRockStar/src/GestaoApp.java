@@ -8,6 +8,7 @@ public class GestaoApp implements Serializable {
     private File fileArtistas;
     private File filePlayLists;
     private File fileMusicas;
+    private File fileCompras;
     private ObjectInputStream iS;
     private ObjectOutputStream oS;
 
@@ -21,6 +22,7 @@ public class GestaoApp implements Serializable {
         this.fileArtistas = new File("fileArtistas.dat");
         this.fileMusicas = new File("fileMusicas.dat");
         this.filePlayLists = new File("filePlaylists.dat");
+        this.fileCompras = new File("fileCompras.dat");
     }
 
 
@@ -36,173 +38,155 @@ public class GestaoApp implements Serializable {
 
     //METODO RUN()  INCLUI AUTOMATICAMENTE LEITURA E CRIACAO DOS FICHEIROS
     @SuppressWarnings("unchecked")
-    protected void run()
-    {
+    protected void run() {
 
         //UTILIZADORES
-        // CASO 1--> � criado 1 admin e 1 funcionario
-        if(!this.fileClientes.exists())
-        {
+        // CASO 1--> É criado 1 admin e 1 funcionario
+        if (!this.fileClientes.exists()) {
             Cliente cliente = new Cliente("vania", "1234");
 
             // De seguida � efectuada a cria�ao do ficheiro:
-            try
-            {
+            try {
                 this.fileClientes.createNewFile();
                 oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
                 oS.writeObject(rockstar.getClientes());
                 oS.close();
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
         }
         //CASO 2:FICHEIRO EXISTE ---> ler o ficheiro existente
-        else
-        {
-            try
-            {
+        else {
+            try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileClientes));
-                try
-                {
+                try {
                     this.rockstar.setClientes((ArrayList<Cliente>) iS.readObject());
                     iS.close();
-                }
-                catch(ClassNotFoundException y)
-                {
+                } catch (ClassNotFoundException y) {
 
                 }
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
         }
 
-        // CARRINHOS
+
         // CASO 1: FICHEIRO NAO EXISTE--->crio um novo ficheiro
-        if(!this.fileArtistas.exists())
-        {
+        if (!this.fileArtistas.exists()) {
             Artista artista = new Artista("cesar", "1234", "0000");
 
-            //	c1.updateCarrinho(1, 2);
             rockstar.adicionarArtista(artista);
 
 
-            try
-            {
+            try {
                 this.fileArtistas.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
                 oS.writeObject(rockstar.getArtistas());
                 oS.close();
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
         }
         //CASO 2:FICHEIRO EXISTE --> ler o ficheiro
-        else
-        {
+        else {
 
-            try
-            {
+            try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileArtistas));
-                try
-                {
+                try {
                     this.rockstar.setArtistas((ArrayList<Artista>) iS.readObject());
                     iS.close();
-                }
-                catch(ClassNotFoundException y)
-                {
+                } catch (ClassNotFoundException y) {
 
                 }
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
 
         }
-        //LIVROS
         //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
-        if(!this.fileMusicas.exists())
-        {
+        if (!this.fileMusicas.exists()) {
             Musica musica = new Musica("Hero", "beyonce", 3.4, "rock", true);
             rockstar.adicionarMusica(musica);
 
-            try
-            {
+            try {
                 this.fileMusicas.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
                 oS.writeObject(rockstar.getMusicas());
                 oS.close();
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE -- > l� o ficheiro existente
-        else
-        {
+        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
+        else {
 
-            try
-            {
+            try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileMusicas));
-                try
-                {
+                try {
                     this.rockstar.setMusicas((ArrayList<Musica>) iS.readObject());
                     iS.close();
-                }
-                catch(ClassNotFoundException y)
-                {
+                } catch (ClassNotFoundException y) {
 
                 }
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
 
         }
 
-        //VENDAS
         //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
-        if(!this.filePlayLists.exists())
-        {
-            try
-            {
+        if (!this.filePlayLists.exists()) {
+            try {
                 this.filePlayLists.createNewFile();
                 this.oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
                 oS.writeObject(rockstar.getPlaylists());
                 oS.close();
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
 
             }
         }
-        //CASO 2:FICHEIRO EXISTE -- > l� o ficheiro existente
-        else
-        {
+        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
+        else {
 
-            try
-            {
+            try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.filePlayLists));
-                try
-                {
+                try {
                     this.rockstar.setPlaylists((ArrayList<PlayList>) iS.readObject());
                     iS.close();
-                }
-                catch(ClassNotFoundException y)
-                {
+                } catch (ClassNotFoundException y) {
 
                 }
+            } catch (IOException e) {
+
             }
-            catch(IOException e)
-            {
+
+        }
+
+        //CASO 1:FICHEIRO NAO EXISTE --> cria um novo ficheiro
+        if (!this.fileCompras.exists()) {
+
+
+            try {
+                this.fileCompras.createNewFile();
+                this.oS = new ObjectOutputStream(new FileOutputStream(this.fileCompras));
+                oS.writeObject(rockstar.getCompras());
+                oS.close();
+            } catch (IOException e) {
+
+            }
+        }
+        //CASO 2:FICHEIRO EXISTE -- > lê o ficheiro existente
+        else {
+
+            try {
+                this.iS = new ObjectInputStream(new FileInputStream(this.fileCompras));
+                try {
+                    this.rockstar.setCompras((ArrayList<Compra>) iS.readObject());
+                    iS.close();
+                } catch (ClassNotFoundException y) {
+
+                }
+            } catch (IOException e) {
 
             }
 
@@ -212,50 +196,44 @@ public class GestaoApp implements Serializable {
 
     //GUARDAR OS FICHEIROS
     //CHAMADO em caso de logOut / fecho janela
-    protected void atualizaficheiro(ArrayList<Cliente> clientes, ArrayList<Artista> artistas,ArrayList <Musica> musicas,ArrayList <PlayList>playLists)
-    {
-        try
-        {
+    protected void atualizaficheiro(ArrayList<Cliente> clientes, ArrayList<Artista> artistas, ArrayList<Musica> musicas,
+                                    ArrayList<PlayList> playLists, ArrayList<Compra> compras) {
+        try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileClientes));
             oS.writeObject(clientes);
             oS.close();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
 
         }
 
-        try
-        {
+        try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
             oS.writeObject(artistas);
             oS.close();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
 
         }
-        try
-        {
+        try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
             oS.writeObject(musicas);
             oS.close();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
 
         }
-        try
-        {
+        try {
             oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
             oS.writeObject(playLists);
             oS.close();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
 
         }
+        try {
+            oS = new ObjectOutputStream(new FileOutputStream(this.fileCompras));
+            oS.writeObject(compras);
+            oS.close();
+        } catch (IOException e) {
+        }
+
+
     }
-
-
 }
