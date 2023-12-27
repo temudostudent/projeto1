@@ -4,32 +4,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.IOException;
 
-public class TesteJanelaProj {
-    public static void main(String[] args) {
+public class JanelaInicial {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> createAndShowGUI());
+    }*/
+    JPanel painelTitulo,painelInicial,painelRegistar,painelLogin;
+    JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
+    JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
+    JFrame f;
+    public void run(){
+        try{
+            JanelaInicial inicio = new JanelaInicial();
+            inicio.f.setVisible(true);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    private static void createAndShowGUI() {
-        JPanel painelTitulo,painelInicial,painelRegistar,painelLogin;
-        JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR;
-        JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
+    public JanelaInicial() throws IOException, ClassNotFoundException {
+        initialize();
+    }
+
+    private void initialize() throws IOException, ClassNotFoundException {
 
         GestaoApp gestaoApp = new GestaoApp();
         gestaoApp.run();
 
         //Criar Frame
-        JFrame f = new JFrame("Rockstar Inc");
+        f = new JFrame("Rockstar Inc");
         JFrame fPin = new JFrame("PIN");
 
         //Criar Paineis
@@ -206,10 +210,16 @@ public class TesteJanelaProj {
                     GestaoApp gestaoApp1 = new GestaoApp();
                     if(c != null){
                         new InterfaceCliente(c, gestaoApp1);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 } else if (gestaoApp.rockstar.tipoUtilizador(username) == 2) {
-                    if (gestaoApp.rockstar.loginArtista(username, password)) {
+
+                    Artista artista = gestaoApp.rockstar.loginArtista(username,password);
+
+                    if (artista != null) {
                         fPin.setVisible(true);
 
                     } else {
@@ -307,7 +317,19 @@ public class TesteJanelaProj {
             public void actionPerformed(ActionEvent e) {
                 String pin = cxPinL.getText();
                 String username = cxUsernameL.getText();
-                gestaoApp.rockstar.verificarPINArtista(username, pin);
+                String password = cxPassL.getText();
+
+                if (gestaoApp.rockstar.verificarPINArtista(username, pin)==true){
+                    Artista artista = gestaoApp.rockstar.loginArtista(username, password);
+                    GestaoApp gestaoApp1 = new GestaoApp();
+                    if(artista != null){
+                        new InterfaceArtista(artista, gestaoApp1);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+
             }
         });
 
