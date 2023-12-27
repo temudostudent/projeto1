@@ -55,7 +55,6 @@ public class InterfaceArtista implements Serializable {
             // criar janela
             janelaArtista = new JFrame();
 
-            artista.novaMusica("musica1", 3.20, "rock", true, 0);
 
             //Criar Painel Pesquisar -------------------------------------------------
             painelPesquisar = new JPanel();
@@ -781,10 +780,6 @@ public class InterfaceArtista implements Serializable {
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
 
-            artista.criarAlbum("Rock1", "Rock");
-            artista.criarAlbum("Rock2", "Pimba");
-            artista.criarAlbum("Rock2", "Pimba");
-            artista.criarAlbum("Rock3", "Jazz");
 
 
             //Adicionar componentes do painel Estatísticas

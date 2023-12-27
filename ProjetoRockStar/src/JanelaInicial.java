@@ -223,6 +223,7 @@ public class JanelaInicial {
                     if (artista != null) {
                         fPin.setVisible(true);
 
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -321,15 +322,19 @@ public class JanelaInicial {
                 String password = cxPassL.getText();
 
                 if (gestaoApp.rockstar.verificarPINArtista(username, pin)==true){
+                    fPin.setVisible(false);
                     Artista artista = gestaoApp.rockstar.loginArtista(username, password);
 
                     if(artista != null){
-                        new InterfaceArtista(artista, gestaoApp);
+
+                        InterfaceArtista ia = new InterfaceArtista(artista, gestaoApp);
+                        ia.run();
                         f.setVisible(false);
-                    }else {
-                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                                JOptionPane.INFORMATION_MESSAGE);
                     }
+
+                }else {
+                    JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
