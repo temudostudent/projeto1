@@ -18,10 +18,8 @@ public class InterfaceCliente implements Serializable {
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
-            removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
-            removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists, criarPlaylistPreenchida;
-            removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList, ordenarPesquisa, okPesquisa,
-            removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists;
+            criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
+            ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists;
     private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
@@ -203,70 +201,72 @@ public class InterfaceCliente implements Serializable {
                 String selecao = (String) ordenarMusicaPor.getSelectedItem();
                 listaM = new ArrayList<>();
 
-                if (botaoTodasAsMusicas.isSelected()){
+                if (botaoTodasAsMusicas.isSelected()) {
 
                     listaM.addAll(app.rockstar.getMusicas());
 
-                if (botaoTodasAsMusicas.isSelected()){
+                    if (botaoTodasAsMusicas.isSelected()) {
 
-                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
-                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
-                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
-                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()){
-                        app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
-                    }
-
-                } else if (botaoParaPesquisarMusicas.isSelected()) {
-
-                    ArrayList<Object[]> copia=new ArrayList<Object[]>();
-
-                    for (int i=0;i<listarItems.getRowCount();i++){
-                        Object[] linha = new Object[tabelaResultadoPesquisa.getColumnCount()];
-                        for (int j=0;j < tabelaResultadoPesquisa.getColumnCount();j++){
-                            linha[j]=listarItems.getValueAt(i,j);
+                        if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
+                        } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                            app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
+                        } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
+                        } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                         }
-                        copia.add(linha);
-                    }
 
-                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.rockstar.ordenarMusicasCrescentePorTitulo(copia);
-                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.rockstar.ordendarMusicasDecrescentePorTitulo(copia);
-                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                        app.rockstar.ordenarMusicasCrescentePorGenero(copia);
-                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()){
-                        app.rockstar.ordenarMusicasCrescentePorGenero(copia);
+                    } else if (botaoParaPesquisarMusicas.isSelected()) {
+
+                        ArrayList<Object[]> copia = new ArrayList<Object[]>();
+
+                        for (int i = 0; i < listarItems.getRowCount(); i++) {
+                            Object[] linha = new Object[tabelaResultadoPesquisa.getColumnCount()];
+                            for (int j = 0; j < tabelaResultadoPesquisa.getColumnCount(); j++) {
+                                linha[j] = listarItems.getValueAt(i, j);
+                            }
+                            copia.add(linha);
+                        }
+
+                        if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasCrescentePorTitulo(copia);
+                        } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                            app.rockstar.ordendarMusicasDecrescentePorTitulo(copia);
+                        } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasCrescentePorGenero(copia);
+                        } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                            app.rockstar.ordenarMusicasCrescentePorGenero(copia);
+                        }
                     }
+                    // Adicionar uma coluna à tabela
+                    listarItems.addColumn("TÍTULO");
+                    listarItems.addColumn("ARTISTA");
+                    listarItems.addColumn("DATA");
+                    listarItems.addColumn("DURACAO");
+                    listarItems.addColumn("GENERO");
+                    listarItems.addColumn("ESTADO");
+                    listarItems.addColumn("PREÇO (€)");
+                    listarItems.addColumn("RATING");
+
+                    // Adicionar os títulos das colunas Na primeira linha
+                    listarItems.addRow(new Object[]{"TÍTULO", "ARTISTA", "DATA", "DURAÇÃO", "GÉNERO", "ESTADO", "PREÇO (€)", "RATING"});
+
+                    // Adicionar os elementos do ArrayList à tabela
+                    for (Musica musica : listaM) {
+                        if (musica instanceof MusicaPaga) {
+                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                        } else {
+                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
+                        }
+                    }
+                    tabelaResultadoPesquisa.setModel(listarItems);
                 }
-                // Adicionar uma coluna à tabela
-                listarItems.addColumn("TÍTULO");
-                listarItems.addColumn("ARTISTA");
-                listarItems.addColumn("DATA");
-                listarItems.addColumn("DURACAO");
-                listarItems.addColumn("GENERO");
-                listarItems.addColumn("ESTADO");
-                listarItems.addColumn("PREÇO (€)");
-                listarItems.addColumn("RATING");
-
-                // Adicionar os títulos das colunas Na primeira linha
-                listarItems.addRow(new Object[]{"TÍTULO","ARTISTA","DATA", "DURAÇÃO", "GÉNERO", "ESTADO","PREÇO (€)","RATING"});
-
-                // Adicionar os elementos do ArrayList à tabela
-                for (Musica musica : listaM) {
-                    if (musica instanceof MusicaPaga) {
-                        listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
-                    }else {
-                        listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
-                    }
-                }
-                tabelaResultadoPesquisa.setModel(listarItems);
             }
         });
+
 
 
         //JComboBox
@@ -670,6 +670,6 @@ public class InterfaceCliente implements Serializable {
         DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
         caixaListarPlayLists.setModel(model);
     }
-
 }
+
 
