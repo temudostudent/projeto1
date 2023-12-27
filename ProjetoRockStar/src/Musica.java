@@ -12,7 +12,7 @@ public class Musica implements Serializable {
     protected LocalDateTime dataCriacao;
     protected double duracao;
     protected String genero;
-    protected ArrayList<Integer> rating;
+    protected ArrayList<Integer> rating=new ArrayList<>();
     protected double ratingMedia;
     protected boolean estado;
 
@@ -24,8 +24,9 @@ public class Musica implements Serializable {
         this.duracao = duracao;
         this.genero = genero;
         this.estado = estado;
+        this.ratingMedia = ratingMedia;
+        this.rating=rating;
     }
-
 
     //adicionar Rating à respetiva
     public void addRating(int valor){
@@ -43,12 +44,14 @@ public class Musica implements Serializable {
 
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
-    private void setRatingMedia(){
-        this.ratingMedia=(double)(somaRatings()/rating.size());
-    }
 
-    public double getRatingMedia() {
-        return ratingMedia;
+    public String getRatingMedia() {
+
+        if (rating.size()==0){
+            return "NA";
+        }else this.ratingMedia=(double)(somaRatings()/rating.size());
+
+        return String.valueOf(ratingMedia);
     }
 
     //get título

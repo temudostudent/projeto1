@@ -55,10 +55,9 @@ public class InterfaceArtista implements Serializable {
             // criar janela
             janelaArtista = new JFrame();
 
-
             //Criar Painel Pesquisar -------------------------------------------------
             painelPesquisar = new JPanel();
-            painelPesquisar.setBackground(new Color(225,145,102));
+            painelPesquisar.setBackground(new Color(255,178,102));
             painelPesquisar.setBounds(340,200,780,500);
             painelPesquisar.setLayout(null);
 
@@ -252,7 +251,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar Painel Musicas
             painelMusicas = new JPanel();
-            painelMusicas.setBackground(new Color(225,145,102));
+            painelMusicas.setBackground(new Color(255,178,102));
             painelMusicas.setBounds(340,200,780,500);
             painelMusicas.setLayout(null);
 
@@ -271,7 +270,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar painel Adicionar Musicas
             painelAdicionarMusica = new JPanel();
-            painelAdicionarMusica.setBackground(new Color(225,145,102));
+            painelAdicionarMusica.setBackground(new Color(255,178,102));
             painelAdicionarMusica.setBounds(340,200,780,500);
             painelAdicionarMusica.setLayout(null);
 
@@ -318,7 +317,7 @@ public class InterfaceArtista implements Serializable {
                     Musica m = artista.novaMusica(titulo,duracao,genero,estadoMusica,preco);
 
                     artista.addMusica(m);
-                    app.rockstar.addMusica(m);
+                    app.rockstar.adicionarMusica(m);
 
                     caixaTituloMusica.setText("");
                     caixaDuracao.setText("");
@@ -347,7 +346,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar Painel Editar Dados
             painelEditarDados = new JPanel();
-            painelEditarDados.setBackground(new Color(225,145,102));
+            painelEditarDados.setBackground(new Color(255,178,102));
             painelEditarDados.setBounds(340,200,780,500);
             painelEditarDados.setLayout(null);
 
@@ -380,12 +379,12 @@ public class InterfaceArtista implements Serializable {
                         // Adicionar uma coluna à tabela
                         listaMusicas.addColumn("TÍTULO");
                         listaMusicas.addColumn("DATA");
-                        listaMusicas.addColumn("DURACAO");
-                        listaMusicas.addColumn("GENERO");
+                        listaMusicas.addColumn("DURACÃO");
+                        listaMusicas.addColumn("GÉNERO");
                         listaMusicas.addColumn("ESTADO");
 
                         // Adicionar os títulos das colunas como a primeira linha
-                        listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                        listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURAÇÃO", "GÉNERO", "ESTADO"});
 
 
                         // Adicionar os elementos do ArrayList à tabela
@@ -581,7 +580,7 @@ public class InterfaceArtista implements Serializable {
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();
-            painelAlbum.setBackground(new Color(225,145,102));
+            painelAlbum.setBackground(new Color(255,178,102));
             painelAlbum.setBounds(340,200,780,500);
             painelAlbum.setLayout(null);
 
@@ -724,7 +723,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar painel Estatisticas-------------------------------------------------------
             painelEstatisticas = new JPanel();
-            painelEstatisticas.setBackground(new Color(225,145,102));
+            painelEstatisticas.setBackground(new Color(255,178,102));
             painelEstatisticas.setBounds(340,200,780,500);
             painelEstatisticas.setLayout(null);
 
@@ -794,7 +793,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar painel fixo Titulo  ----------------------------------------------
             painelTitulo = new JPanel();
-            painelTitulo.setBackground(new Color(225,145,102));
+            painelTitulo.setBackground(new Color(255,178,102));
             painelTitulo.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
             titulo = new JLabel("ROCKSTAR.INC");
             titulo.setFont(new Font("Magneto", Font.BOLD, 80));
@@ -802,7 +801,7 @@ public class InterfaceArtista implements Serializable {
 
             //Criar Painel Fixo Menu  ----------------------------------------------------
             painelMenu = new JPanel();
-            painelMenu.setBackground(new Color(225,145,102));
+            painelMenu.setBackground(new Color(255,178,102));
             painelMenu.setLayout(null);
 
             //Criar componentes do painel Menu Fixo--------------------------------------

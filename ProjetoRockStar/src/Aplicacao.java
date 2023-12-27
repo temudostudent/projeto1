@@ -102,10 +102,6 @@ public class Aplicacao implements Serializable {
         return login;
     }
 
-    public void addMusica(Musica m){
-        musicas.add(m);
-    }
-
 
     //Listar músicas
     public void listarMusicas(){
@@ -126,7 +122,7 @@ public class Aplicacao implements Serializable {
     }
 
     //Ordenar a lista de musicas pelo título de forma descendente
-    public void ordendarDecrescentePorTitulo(){
+    public void ordenarDecrescentePorTitulo(){
         Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
         musicas.sort(comparador);
     }
@@ -201,6 +197,35 @@ public class Aplicacao implements Serializable {
 
         Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero).reversed();
         lista.sort(comparador);
+    }
+
+    public ArrayList<Musica> listaMusicasDeTitulo(String titulo){
+        ArrayList<Musica> novaLista = new ArrayList<>();
+        for(Musica m : musicas){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
+                novaLista.add(m);
+            }
+        }
+        return novaLista;
+    }
+
+    public ArrayList<Musica> listaMusicasDeArtista(String artista){
+        ArrayList<Musica> novaLista = new ArrayList<>();
+        for(Musica m : musicas){
+            if(m.getNomeArtista().equalsIgnoreCase(artista)){
+                novaLista.add(m);
+            }
+        }
+        return novaLista;
+    }
+    public Musica pesquisaObjetoTitulo(String titulo){
+        Musica objeto = null;
+        for(Musica m : musicas){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
+                objeto = m;
+            }
+        }
+        return objeto;
     }
 
     public ArrayList<Cliente> getClientes() {

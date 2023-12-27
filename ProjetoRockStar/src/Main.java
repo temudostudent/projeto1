@@ -13,12 +13,5 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //new InterfaceArtista();
-
-        //Cliente c=new Cliente();
-
-
-        //GestaoApp gb=new GestaoApp();
-       //new InterfaceCliente(c,gb);
     }
 }
