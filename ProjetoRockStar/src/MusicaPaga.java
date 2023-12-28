@@ -30,6 +30,11 @@ public class MusicaPaga extends Musica implements Serializable {
         this.historicoPreco.put(LocalDateTime.now(),novoPreco);
     }
 
+
+    public Map<LocalDateTime, Double> getHistoricoPreco() {
+        return historicoPreco;
+    }
+
     public double getPreco() {return preco;}
 
     public void setPreco(double preco) {

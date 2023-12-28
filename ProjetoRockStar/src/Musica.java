@@ -28,6 +28,10 @@ public class Musica implements Serializable {
         this.rating=rating;
     }
 
+    public Musica() {
+
+    }
+
     //adicionar Rating à respetiva
     public void addRating(int valor){
         rating.add(valor);
