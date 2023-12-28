@@ -44,4 +44,12 @@ public class MusicaPaga extends Musica implements Serializable {
 
         adicionarRegisto(preco);
     }
+    @Override
+    public String tipoEstado(){
+        if(getEstado() == true){
+            return "ATIVA";
+        }else{
+            return "INATIVA";
+        }
+    }
 }
