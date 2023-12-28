@@ -36,6 +36,8 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         return this.nome;
     }
 
+    public int getNumMusicas(){return this.musicas.size();}
+
     //Mostra a visibilidade
     public boolean isVisibilidade() {
         return this.visibilidade;

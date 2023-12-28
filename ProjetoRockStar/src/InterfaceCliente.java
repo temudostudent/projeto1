@@ -15,7 +15,7 @@ public class InterfaceCliente implements Serializable {
     private Cliente cliente;
     private GestaoApp app;
     private ArrayList<Musica> listaM;
-    private JFrame janelaCliente;
+    private JFrame janelaCliente, janelaPlaylists;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
@@ -168,6 +168,12 @@ public class InterfaceCliente implements Serializable {
 
         adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
         adicionarPlayList.setBounds(310,450,200,40);
+        adicionarPlayList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaDasPlaylists(cliente.getPlaylists(),true);
+            }
+        });
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
         adicionarCarrinho.setBounds(80,450 ,200,40);
         adicionarCarrinho.addActionListener(new ActionListener() {
@@ -261,8 +267,11 @@ public class InterfaceCliente implements Serializable {
         //JTable
         tabelaResultadoPesquisa = new JTable();
         tabelaResultadoPesquisa.setBounds(50,200,800,200);
-        scrollPane = new JScrollPane(tabelaResultadoPesquisa, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        tabelaResultadoPesquisa.setPreferredScrollableViewportSize(tabelaResultadoPesquisa.getPreferredSize());
+        scrollPane = new JScrollPane(tabelaResultadoPesquisa);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         //JRadioButton
         botaoTodasAsMusicas = new JRadioButton("Ver todas as músicas");
@@ -325,8 +334,8 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.add(ordenarMusicaPor);
         painelPesquisarCliente.add(botaoDescendenteCliente);
         painelPesquisarCliente.add(botaoAscendenteCliente);
+        painelPesquisarCliente.add(scrollPane);
         painelPesquisarCliente.add(tabelaResultadoPesquisa);
-        painelPesquisarCliente.add(scrollPane, BorderLayout.CENTER);
         painelPesquisarCliente.add(ordenarPesquisa);
         painelPesquisarCliente.add(botaoParaPesquisarMusicas);
         painelPesquisarCliente.add(botaoTodasAsMusicas);
@@ -551,9 +560,12 @@ public class InterfaceCliente implements Serializable {
         valorTotalPagar.setBounds(400, 200, 250,40);
 
         //JTextField
-        mostrarValorPagar = new JTextField(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+        mostrarValorPagar = new JTextField("0.00 €");
         mostrarValorPagar.setBounds(400,250,100,40);
         mostrarValorPagar.setEditable(false);
+        if (cliente.compra!=null){
+            mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+        }
         mostrarSaldoCliente = new JTextField(String.format("%.2f",cliente.getSaldo()) + " €");
         mostrarSaldoCliente.setBounds(550,250,100,40);
         mostrarSaldoCliente.setEditable(false);
@@ -716,20 +728,63 @@ public class InterfaceCliente implements Serializable {
     private void tabelaCarrinho(){
         DefaultTableModel listarCarrinho = new DefaultTableModel();
 
-        ArrayList<MusicaPaga> meuCarrinho = cliente.compra.getCarrinho();
+        if (cliente.compra!=null){
+            ArrayList<MusicaPaga> meuCarrinho = cliente.compra.getCarrinho();
 
-        listarCarrinho.addColumn("TÍTULO");
-        listarCarrinho.addColumn("PREÇO");
+            listarCarrinho.addColumn("TÍTULO");
+            listarCarrinho.addColumn("PREÇO");
 
-        listarCarrinho.addRow(new Object[]{"TÍTULO","PREÇO"});
+            listarCarrinho.addRow(new Object[]{"TÍTULO","PREÇO"});
 
-        for (MusicaPaga m : meuCarrinho) {
-            listarCarrinho.addRow(new Object[]{m.getTitulo(), m.getPreco() + " €"});
+            for (MusicaPaga m : meuCarrinho) {
+                listarCarrinho.addRow(new Object[]{m.getTitulo(), m.getPreco() + " €"});
+            }
+
+            listaMusicasCarrinho.setModel(listarCarrinho);
         }
 
-        listaMusicasCarrinho.setModel(listarCarrinho);
+        if (cliente.compra!=null){
+            mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+        }
+    }
 
-        mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+    private void janelaDasPlaylists(ArrayList<PlayList> playlists,boolean visivel) {
+
+        janelaPlaylists = new JFrame();
+
+        DefaultTableModel modelo = new DefaultTableModel(new String[]{"Título", "Tamanho"}, 0);
+        JTable tabPlaylists = new JTable(modelo);
+
+        tabPlaylists.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tabPlaylists.setPreferredScrollableViewportSize(tabPlaylists.getPreferredSize());
+
+        JScrollPane scrollPanePl = new JScrollPane(tabPlaylists);
+        scrollPanePl.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPanePl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        janelaPlaylists.add(scrollPane, BorderLayout.CENTER);
+
+        JButton okButtonPl = new JButton("ADICIONAR");
+        janelaPlaylists.add(okButtonPl, BorderLayout.SOUTH);
+
+        String title = "Título";
+        String size = "Tamanho";
+        modelo.addRow(new String[]{title, size});
+
+        for (PlayList p : playlists) {
+            modelo.addRow(new Object[]{p.getNome(), p.getNumMusicas()});
+        }
+
+        janelaPlaylists.pack();
+        janelaPlaylists.setLocationRelativeTo(null);
+        janelaPlaylists.setVisible(visivel);
+
+        okButtonPl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaPlaylists.setVisible(false);
+            }
+        });
     }
 }
 

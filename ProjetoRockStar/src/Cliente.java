@@ -19,7 +19,6 @@ public class Cliente extends Utilizador implements Serializable {
         super(username, password);
         this.playlists = playlists;
         this.historicoCompras = historicoCompras;
-        this.compra = compra;
         super.saldo = 0;
     }
 
@@ -31,7 +30,6 @@ public class Cliente extends Utilizador implements Serializable {
             System.out.println(f);
         }
     }
-
 
     public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
@@ -119,6 +117,10 @@ public class Cliente extends Utilizador implements Serializable {
     @Override
     public int getTipo() {
         return 1;
+    }
+
+    public ArrayList<PlayList> getPlaylists() {
+        return playlists;
     }
 
     public void verPlayListCliente(int indiceSelecionado) {
