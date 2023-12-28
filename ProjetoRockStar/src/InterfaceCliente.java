@@ -111,8 +111,13 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                rating.setVisible(true);
+                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
+                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
+                if (object!=null){
+                    rating.setVisible(true);
+                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
             }
         });
 
