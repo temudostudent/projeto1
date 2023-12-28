@@ -128,6 +128,10 @@ public class JanelaInicial {
         voltar.setFont(new Font("Calibri",Font.BOLD,15));
         voltar.setBounds(1000,420,150,80);
 
+        JButton voltarRegisto = new JButton("Voltar ao início");
+        voltarRegisto.setFont(new Font("Calibri",Font.BOLD,15));
+        voltarRegisto.setBounds(1000,420,150,80);
+
 
         //Caixas de texto
 
@@ -255,6 +259,18 @@ public class JanelaInicial {
         painelRegistar.add(cxUsernameR);
         painelRegistar.add(cxPassR);
         painelRegistar.add(botaoRegistar2);
+        painelRegistar.add(voltarRegisto);
+
+        voltarRegisto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.remove(painelRegistar);
+                f.add(painelInicial);
+                f.repaint();
+                f.revalidate();
+            }
+        });
+
         botaoRegistar2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -498,7 +498,6 @@ public class InterfaceCliente implements Serializable {
 
                 } else {
 
-
                 }
             }
         });
@@ -667,6 +666,14 @@ public class InterfaceCliente implements Serializable {
             }
         });
 
+        botaoLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.atualizaficheiro(app.rockstar.getClientes(), app.rockstar.getArtistas(),
+                        app.rockstar.getMusicas(), app.rockstar.getPlaylists(), app.rockstar.getCompras());
+            }
+        });
+
         //Caracteristicas janela
         janelaCliente.setSize(1200, 800);
         janelaCliente.setLocation(100, 100);
@@ -703,10 +710,10 @@ public class InterfaceCliente implements Serializable {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " €", musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
             }else {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), "0 €", musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), "0", musica.getRatingMedia()});
             }
         }
     }

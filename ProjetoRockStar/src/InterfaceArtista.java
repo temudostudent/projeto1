@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class InterfaceArtista implements Serializable {
         private JComboBox caixaPesquisarMusica, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
-        private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum, tabela;
+        private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
         private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas), scrollPane3;
 
 
@@ -391,9 +392,10 @@ public class InterfaceArtista implements Serializable {
                         listaMusicas.addColumn("DURACÃO");
                         listaMusicas.addColumn("GÉNERO");
                         listaMusicas.addColumn("ESTADO");
+                        listaMusicas.addColumn("PREÇO");
 
                         // Adicionar os títulos das colunas como a primeira linha
-                        listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURAÇÃO", "GÉNERO", "ESTADO"});
+                        listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURAÇÃO", "GÉNERO", "ESTADO", "PREÇO"});
 
 
                         // Adicionar os elementos do ArrayList à tabela
@@ -431,30 +433,28 @@ public class InterfaceArtista implements Serializable {
                     } else if("ÁLBUM".equals(selecao)){
                         String tituloAlbum = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
-                        ArrayList<Musica> lista = new ArrayList<>();
-                        lista = artista.pesquisaMusicaAlbum(tituloAlbum);
+                        ArrayList<Musica> lista = artista.pesquisaMusicaAlbum(tituloAlbum);
 
-                        // Adicionar uma coluna à tabela
-                        listaMusicas.addColumn("TÍTULO");
-                        listaMusicas.addColumn("DATA");
-                        listaMusicas.addColumn("DURACAO");
-                        listaMusicas.addColumn("GENERO");
-                        listaMusicas.addColumn("ESTADO");
-
-                        // Adicionar os títulos das colunas como a primeira linha
-                        listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO"});
+                        //Constrói a tabela
+                        titulosDasColunasTabela(listaMusicas);
 
 
-                        // Adicionar os elementos do ArrayList à tabela
-                        for (Musica musica : lista) {
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.tipoEstado()});
-                        }
+                        //Adiciona os elementos da lista à tabela
+                        adicionarElementosTabela(lista,listaMusicas);
+                        /*JScrollPane areaRolamento = new JScrollPane(tabelaListaMusicas);
+                        areaRolamento.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                        areaRolamento.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        tabelaListaMusicas.setPreferredScrollableViewportSize(tabelaListaMusicas.getPreferredSize());
+                        tabelaListaMusicas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                        janelaArtista.add(areaRolamento);
                         tabelaListaMusicas.setModel(listaMusicas);
+                        painelEditarDados.add(areaRolamento);
+
+                         */
+
 
                     }else{
                         JOptionPane.showMessageDialog(null, " Música não encontrada!");
-
                     }
 
                 }
@@ -500,9 +500,10 @@ public class InterfaceArtista implements Serializable {
                             //Criar um Map para armazenar os valores
                             Map<LocalDateTime, Double> historicoPreco;
                             historicoPreco = ((MusicaPaga) object).getHistoricoPreco();
+                            DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
                             for (Map.Entry<LocalDateTime, Double> entry : historicoPreco.entrySet()) {
-                                Object[] rowData = {entry.getKey(), entry.getValue()};
+                                Object[] rowData = {formatoData.format(entry.getKey()), entry.getValue() + " € "};
                                 listaPrecos.addRow(rowData);
                             }
 
@@ -532,37 +533,49 @@ public class InterfaceArtista implements Serializable {
                                 if (!caixaAltearPreco.equals(null)) {
                                     object.setTitulo(caixaAltearPreco.getText());
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
+                                    atualizarTabelaMusicas();
                                 }else {
                                     JOptionPane.showMessageDialog(null, "Música não encontrada!");
 
                                 }
+
                             }else if (alterarEstado.isSelected()) {
                                 if (estadoAtivo1.isSelected() && object.getEstado()==false) {
                                     object.setEstado(true);
                                     app.rockstar.adicionarMusica(object);
 
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
+                                    atualizarTabelaMusicas();
                                 } else if(estadoInativo1.isSelected() && object.getEstado()==true){
                                     object.setEstado(false);
                                     app.rockstar.removerMusica(object);
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
+                                    atualizarTabelaMusicas();
                                 }
+
                             }
                             else if(alterarPreco1.isSelected()){
                                 if(object instanceof MusicaPaga){
                                     ((MusicaPaga) object).setPreco(Double.parseDouble(caixaAltearPreco.getText()));
+                                    JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
+                                    atualizarTabelaMusicas();
 
                                 }else{
                                     MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(),
                                             object.getNomeArtista(), object.getDuracao(), object.getGenero(),
                                             object.getEstado(), Double.parseDouble(caixaAltearPreco.getText()));
                                     artista.getMusicas().set(artista.encontrarPosicao(object),musicaPaga);
+                                    JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
+                                    atualizarTabelaMusicas();
+
                                 }
+
                             }
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Preencha o campo!");
                         }
+
                     }
                 }
 
@@ -574,35 +587,11 @@ public class InterfaceArtista implements Serializable {
             listarMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    DefaultTableModel listaMusicas = new DefaultTableModel();
-                    ArrayList<Musica> lista = new ArrayList<>();
-                            lista = artista.getMusicas();
-
-
-                    // Adicionar uma coluna à tabela
-                    listaMusicas.addColumn("TÍTULO");
-                    listaMusicas.addColumn("DATA");
-                    listaMusicas.addColumn("DURACAO");
-                    listaMusicas.addColumn("GENERO");
-                    listaMusicas.addColumn("ESTADO");
-                    listaMusicas.addColumn("PREÇO");
-
-                    // Adicionar os títulos das colunas Na primeira linha
-                    listaMusicas.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO", "PREÇO"});
-
-                    // Adicionar os elementos do ArrayList à tabela
-                    for (Musica musica : lista) {
-                        if(musica instanceof MusicaPaga) {
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
-                        }else{
-                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.tipoEstado(), "0"});
-                        }
-                    }
-                    tabelaListaMusicas.setModel(listaMusicas);
+                    atualizarTabelaMusicas();
                 }
             });
+
+
 
             //Adicionar componentes ao painel
             painelEditarDados.add(pesquisaTitulo);painelEditarDados.add(inserirTitulo);painelEditarDados.add(pesquisarMusica);
@@ -658,6 +647,7 @@ public class InterfaceArtista implements Serializable {
 
                     // Adicionar uma coluna à tabela
                     listaMusicasPAlbum.addColumn("Título");
+
 
                     // Adicionar os elementos do ArrayList à tabela
                     for (Musica musica : listaMusicasPainelAlbum) {
@@ -914,6 +904,14 @@ public class InterfaceArtista implements Serializable {
                 }
             });
 
+            botaoLogout.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    app.atualizaficheiro(app.rockstar.getClientes(), app.rockstar.getArtistas(),
+                            app.rockstar.getMusicas(), app.rockstar.getPlaylists(), app.rockstar.getCompras());
+                }
+            });
+
 
             //Caracteristicas janela
             janelaArtista.setSize(1200, 800);
@@ -939,5 +937,51 @@ public class InterfaceArtista implements Serializable {
             novoPainel.setVisible(true);
 
         }
+
+        public void atualizarTabelaMusicas (){
+
+                    DefaultTableModel listaMusicas = new DefaultTableModel();
+                    ArrayList<Musica> lista = new ArrayList<>();
+                    lista = artista.getMusicas();
+
+                    titulosDasColunasTabela(listaMusicas);
+
+                    // Adicionar os elementos do ArrayList à tabela
+                    for (Musica musica : lista) {
+                        if(musica instanceof MusicaPaga) {
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                        }else{
+                            listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                    musica.getGenero(), musica.tipoEstado(), "0"});
+                        }
+                    }
+                    tabelaListaMusicas.setModel(listaMusicas);
+
+        }
+    private void titulosDasColunasTabela(DefaultTableModel modelo){
+        modelo.addColumn("TÍTULO");
+        modelo.addColumn("DATA");
+        modelo.addColumn("DURACAO");
+        modelo.addColumn("GENERO");
+        modelo.addColumn("ESTADO");
+        modelo.addColumn("PREÇO (€)");
+
+        // Adicionar os títulos das colunas Na primeira linha
+        modelo.addRow(new Object[]{"TÍTULO", "DATA", "DURACAO", "GENERO", "ESTADO","PREÇO (€)"});
+
+    }
+
+    private void adicionarElementosTabela(ArrayList<Musica> lista,DefaultTableModel modelo){
+        for (Musica musica : lista) {
+            if (musica instanceof MusicaPaga) {
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+            }else {
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+                        musica.getGenero(), musica.tipoEstado(), "0", musica.getRatingMedia()});
+            }
+        }
+    }
 
 }
