@@ -181,8 +181,7 @@ public class InterfaceCliente implements Serializable {
                     cliente.compra.adicionarMusica((MusicaPaga) object);
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
-
-
+                mostrarValorPagar.setText(String.valueOf(cliente.compra.totalCarrinhoCliente()));
 
             }
         });
@@ -525,7 +524,7 @@ public class InterfaceCliente implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 double valor= Double.parseDouble(valorACarregar.getText());
                 cliente.alterarSaldo(valor);
-                mostrarSaldoCliente.setText(String.valueOf(cliente.getSaldo()));
+                mostrarSaldoCliente.setText(String.valueOf(cliente.getSaldo() + " €"));
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
@@ -639,18 +638,7 @@ public class InterfaceCliente implements Serializable {
         janelaCliente.setLocationRelativeTo(null);
         janelaCliente.setResizable(false);
         janelaCliente.setVisible(false);
-
     }
-
-
-    /*public InterfaceCliente(Cliente c, GestaoApp gestaoApp) {
-
-        Aplicacao app=new Aplicacao();
-        GestaoApp gestaoApp1 = new GestaoApp();
-        gestaoApp1.run();
-        cli = c;*/
-
-
 
 
     //Método para efetuar a troca de painéis
@@ -679,10 +667,10 @@ public class InterfaceCliente implements Serializable {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
             }else {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), "0", musica.getRatingMedia()});
             }
         }
     }
