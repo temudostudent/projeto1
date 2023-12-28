@@ -90,7 +90,7 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-    //Posicao no aarayLista a partir do nome da musica
+    //Posicao na ArrayList a partir do nome da musica
     public int encontrarPosicao(Musica m){
         int posicao = 0;
         for(Musica musica : musicas){
@@ -115,7 +115,6 @@ public class Artista extends Utilizador implements Serializable {
     //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
     public void addMusica(int indexAlbum, int indexMusica) {
         Musica m = musicas.get(indexMusica);
-
         if (!albuns.get(indexAlbum).musicas.contains(m)){
             albuns.get(indexAlbum).adicionarMusica(m);
             JOptionPane.showMessageDialog(null, "Musica adicionada com sucesso", "",
