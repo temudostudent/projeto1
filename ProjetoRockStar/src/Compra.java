@@ -3,12 +3,11 @@ import java.util.ArrayList;
 
 public class Compra implements Serializable{
     private Integer ultimoID = 0;
-
     private Integer id_compra;
-    private ArrayList< MusicaPaga > carrinho;
+    private ArrayList< MusicaPaga > carrinho=new ArrayList<>();
 
     public Compra(){
-        this.carrinho = new ArrayList<>();
+        this.carrinho = carrinho;
         this.id_compra  = ++ultimoID;
     }
 
@@ -16,12 +15,24 @@ public class Compra implements Serializable{
         Compra compra = new Compra();
     }
 
-    public void totalCarrinhoCliente(){
-        double valorTotal = 0;
-        for(MusicaPaga m : carrinho){
-            valorTotal += m.getPreco();
-        }
+    public void adicionarMusica(MusicaPaga m){
+        carrinho.add(m);
     }
+
+    public void removerMusica(MusicaPaga m){
+        carrinho.remove(m);
+    }
+
+    public double totalCarrinhoCliente(){
+        double valorTotal = 0;
+        if (carrinho.size()==0){
+            return 0;
+        }else {
+            for (MusicaPaga m : carrinho) {
+                valorTotal += m.getPreco();
+            }
+        }
+    return valorTotal;}
 
     public void valorMusicaArtista(){
         double valorMusica = 0;

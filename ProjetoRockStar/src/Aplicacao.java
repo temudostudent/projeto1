@@ -303,6 +303,7 @@ public class Aplicacao implements Serializable {
     public void adicionarMusica(Musica m){
         musicas.add(m);
     }
+    public void removerMusica(Musica m){musicas.remove(m);}
     public void adicionarPlayList(PlayList p){
         playlists.add(p);
     }

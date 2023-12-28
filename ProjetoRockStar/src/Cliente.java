@@ -8,18 +8,18 @@ public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
 
-    private ArrayList<PlayList> playlists;
-    private ArrayList<Compra> historicoCompras;
-    private Compra compra;
+    private ArrayList<PlayList> playlists=new ArrayList<>();
+    private ArrayList<Compra> historicoCompras=new ArrayList<>();
+    protected Compra compra=new Compra();
 
 
     // Construtor classe
 
     public Cliente(String username,String password) {
         super(username, password);
-        this.playlists = new ArrayList<>();;
-        this.historicoCompras = new ArrayList<>();
-        this.compra = new Compra();
+        this.playlists = playlists;
+        this.historicoCompras = historicoCompras;
+        this.compra = compra;
         super.saldo = 0;
     }
 
@@ -30,7 +30,6 @@ public class Cliente extends Utilizador implements Serializable {
         for(PlayList f : playlists){
             System.out.println(f);
         }
-
     }
 
 
@@ -95,6 +94,11 @@ public class Cliente extends Utilizador implements Serializable {
     //Remover playList através do objeto
     public void removerPlaylist(PlayList playlist) {
         playlists.remove(playlist);
+    }
+
+    //
+    public void abrirCompra(){
+        this.compra=new Compra();
     }
 
     //Método para finalizar a compra

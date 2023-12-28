@@ -15,15 +15,18 @@ public class MusicaPaga extends Musica implements Serializable {
         this.dataCriacao = LocalDateTime.now();
         this.preco = preco;
         this.historicoPreco = historicoPreco;
+        adicionarRegisto(preco);
     }
+    //Construtor quando Música já existe gratuita e quer passar a ser paga
     public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
         super(titulo, nomeArtista, duracao, genero, estado);
         this.dataCriacao = LocalDateTime.parse(dataCriacao);
         this.preco = preco;
         this.historicoPreco = historicoPreco;
+        adicionarRegisto(preco);
     }
 
-    public void adicionarRegisto(double novoPreco){
+    private void adicionarRegisto(double novoPreco){
         this.historicoPreco.put(LocalDateTime.now(),novoPreco);
     }
 
@@ -33,5 +36,7 @@ public class MusicaPaga extends Musica implements Serializable {
         if (preco<0){
             this.preco=0;
         }else this.preco = preco;
+
+        adicionarRegisto(preco);
     }
 }

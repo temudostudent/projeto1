@@ -317,7 +317,9 @@ public class InterfaceArtista implements Serializable {
                     Musica m = artista.novaMusica(titulo,duracao,genero,estadoMusica,preco);
 
                     artista.addMusica(m);
-                    app.rockstar.adicionarMusica(m);
+                    if (m.getEstado()==true){
+                        app.rockstar.adicionarMusica(m);
+                    }
 
                     caixaTituloMusica.setText("");
                     caixaDuracao.setText("");

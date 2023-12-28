@@ -34,7 +34,6 @@ public class InterfaceCliente implements Serializable {
             janelaCliente.setVisible(true);
         }catch (Exception e){
             System.out.println(e);
-
         }
     }
 
@@ -83,45 +82,17 @@ public class InterfaceCliente implements Serializable {
 
                 String selecao = (String) atributoPesquisa.getSelectedItem();
 
-                // Adicionar uma coluna à tabela
-                listarMusicas.addColumn("TÍTULO");
-                listarMusicas.addColumn("ARTISTA");
-                listarMusicas.addColumn("DATA");
-                listarMusicas.addColumn("DURACAO");
-                listarMusicas.addColumn("GENERO");
-                listarMusicas.addColumn("ESTADO");
-                listarMusicas.addColumn("PREÇO (€)");
-                listarMusicas.addColumn("RATING");
-
-                // Adicionar os títulos das colunas Na primeira linha
-                listarMusicas.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURACAO","GENERO","ESTADO","PREÇO (€)","RATING"});
+                titulosDasColunasTabela(listarMusicas);
 
                 if ("TÍTULO".equals(selecao)){
                     listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
 
                     // Adicionar os elementos do ArrayList à tabela
-                    for (Musica musica : listaM) {
-                        if (musica instanceof MusicaPaga) {
-                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
-                        }else {
-                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
-                        }
-                    }
+                    adicionarElementosTabela(listaM,listarMusicas);
                 } else if ("ARTISTA".equals(selecao)) {
                     listaM = app.rockstar.listaMusicasDeArtista(pesquisa);
 
-                    // Adicionar os elementos do ArrayList à tabela
-                    for (Musica musica : listaM) {
-                        if (musica instanceof MusicaPaga) {
-                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
-                        }else {
-                            listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
-                        }
-                    }
+                    adicionarElementosTabela(listaM,listarMusicas);
                 }
                 tabelaResultadoPesquisa.setModel(listarMusicas);
             }
@@ -192,6 +163,27 @@ public class InterfaceCliente implements Serializable {
         adicionarPlayList.setBounds(310,450,200,40);
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
         adicionarCarrinho.setBounds(80,450 ,200,40);
+        adicionarCarrinho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (cliente.compra==null){
+                    cliente.abrirCompra();
+                }
+
+                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
+                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
+                if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco()>0){
+                    cliente.compra.adicionarMusica((MusicaPaga) object);
+                }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
+
+
+
+
+            }
+        });
         ordenarPesquisa = new JButton("ORDENAR");
         ordenarPesquisa.setBounds(650,100,100,30);
         ordenarPesquisa.addActionListener(new ActionListener() {
@@ -205,65 +197,45 @@ public class InterfaceCliente implements Serializable {
 
                     listaM.addAll(app.rockstar.getMusicas());
 
-                    if (botaoTodasAsMusicas.isSelected()) {
-
-                        if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
-                        } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                            app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
-                        } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
-                        } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
-                        }
-
-                    } else if (botaoParaPesquisarMusicas.isSelected()) {
-
-                        ArrayList<Object[]> copia = new ArrayList<Object[]>();
-
-                        for (int i = 0; i < listarItems.getRowCount(); i++) {
-                            Object[] linha = new Object[tabelaResultadoPesquisa.getColumnCount()];
-                            for (int j = 0; j < tabelaResultadoPesquisa.getColumnCount(); j++) {
-                                linha[j] = listarItems.getValueAt(i, j);
-                            }
-                            copia.add(linha);
-                        }
-
-                        if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasCrescentePorTitulo(copia);
-                        } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                            app.rockstar.ordendarMusicasDecrescentePorTitulo(copia);
-                        } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasCrescentePorGenero(copia);
-                        } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                            app.rockstar.ordenarMusicasCrescentePorGenero(copia);
-                        }
+                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
+                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
-                    // Adicionar uma coluna à tabela
-                    listarItems.addColumn("TÍTULO");
-                    listarItems.addColumn("ARTISTA");
-                    listarItems.addColumn("DATA");
-                    listarItems.addColumn("DURACAO");
-                    listarItems.addColumn("GENERO");
-                    listarItems.addColumn("ESTADO");
-                    listarItems.addColumn("PREÇO (€)");
-                    listarItems.addColumn("RATING");
 
-                    // Adicionar os títulos das colunas Na primeira linha
-                    listarItems.addRow(new Object[]{"TÍTULO", "ARTISTA", "DATA", "DURAÇÃO", "GÉNERO", "ESTADO", "PREÇO (€)", "RATING"});
+                } else if (botaoParaPesquisarMusicas.isSelected()) {
 
-                    // Adicionar os elementos do ArrayList à tabela
-                    for (Musica musica : listaM) {
-                        if (musica instanceof MusicaPaga) {
-                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
-                        } else {
-                            listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
-                        }
+                    String pesquisa = caixaTextoPesquisa.getText();
+
+                    String selecaoAtributo = (String) atributoPesquisa.getSelectedItem();
+
+                    if ("TÍTULO".equals(selecaoAtributo)){
+                        listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
+
+                    } else if ("ARTISTA".equals(selecaoAtributo)) {
+                        listaM = app.rockstar.listaMusicasDeArtista(pesquisa);
                     }
-                    tabelaResultadoPesquisa.setModel(listarItems);
+
+                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
+                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
+                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
+                    }
                 }
+                titulosDasColunasTabela(listarItems);
+
+                adicionarElementosTabela(listaM,listarItems);
+
+                tabelaResultadoPesquisa.setModel(listarItems);
+
             }
         });
 
@@ -304,29 +276,10 @@ public class InterfaceCliente implements Serializable {
                 listaM = app.rockstar.getMusicas();
 
 
-                // Adicionar uma coluna à tabela
-                listarMusicas.addColumn("TÍTULO");
-                listarMusicas.addColumn("ARTISTA");
-                listarMusicas.addColumn("DATA");
-                listarMusicas.addColumn("DURACAO");
-                listarMusicas.addColumn("GENERO");
-                listarMusicas.addColumn("ESTADO");
-                listarMusicas.addColumn("PREÇO (€)");
-                listarMusicas.addColumn("RATING");
+                titulosDasColunasTabela(listarMusicas);
 
-                // Adicionar os títulos das colunas Na primeira linha
-                listarMusicas.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURAÇÃO","GÉNERO","ESTADO","PREÇO (€)","RATING"});
+                adicionarElementosTabela(listaM,listarMusicas);
 
-                // Adicionar os elementos do ArrayList à tabela
-                for (Musica musica : listaM) {
-                    if (musica instanceof MusicaPaga) {
-                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
-                    }else {
-                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
-                    }
-                }
                 tabelaResultadoPesquisa.setModel(listarMusicas);
             }
         });
@@ -541,6 +494,7 @@ public class InterfaceCliente implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 double valor= Double.parseDouble(valorACarregar.getText());
                 cliente.alterarSaldo(valor);
+                mostrarSaldoCliente.setText(String.valueOf(cliente.getSaldo()));
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
@@ -549,10 +503,10 @@ public class InterfaceCliente implements Serializable {
         valorTotalPagar.setBounds(400, 200, 250,40);
 
         //JTextField
-        mostrarValorPagar = new JTextField();
+        mostrarValorPagar = new JTextField(String.valueOf(cliente.compra.totalCarrinhoCliente()));
         mostrarValorPagar.setBounds(400,250,100,40);
         mostrarValorPagar.setEditable(false);
-        mostrarSaldoCliente = new JTextField();
+        mostrarSaldoCliente = new JTextField(String.valueOf(cliente.getSaldo()));
         mostrarSaldoCliente.setBounds(550,250,100,40);
         mostrarSaldoCliente.setEditable(false);
         valorACarregar = new JTextField("€ a carregar");
@@ -576,6 +530,7 @@ public class InterfaceCliente implements Serializable {
         //Criar painel fixo Titulo  ----------------------------------------------
         painelTituloCliente = new JPanel();
         painelTituloCliente.setBackground(new Color(255,178,102));
+        painelTituloCliente.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
         tituloCliente = new JLabel("ROCKSTAR.INC");
         tituloCliente.setFont(new Font("Magneto", Font.BOLD, 80));
         painelTituloCliente.add(tituloCliente);
@@ -595,7 +550,7 @@ public class InterfaceCliente implements Serializable {
         botaoCarrinho = new JButton("CARRINHO");
         botaoCarrinho.setBounds(70, 400, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
-        username = new JLabel(cliente.getUsername());
+        username = new JLabel("Bem Vindo " + cliente.getUsername());
         username.setBounds(70, 70, 250, 20);
 
         //Adicional componentes ao painel
@@ -669,6 +624,31 @@ public class InterfaceCliente implements Serializable {
 
         DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
         caixaListarPlayLists.setModel(model);
+    }
+    private void adicionarElementosTabela(ArrayList<Musica> lista,DefaultTableModel modelo){
+        for (Musica musica : lista) {
+            if (musica instanceof MusicaPaga) {
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+                        musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+            }else {
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+                        musica.getGenero(), musica.getEstado(), "0", musica.getRatingMedia()});
+            }
+        }
+    }
+    private void titulosDasColunasTabela(DefaultTableModel modelo){
+        // Adicionar uma coluna à tabela
+        modelo.addColumn("TÍTULO");
+        modelo.addColumn("ARTISTA");
+        modelo.addColumn("DATA");
+        modelo.addColumn("DURAÇÃO");
+        modelo.addColumn("GÉNERO");
+        modelo.addColumn("ESTADO");
+        modelo.addColumn("PREÇO (€)");
+        modelo.addColumn("RATING");
+
+        // Adicionar os títulos das colunas Na primeira linha
+        modelo.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURAÇÃO","GÉNERO","ESTADO","PREÇO (€)","RATING"});
     }
 }
 
