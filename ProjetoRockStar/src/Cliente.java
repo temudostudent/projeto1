@@ -10,7 +10,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     private ArrayList<PlayList> playlists=new ArrayList<>();
     private ArrayList<Compra> historicoCompras=new ArrayList<>();
-    protected Compra compra=new Compra();
+    protected Compra compra;
 
 
     // Construtor classe
@@ -80,15 +80,6 @@ public class Cliente extends Utilizador implements Serializable {
         //Adicionar a nova playList à lista das playLists
         playlists.add(nova);
 
-    }
-
-    // Remover um playList dando o atributo nome
-    public void removerPlayList(String nome) {
-        for (PlayList play : playlists) {
-            if (play.getNome().equals(nome)) {
-                playlists.remove(play);
-            }
-        }
     }
 
     //Remover playList através do objeto

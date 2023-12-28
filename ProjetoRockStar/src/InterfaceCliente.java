@@ -186,7 +186,7 @@ public class InterfaceCliente implements Serializable {
                     cliente.compra.adicionarMusica((MusicaPaga) object);
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
-                mostrarValorPagar.setText(String.valueOf(cliente.compra.totalCarrinhoCliente()));
+                tabelaCarrinho();
 
             }
         });
@@ -522,6 +522,19 @@ public class InterfaceCliente implements Serializable {
         //JButton
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA CARRINHO");
         removerMusicaCarrinho.setBounds(400, 50, 250,40);
+        removerMusicaCarrinho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int indexMusicaSelect = listaMusicasCarrinho.getSelectedRow();
+                String valorTituloMusica = (String) listaMusicasCarrinho.getValueAt(indexMusicaSelect, 0);
+                MusicaPaga object = (MusicaPaga) app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
+                if (object!=null){
+                    cliente.compra.removerMusica(object);
+                    tabelaCarrinho();
+                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+            }
+        });
         carregarSaldo = new JButton("CARREGAR SALDO");
         carregarSaldo.setBounds(400,100,250,40);
         carregarSaldo.addActionListener(new ActionListener() {
@@ -529,7 +542,7 @@ public class InterfaceCliente implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 double valor= Double.parseDouble(valorACarregar.getText());
                 cliente.alterarSaldo(valor);
-                mostrarSaldoCliente.setText(String.valueOf(cliente.getSaldo() + " €"));
+                mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
@@ -538,10 +551,10 @@ public class InterfaceCliente implements Serializable {
         valorTotalPagar.setBounds(400, 200, 250,40);
 
         //JTextField
-        mostrarValorPagar = new JTextField(String.valueOf(cliente.compra.totalCarrinhoCliente()));
+        mostrarValorPagar = new JTextField(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
         mostrarValorPagar.setBounds(400,250,100,40);
         mostrarValorPagar.setEditable(false);
-        mostrarSaldoCliente = new JTextField(String.valueOf(cliente.getSaldo()));
+        mostrarSaldoCliente = new JTextField(String.format("%.2f",cliente.getSaldo()) + " €");
         mostrarSaldoCliente.setBounds(550,250,100,40);
         mostrarSaldoCliente.setEditable(false);
         valorACarregar = new JTextField("€ a carregar");
@@ -627,6 +640,12 @@ public class InterfaceCliente implements Serializable {
         botaoPlayList.addActionListener(e->trocarPainel(painelPlayList));
         botaoPesquisar.addActionListener(e->trocarPainel(painelPesquisarCliente));
         botaoCarrinho.addActionListener(e->trocarPainel(painelCarrinho));
+        botaoCarrinho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabelaCarrinho();
+            }
+        });
         janelaCliente.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -672,10 +691,10 @@ public class InterfaceCliente implements Serializable {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " €", musica.getRatingMedia()});
             }else {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), "0", musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), "0 €", musica.getRatingMedia()});
             }
         }
     }
@@ -687,11 +706,30 @@ public class InterfaceCliente implements Serializable {
         modelo.addColumn("DURAÇÃO");
         modelo.addColumn("GÉNERO");
         modelo.addColumn("ESTADO");
-        modelo.addColumn("PREÇO (€)");
+        modelo.addColumn("PREÇO");
         modelo.addColumn("RATING");
 
         // Adicionar os títulos das colunas Na primeira linha
-        modelo.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURAÇÃO","GÉNERO","ESTADO","PREÇO (€)","RATING"});
+        modelo.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURAÇÃO","GÉNERO","ESTADO","PREÇO","RATING"});
+    }
+
+    private void tabelaCarrinho(){
+        DefaultTableModel listarCarrinho = new DefaultTableModel();
+
+        ArrayList<MusicaPaga> meuCarrinho = cliente.compra.getCarrinho();
+
+        listarCarrinho.addColumn("TÍTULO");
+        listarCarrinho.addColumn("PREÇO");
+
+        listarCarrinho.addRow(new Object[]{"TÍTULO","PREÇO"});
+
+        for (MusicaPaga m : meuCarrinho) {
+            listarCarrinho.addRow(new Object[]{m.getTitulo(), m.getPreco() + " €"});
+        }
+
+        listaMusicasCarrinho.setModel(listarCarrinho);
+
+        mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
     }
 }
 
