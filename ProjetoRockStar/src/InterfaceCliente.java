@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,7 +20,8 @@ public class InterfaceCliente implements Serializable {
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
-            ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists;
+            ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists,
+            botaoLogout;
     private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
@@ -392,18 +394,45 @@ public class InterfaceCliente implements Serializable {
         listaMusicasPlayList.setBounds(50,50,400,380);
         botaoAtualizarPlaylists = new JButton("ATUALIZAR PLAYLISTS");
         botaoAtualizarPlaylists.setBounds(500,0,220,40);
-        botaoAtualizarPlaylists.addActionListener(new ActionListener() {
+        caixaListarPlayLists.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ver as playLists do Cliente
-                ArrayList<PlayList> playList = cliente.verPlayListCliente();
+                // Obtém o índice da playlist selecionada
+                PlayList playlistSelecionada = (PlayList) caixaListarPlayLists.getSelectedItem();
 
-                // Crie um array de objetos PlayList
-                PlayList[] playlistsArray = playList.toArray(new PlayList[0]);
+                // Verifica se alguma playlist está selecionada
+                if (playlistSelecionada != null) {
+                    // Obtém as músicas da playlist
+                    ArrayList<Musica> musicas = playlistSelecionada.getMusicas();
 
-                DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
-                caixaListarPlayLists.setModel(model);
+                    // Cria um modelo de tabela para as músicas
+                    DefaultTableModel modeloTabela = new DefaultTableModel();
+                    modeloTabela.addColumn("Nome da Música");
+
+                    // Adiciona as músicas ao modelo de tabela
+                    for (Musica musica : musicas) {
+                        modeloTabela.addRow(new Object[]{musica.getTitulo()});
+                    }
+
+                    // Configura o modelo na tabela
+                    listaMusicasPlayList.setModel(modeloTabela);
+                }
+
             }
+        });
+
+        botaoAtualizarPlaylists.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                    // Ver as playLists do Cliente
+                    ArrayList<PlayList> playList = cliente.verPlayListCliente();
+
+                    // Crie um array de objetos PlayList
+                    PlayList[] playlistsArray = playList.toArray(new PlayList[0]);
+
+                    DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
+                    caixaListarPlayLists.setModel(model);
+                }
         });
         removerPlayList = new JButton("REMOVER PLAYLIST");
         removerPlayList.setBounds(500, 100, 220,40);
@@ -471,7 +500,7 @@ public class InterfaceCliente implements Serializable {
                 String nomeNovaPlaylist = JOptionPane.showInputDialog(frame, "Indique o nome da nova playlist:");
 
                 if (nomeNovaPlaylist != null && !nomeNovaPlaylist.isEmpty()) {
-                    // Cria a nova playlist no cliente
+                    // Cria a nova playlist no cliente com visibilidade true
                     cliente.criarPlaylist(nomeNovaPlaylist, true);
 
                     // Atualiza a  JComboBox
@@ -485,12 +514,13 @@ public class InterfaceCliente implements Serializable {
         removerMusicaPlayList = new JButton("REMOVER MÚSICA PLAYLIST");
         removerMusicaPlayList.setBounds(500, 250, 220,40);
         criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
+        criarPlaylistPreenchida.setBounds(500,300,220,40);
 
         criarPlaylistPreenchida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame();
-                String nomeNovaPlaylist = JOptionPane.showInputDialog(frame, "Indique o género da nova playlist:");
+                String genero = JOptionPane.showInputDialog(frame, "Indique o género da nova playlist:");
                 String tamanho = JOptionPane.showInputDialog(frame, "Indique o tamanho da nova playlist:");
                 if (tamanho != null && !tamanho.isEmpty()) {
                         // Tenta converter a string para um inteiro
@@ -498,6 +528,7 @@ public class InterfaceCliente implements Serializable {
 
 
                         //  Cria a playlist com genero e tamanho pretendido.
+                    cliente.criarPlayListGenero(genero, tamanho1, app.getRockstar().getMusicas());
 
                 } else {
 
@@ -510,7 +541,7 @@ public class InterfaceCliente implements Serializable {
         painelPlayList.add(caixaListarPlayLists);painelPlayList.add(listaMusicasPlayList);
         painelPlayList.add(removerPlayList);painelPlayList.add(alterarVisibilidade);
         painelPlayList.add(criarNovaPlayList);painelPlayList.add(removerMusicaPlayList);
-        painelPlayList.add(botaoAtualizarPlaylists);
+        painelPlayList.add(botaoAtualizarPlaylists); painelPlayList.add(criarPlaylistPreenchida);
 
         //Criar painel Carrinho  ------------------------------------------------------------------------
         painelCarrinho = new JPanel();
@@ -590,19 +621,36 @@ public class InterfaceCliente implements Serializable {
         botaoPesquisar.setBounds(70, 100, 250, 100);
         botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 20));
         botaoPlayList = new JButton("PLAYLISTS");
-        botaoPlayList.setBounds(70, 250, 250, 100);
+        botaoPlayList.setBounds(70, 220, 250, 100);
         botaoPlayList.setFont(new Font("Arial", Font.BOLD, 20));
         botaoCarrinho = new JButton("CARRINHO");
-        botaoCarrinho.setBounds(70, 400, 250, 100);
+        botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
-        username = new JLabel(cliente.getUsername());
-        username.setBounds(70, 70, 250, 20);
+        username = new JLabel("Olá " + cliente.getUsername());
+        username.setBounds(70, 75, 100, 20);
+        botaoLogout = new JButton("LOGOUT");
+        botaoLogout.setBounds(70,460,250,30);
+
+        botaoLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaCliente.setVisible(false);
+
+                try {
+                    JanelaInicial run = new JanelaInicial();
+                } catch (IOException es) {
+                    throw new RuntimeException(es);
+                } catch (ClassNotFoundException es) {
+                    throw new RuntimeException(es);
+                }
+            }
+        });
 
         //Adicional componentes ao painel
         painelMenu.add(botaoPesquisar);
         painelMenu.add(botaoPlayList);
         painelMenu.add(botaoCarrinho);
-        painelMenu.add(username);
+        painelMenu.add(username); painelMenu.add(botaoLogout);
 
         //Adicionar painéis à janela
         janelaCliente.add(painelTituloCliente, BorderLayout.NORTH);

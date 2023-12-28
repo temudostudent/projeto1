@@ -6,8 +6,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class InterfaceArtista implements Serializable {
 
@@ -22,7 +27,7 @@ public class InterfaceArtista implements Serializable {
                 totalAlbumGenero ;
         private JButton botaoPesquisar, botaoMusicas, botaoEstatisticas, criarMusica, editarDados, adicionarMusica,
                 pesquisarMusica, guardarAlteracao, listarMusicas, menuAlbum, criarAlbum, criarListaMusicas,
-                adicionarMusicaAlbum, botaorefresh, historicoPreco;
+                adicionarMusicaAlbum, botaorefresh, historicoPreco, botaoLogout;
         private JTextField caixaTituloMusica, caixaDuracao, caixaGenero, caixaCusto,
                 caixaAltearPreco, caixaNomeAlbum, caixaGeneroAlgum,
                 caixaTotalUtilizadores, caixaTotalMusicas, caixaValorTotalColecao, caixaValorTotalVendas, caixaMusicaMaisGravada,
@@ -32,8 +37,8 @@ public class InterfaceArtista implements Serializable {
         private JComboBox caixaPesquisarMusica, ordenarPor;
         private JTextArea areaPesquisa, listaAlbumGenero;
         private ButtonGroup botaoEstado, botaoEstado1, grupoPesquisa, botaogeral;
-        private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum;
-        private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas);
+        private JTable tabelaListaMusicasPesquisar, tabelaListaMusicas, listaAlbumGenero1, listaMusicasAlbum, tabela;
+        private JScrollPane scrollListarMusicas = new JScrollPane(tabelaListaMusicas), scrollPane3;
 
 
         public void run(){
@@ -362,6 +367,8 @@ public class InterfaceArtista implements Serializable {
             inserirTitulo.setBounds(250,10,150,40);
             pesquisarMusica = new JButton("PESQUISAR");
             pesquisarMusica.setBounds(430,10,150,40);
+            tabelaListaMusicas = new JTable();
+            tabelaListaMusicas.setBounds(50,80, 400,400);
             pesquisarMusica.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -448,7 +455,6 @@ public class InterfaceArtista implements Serializable {
 
                     }
 
-
                 }
             });
 
@@ -476,9 +482,35 @@ public class InterfaceArtista implements Serializable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
+                    int linhaSelecionada = tabelaListaMusicas.getSelectedRow();
+                    if (linhaSelecionada >= 0) {
+                        String tituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
+                        Musica object = artista.pesquisaObjetoTitulo(tituloMusica);
+                        if (object instanceof MusicaPaga) {
 
+                            // Converter o Map para um DefaultTableModel
+                            DefaultTableModel listaPrecos = new DefaultTableModel();
+                            listaPrecos.addColumn("Data e Hora");
+                            listaPrecos.addColumn("Preço");
+                            listaPrecos.addRow(new Object[]{"Data", "Preço"});
+
+
+                            //Criar um Map para armazenar os valores
+                            Map<LocalDateTime, Double> historicoPreco;
+                            historicoPreco = ((MusicaPaga) object).getHistoricoPreco();
+
+                            for (Map.Entry<LocalDateTime, Double> entry : historicoPreco.entrySet()) {
+                                Object[] rowData = {entry.getKey(), entry.getValue()};
+                                listaPrecos.addRow(rowData);
+                            }
+
+                            //Adicionar o modelo de tabela à tabela já existente
+                            tabelaListaMusicas.setModel(listaPrecos);
+                        }
+                    }
 
                 }
+
             });
 
             String tituloMusica;
@@ -503,11 +535,14 @@ public class InterfaceArtista implements Serializable {
 
                                 }
                             }else if (alterarEstado.isSelected()) {
-                                if (estadoAtivo1.isSelected()) {
+                                if (estadoAtivo1.isSelected() && object.getEstado()==false) {
                                     object.setEstado(true);
+                                    app.rockstar.adicionarMusica(object);
+
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
-                                } else {
+                                } else if(estadoInativo1.isSelected() && object.getEstado()==true){
                                     object.setEstado(false);
+                                    app.rockstar.removerMusica(object);
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
                                 }
                             }
@@ -533,8 +568,7 @@ public class InterfaceArtista implements Serializable {
 
             listarMusicas = new JButton("LISTAR MÚSICAS");
             listarMusicas.setBounds(610,10,150,40);
-            tabelaListaMusicas = new JTable();
-            tabelaListaMusicas.setBounds(50,80, 400,400);
+
             listarMusicas.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -577,6 +611,7 @@ public class InterfaceArtista implements Serializable {
             painelEditarDados.add(listarMusicas); painelEditarDados.add(scrollListarMusicas);
             painelEditarDados.add(tabelaListaMusicas); painelEditarDados.add(caixaPesquisarMusica);
             painelEditarDados.add(alterarTituloMusica); painelEditarDados.add(historicoPreco);
+
 
             // Criar Painel Criar Album
             painelAlbum = new JPanel();
@@ -812,19 +847,37 @@ public class InterfaceArtista implements Serializable {
             botaoPesquisar.setBounds(70,100, 250,100);
             botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 20));
             botaoMusicas = new JButton("MÚSICAS");
-            botaoMusicas.setBounds(70,250,250,100);
+            botaoMusicas.setBounds(70,220,250,100);
             botaoMusicas.setFont(new Font("Arial", Font.BOLD, 20));
             botaoEstatisticas = new JButton("ESTATÍSTICAS");
-            botaoEstatisticas.setBounds(70,400, 250,100);
+            botaoEstatisticas.setBounds(70,340, 250,100);
             botaoEstatisticas.setFont(new Font("Arial", Font.BOLD, 20));
             username1 =new JLabel("Olá " + artista.getUsername());
-            username1.setBounds(70, 70, 250, 20);
+            username1.setBounds(70,75,100,20);
+            botaoLogout = new JButton("LOGOUT");
+            botaoLogout.setBounds(70,460,250,30);
+
+            botaoLogout.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    janelaArtista.setVisible(false);
+
+                    try {
+                        JanelaInicial run = new JanelaInicial();
+                    } catch (IOException es) {
+                        throw new RuntimeException(es);
+                    } catch (ClassNotFoundException es) {
+                        throw new RuntimeException(es);
+                    }
+                }
+            });
 
             //Adicional componentes ao painel
             painelMenu.add(botaoPesquisar);
             painelMenu.add(botaoMusicas);
             painelMenu.add(botaoEstatisticas);
             painelMenu.add(username1);
+            painelMenu.add(botaoLogout);
 
 
             //Adicionar à janela os paineis
