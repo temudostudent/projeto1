@@ -124,9 +124,12 @@ public class InterfaceCliente implements Serializable {
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                 Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (object!=null){
-                    rating.setVisible(true);
-                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+                if (object==null){
+                    JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+                } else if (object.rating.containsKey(cliente)) {
+                    JOptionPane.showMessageDialog(null, "Já avaliou esta música");
+                }else rating.setVisible(true);
+
             }
         });
 
@@ -165,7 +168,7 @@ public class InterfaceCliente implements Serializable {
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                 Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                object.addRating(resultado[0]);
+                object.addRating(cliente,resultado[0]);
 
                 JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
 
@@ -377,6 +380,8 @@ public class InterfaceCliente implements Serializable {
                     // Obtém as músicas da playlist
                     ArrayList<Musica> musicas = playlistSelecionada.getMusicas();
 
+                    playlistSelecionada.getMusicas().forEach(System.out::println);
+
                     // Cria um modelo de tabela para as músicas
                     DefaultTableModel modeloTabela = new DefaultTableModel();
                     modeloTabela.addColumn("Nome da Música");
@@ -388,6 +393,9 @@ public class InterfaceCliente implements Serializable {
 
                     // Configura o modelo na tabela
                     listaMusicasPlayList.setModel(modeloTabela);
+
+
+
                 }
 
             }
@@ -524,7 +532,7 @@ public class InterfaceCliente implements Serializable {
         //Criar componentes do Painel Carrinho
 
         //JLabel
-        listacompras = new JLabel ("LISTA DE MUSICAS DENTRO DO CARRINHO");
+        listacompras = new JLabel ("CARRINHO DE COMPRAS");
         listacompras.setBounds(50,0,280,40);
         saldoCliente = new JLabel("SALDO");
         saldoCliente.setBounds(550,200, 250, 40);
@@ -534,7 +542,7 @@ public class InterfaceCliente implements Serializable {
         listaMusicasCarrinho.setBounds(50, 50,250,300);
 
         //JButton
-        removerMusicaCarrinho = new JButton("REMOVER MÚSICA CARRINHO");
+        removerMusicaCarrinho = new JButton("REMOVER MÚSICA DO CARRINHO");
         removerMusicaCarrinho.setBounds(400, 50, 250,40);
         removerMusicaCarrinho.addActionListener(new ActionListener() {
             @Override
@@ -793,16 +801,17 @@ public class InterfaceCliente implements Serializable {
 
                 int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
-                Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+                Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
                 int indexPlaylistSelect = tabPlaylists.getSelectedRow();
                 String tituloPlaylist = (String) tabPlaylists.getValueAt(indexPlaylistSelect, 0);
+                PlayList p = cliente.pesquisaPlaylistTitulo(tituloPlaylist);
 
-                if (cliente.existeMusica(tituloPlaylist, object)){
-                    JOptionPane.showMessageDialog(null, "Música já existe na " + tituloPlaylist);
-                }else{
-                    cliente.adicionarMusica(tituloPlaylist,object);
+                if (!p.getMusicas().contains(m)){
+                    cliente.adicionarMusica(p,m);
                     JOptionPane.showMessageDialog(null, "Música adicionada à playlist " + tituloPlaylist);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Música já existe na " + tituloPlaylist);
                 }
 
                 janelaPlaylists.setVisible(false);

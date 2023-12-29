@@ -34,4 +34,16 @@ public abstract class ConjuntoMusicas implements Serializable {
         return dataCriacao.format(dataFormatada);
     }
 
+    @Override
+    public boolean equals(Object p){
+        if (this == p) {
+            return true;
+        }
+        if (p == null || getClass() != p.getClass()) {
+            return false;
+        }
+        ConjuntoMusicas objeto = (ConjuntoMusicas) p;
+        return true;
+    }
+
 }
