@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Compra implements Serializable{
     private Integer ultimoID = 0;
     private Integer id_compra;
-    private ArrayList< MusicaPaga > carrinho=new ArrayList<>();
+    private ArrayList< MusicaPaga > carrinho;
 
     public Compra(){
-        this.carrinho = carrinho;
+        this.carrinho = new ArrayList<>();
         this.id_compra  = ++ultimoID;
     }
 

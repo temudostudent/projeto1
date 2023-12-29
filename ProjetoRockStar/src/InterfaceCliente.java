@@ -716,10 +716,10 @@ public class InterfaceCliente implements Serializable {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € ", musica.getRatingMedia()});
             }else {
                 modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), "0", musica.getRatingMedia()});
+                        musica.getGenero(), musica.tipoEstado(), "GRATIS", musica.getRatingMedia()});
             }
         }
     }
@@ -733,7 +733,6 @@ public class InterfaceCliente implements Serializable {
         modelo.addColumn("ESTADO");
         modelo.addColumn("PREÇO");
         modelo.addColumn("RATING");
-
 
     }
 
