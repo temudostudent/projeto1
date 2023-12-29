@@ -214,23 +214,23 @@ public class JanelaInicial {
 
                 switch (tipoUtilizador){
                     case 1:
-                    Cliente c = gestaoApp.rockstar.loginCliente(username, password);
-                    if(c != null){
-                        InterfaceCliente ic = new InterfaceCliente(c, gestaoApp);
+                    Cliente cliente = gestaoApp.rockstar.loginCliente(username, password);
+                    if(cliente != null){
+                        InterfaceCliente ic = new InterfaceCliente(cliente, gestaoApp);
                         ic.run();
                         f.setVisible(false);
+
                     }
+                    break;
+
                     case 2:
                     Artista artista = gestaoApp.rockstar.loginArtista(username,password);
 
                     if (artista != null) {
                         fPin.setVisible(true);
-
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                                JOptionPane.INFORMATION_MESSAGE);
                     }
+                    break;
+
                 }
             }
         });
@@ -340,21 +340,16 @@ public class JanelaInicial {
                 String pin = cxPinL.getText();
                 String username = cxUsernameL.getText();
                 String password = cxPassL.getText();
+                Artista artista = gestaoApp.rockstar.loginArtista(username, password);
 
-                if (gestaoApp.rockstar.verificarPINArtista(username, pin)==true){
-                    fPin.setVisible(false);
-                    Artista artista = gestaoApp.rockstar.loginArtista(username, password);
-
-                    if(artista != null){
+                if (artista!= null){
+                    fPin.setVisible(true);
+                    if(gestaoApp.rockstar.verificarPINArtista(username, pin)){
 
                         InterfaceArtista ia = new InterfaceArtista(artista, gestaoApp);
                         ia.run();
                         f.setVisible(false);
                     }
-
-                }else {
-                    JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                            JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }

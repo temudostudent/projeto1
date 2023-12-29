@@ -56,23 +56,25 @@ public class Aplicacao implements Serializable {
     //Login - Verificar se todas as condições coincidem
 
     public Cliente loginCliente(String username, String password) {
-        if (!procurarUserCliente(username)) {
-            JOptionPane.showMessageDialog(null, "Utilizador não existe!", "",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return null;
-
-        } else {
+        Cliente cliente = null;
+        if (procurarUserCliente(username)) {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
                     //Se a password estiver correta devolve o cliente
-                    return c;
+                    cliente = c;
+                }else{
+                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
+
             }
-            //Password incorreta retorna null
-            JOptionPane.showMessageDialog(null, "Credencias inválidas. Tente novamente!", "",
+
+        }else {
+            JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        return null;
+
+        return cliente;
     }
 
 
@@ -81,37 +83,45 @@ public class Aplicacao implements Serializable {
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getPassword().equals(password)) {
-                    artista=a;
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    artista = a;
                 }
             }
+
+                if (artista == null){
+                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                }
+        }else{
+                JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
         }
+
+
         return artista;
     }
 
     public boolean verificarPINArtista(String username,String pin){
-        boolean login = false;
-        int cont=0;
+
         if (procurarUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getUsername().equals(username) && a.getPin().equals(pin)) {
-                    login = true;
-                    cont++;
+                    JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return true;
+
                 }
             }
-            if (cont==1){
-                JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
+
+                JOptionPane.showMessageDialog(null, "Pin incorreto! Tente novamente", "",
                         JOptionPane.INFORMATION_MESSAGE);
             }
             else {
-                JOptionPane.showMessageDialog(null, "Pin Incorreto. Tente novamente!", "",
+                JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        }
-        return login;
+
+        return false;
     }
 
     public void addMusica(Musica m){
@@ -189,6 +199,8 @@ public class Aplicacao implements Serializable {
         pin= String.valueOf(num);
 
     return pin;}
+
+    //Método que retorna o tipo de utilizador
 
     public int tipoUtilizador(String username) {
         int tipo=0;
