@@ -27,6 +27,7 @@ public class InterfaceCliente implements Serializable {
     private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
+    private JScrollPane scroljListarMusicas;
 
 
     public void run(){
@@ -57,6 +58,11 @@ public class InterfaceCliente implements Serializable {
 
         //Criar Componentes do Painel Pesquisar
 
+        //JTable
+        tabelaResultadoPesquisa = new JTable();
+        scroljListarMusicas = new JScrollPane(tabelaResultadoPesquisa);
+        scroljListarMusicas.setBounds(40,180,610,200);
+
         //JLabel
         ordenarMusicasCliente = new JLabel("ORDENAR POR:");
         ordenarMusicasCliente.setBounds(450,10,150,40);
@@ -80,6 +86,10 @@ public class InterfaceCliente implements Serializable {
                 DefaultTableModel listarMusicas = new DefaultTableModel();
                 String pesquisa = caixaTextoPesquisa.getText();
                 listaM = new ArrayList<>();
+                tabelaResultadoPesquisa.setModel(listarMusicas);
+                scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
+                tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
 
                 String selecao = (String) atributoPesquisa.getSelectedItem();
 
@@ -95,7 +105,7 @@ public class InterfaceCliente implements Serializable {
 
                     adicionarElementosTabela(listaM,listarMusicas);
                 }
-                tabelaResultadoPesquisa.setModel(listarMusicas);
+
             }
         });
 
@@ -207,6 +217,10 @@ public class InterfaceCliente implements Serializable {
                 String selecao = (String) ordenarMusicaPor.getSelectedItem();
                 listaM = new ArrayList<>();
 
+                tabelaResultadoPesquisa.setModel(listarItems);
+                scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
+                tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
                 if (botaoTodasAsMusicas.isSelected()) {
 
                     listaM.addAll(app.rockstar.getMusicas());
@@ -248,7 +262,7 @@ public class InterfaceCliente implements Serializable {
 
                 adicionarElementosTabela(listaM,listarItems);
 
-                tabelaResultadoPesquisa.setModel(listarItems);
+
 
             }
         });
@@ -266,11 +280,6 @@ public class InterfaceCliente implements Serializable {
         atributoPesquisa.addItem("ARTISTA");
         atributoPesquisa.setVisible(false);
 
-        //JTable
-        tabelaResultadoPesquisa = new JTable();
-        tabelaResultadoPesquisa.setBounds(50,200,800,200);
-        tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        tabelaResultadoPesquisa.setPreferredScrollableViewportSize(tabelaResultadoPesquisa.getPreferredSize());
 
         //JRadioButton
         botaoTodasAsMusicas = new JRadioButton("Ver todas as músicas");
@@ -293,8 +302,9 @@ public class InterfaceCliente implements Serializable {
                 titulosDasColunasTabela(listarMusicas);
 
                 adicionarElementosTabela(listaM,listarMusicas);
-
                 tabelaResultadoPesquisa.setModel(listarMusicas);
+                scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
+                tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             }
         });
 
@@ -344,6 +354,7 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.add(atributoPesquisarLegenda);
         painelPesquisarCliente.add(adicionarRating);
         painelPesquisarCliente.add(okPesquisa);
+        painelPesquisarCliente.add(scroljListarMusicas);
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();
@@ -607,10 +618,10 @@ public class InterfaceCliente implements Serializable {
         botaoPesquisar.setBounds(70, 100, 250, 100);
         botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 20));
         botaoPlayList = new JButton("PLAYLISTS");
-        botaoPlayList.setBounds(70, 250, 250, 100);
+        botaoPlayList.setBounds(70, 220, 250, 100);
         botaoPlayList.setFont(new Font("Arial", Font.BOLD, 20));
         botaoCarrinho = new JButton("CARRINHO");
-        botaoCarrinho.setBounds(70, 400, 250, 100);
+        botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
         username = new JLabel("Bem Vindo " + cliente.getUsername());
         username.setBounds(70, 70, 250, 20);
@@ -721,7 +732,7 @@ public class InterfaceCliente implements Serializable {
         }
     }
     private void titulosDasColunasTabela(DefaultTableModel modelo){
-        // Adicionar uma coluna à tabela
+        // Adicionar uma coluna à tabela e respetivos titulos
         modelo.addColumn("TÍTULO");
         modelo.addColumn("ARTISTA");
         modelo.addColumn("DATA");
@@ -731,8 +742,7 @@ public class InterfaceCliente implements Serializable {
         modelo.addColumn("PREÇO");
         modelo.addColumn("RATING");
 
-        // Adicionar os títulos das colunas Na primeira linha
-        modelo.addRow(new Object[]{"TÍTULO","ARTISTA","DATA","DURAÇÃO","GÉNERO","ESTADO","PREÇO","RATING"});
+
     }
 
     private void tabelaCarrinho(){

@@ -209,32 +209,33 @@ public class JanelaInicial {
                 String username = cxUsernameL.getText();
                 String password = cxPassL.getText();
 
-                if (gestaoApp.rockstar.tipoUtilizador(username) == 1) {
-                    Cliente c = gestaoApp.rockstar.loginCliente(username, password);
-                    if(c != null){
-                        InterfaceCliente ic = new InterfaceCliente(c, gestaoApp);
+                //Verifica o tipo de utilizador: 1 - cliente; 2 - artista
+                int tipoUtilizador = gestaoApp.rockstar.tipoUtilizador(username);
+
+                switch (tipoUtilizador){
+                    case 1:
+                    Cliente cliente = gestaoApp.rockstar.loginCliente(username, password);
+                    if(cliente != null){
+                        InterfaceCliente ic = new InterfaceCliente(cliente, gestaoApp);
                         ic.run();
                         f.setVisible(false);
-                    }else if (c == null){
-                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                                JOptionPane.INFORMATION_MESSAGE);
+
                     }
+                    break;
 
-                } else if (gestaoApp.rockstar.tipoUtilizador(username) == 2) {
-
+                    case 2:
                     Artista artista = gestaoApp.rockstar.loginArtista(username,password);
 
                     if (artista != null) {
                         fPin.setVisible(true);
-
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                                JOptionPane.INFORMATION_MESSAGE);
                     }
+                    break;
+
                 }
             }
         });
+
+
         painelLogin.add(usernameLegendaL);
         painelLogin.add(passLegendaL);
 
@@ -339,21 +340,16 @@ public class JanelaInicial {
                 String pin = cxPinL.getText();
                 String username = cxUsernameL.getText();
                 String password = cxPassL.getText();
+                Artista artista = gestaoApp.rockstar.loginArtista(username, password);
 
-                if (gestaoApp.rockstar.verificarPINArtista(username, pin)==true){
-                    fPin.setVisible(false);
-                    Artista artista = gestaoApp.rockstar.loginArtista(username, password);
-
-                    if(artista != null){
+                if (artista!= null){
+                    fPin.setVisible(true);
+                    if(gestaoApp.rockstar.verificarPINArtista(username, pin)){
 
                         InterfaceArtista ia = new InterfaceArtista(artista, gestaoApp);
                         ia.run();
                         f.setVisible(false);
                     }
-
-                }else {
-                    JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                            JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
