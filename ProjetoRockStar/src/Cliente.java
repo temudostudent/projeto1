@@ -42,12 +42,21 @@ public class Cliente extends Utilizador implements Serializable {
 
     // Método para adicionar músicas a uma determinada PlayList
     public void adicionarMusica(String nomePlayList, Musica musica) {
-        for (PlayList f : playlists) {
-            if (f.getNome().equals(nomePlayList)) {
-                f.adicionarMusica(musica);
+        for (PlayList p : playlists) {
+            if (p.getNome().equals(nomePlayList) && !p.getMusicas().contains(musica)) {
+                p.adicionarMusica(musica);
             }
         }
     }
+
+    public boolean existeMusica (String nomePlayList, Musica m){
+        for (PlayList p : playlists){
+            if (p.getNome().equals(nomePlayList) && p.getMusicas().contains(m)){
+                return true;
+            }
+        }
+    return false;}
+
 
     // Criar uma playList indicando o género e tamanho
     public void criarPlayListGenero(String genero, int tamanho, ArrayList <Musica> listaMusicas) {
