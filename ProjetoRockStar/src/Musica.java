@@ -2,8 +2,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class Musica implements Serializable {
     //Atributos
@@ -12,9 +11,10 @@ public class Musica implements Serializable {
     protected LocalDateTime dataCriacao;
     protected double duracao;
     protected String genero;
-    protected ArrayList<Integer> rating=new ArrayList<>();
+    //protected ArrayList<Integer> rating=new ArrayList<>();
     protected double ratingMedia;
     protected boolean estado;
+    protected Map<Cliente, Integer> rating = new HashMap<>();
 
     //Construtor que recebe titulo,ano,duracao,genero,estado
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
@@ -29,31 +29,29 @@ public class Musica implements Serializable {
     }
 
     public Musica() {
-
     }
 
     //adicionar Rating à respetiva
-    public void addRating(int valor){
-        rating.add(valor);
+    public void addRating(Cliente cl ,int valor){
+        rating.put(cl,valor);
     }
-
-    //soma de todos os ratings
-    private int somaRatings(){
-        int soma=0;
-        for (int i=0;i<rating.size();i++){
-            soma+=rating.get(i);
-        }
-        return soma;
-    }
-
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
-
     public String getRatingMedia() {
-
         if (rating.size()==0){
             return "NA";
-        }else this.ratingMedia=(double)(somaRatings()/rating.size());
+        }else{
+            Set<Cliente> chaves = rating.keySet();
+            int soma=0;
+            int cont=0;
+            for (Cliente c : chaves){
+                int valor = rating.get(c);
+                soma+=valor;
+                cont++;
+            }
+
+            this.ratingMedia=(double)(soma/cont);
+        }
 
         return String.valueOf(ratingMedia);
     }
@@ -97,6 +95,19 @@ public class Musica implements Serializable {
         DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dataCriacao.format(dataFormatada);
     }
+
+    @Override
+    public boolean equals(Object m){
+        if (this == m) {
+            return true;
+        }
+        if (m == null || getClass() != m.getClass()) {
+            return false;
+        }
+        Musica objeto = (Musica) m;
+        return true;
+    }
+
 
     @Override
     public String toString() {
