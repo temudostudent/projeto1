@@ -209,19 +209,18 @@ public class JanelaInicial {
                 String username = cxUsernameL.getText();
                 String password = cxPassL.getText();
 
-                if (gestaoApp.rockstar.tipoUtilizador(username) == 1) {
+                //Verifica o tipo de utilizador: 1 - cliente; 2 - artista
+                int tipoUtilizador = gestaoApp.rockstar.tipoUtilizador(username);
+
+                switch (tipoUtilizador){
+                    case 1:
                     Cliente c = gestaoApp.rockstar.loginCliente(username, password);
                     if(c != null){
                         InterfaceCliente ic = new InterfaceCliente(c, gestaoApp);
                         ic.run();
                         f.setVisible(false);
-                    }else if (c == null){
-                        JOptionPane.showMessageDialog(null, "Utilizador não existe", "",
-                                JOptionPane.INFORMATION_MESSAGE);
                     }
-
-                } else if (gestaoApp.rockstar.tipoUtilizador(username) == 2) {
-
+                    case 2:
                     Artista artista = gestaoApp.rockstar.loginArtista(username,password);
 
                     if (artista != null) {
@@ -235,6 +234,8 @@ public class JanelaInicial {
                 }
             }
         });
+
+
         painelLogin.add(usernameLegendaL);
         painelLogin.add(passLegendaL);
 

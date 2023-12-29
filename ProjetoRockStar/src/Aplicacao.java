@@ -56,20 +56,25 @@ public class Aplicacao implements Serializable {
     //Login - Verificar se todas as condições coincidem
 
     public Cliente loginCliente(String username, String password) {
-        if (procurarUserCliente(username)) {
+        if (!procurarUserCliente(username)) {
+            JOptionPane.showMessageDialog(null, "Utilizador não existe!", "",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return null;
+
+        } else {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
-                    //Password correta
+                    //Se a password estiver correta devolve o cliente
                     return c;
                 }
             }
-            //Password incorreta
-                JOptionPane.showMessageDialog(null, "Credencias inválidas. Tente novamente!", "",
-                        JOptionPane.INFORMATION_MESSAGE);
-
+            //Password incorreta retorna null
+            JOptionPane.showMessageDialog(null, "Credencias inválidas. Tente novamente!", "",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
     }
+
 
     public Artista loginArtista(String username, String password) {
         Artista artista = null;

@@ -604,10 +604,10 @@ public class InterfaceCliente implements Serializable {
         botaoPesquisar.setBounds(70, 100, 250, 100);
         botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 20));
         botaoPlayList = new JButton("PLAYLISTS");
-        botaoPlayList.setBounds(70, 250, 250, 100);
+        botaoPlayList.setBounds(70, 220, 250, 100);
         botaoPlayList.setFont(new Font("Arial", Font.BOLD, 20));
         botaoCarrinho = new JButton("CARRINHO");
-        botaoCarrinho.setBounds(70, 400, 250, 100);
+        botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
         username = new JLabel("Bem Vindo " + cliente.getUsername());
         username.setBounds(70, 70, 250, 20);
