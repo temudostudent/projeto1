@@ -958,10 +958,10 @@ public class InterfaceArtista implements Serializable {
                     for (Musica musica : lista) {
                         if(musica instanceof MusicaPaga) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco()});
+                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                         }else{
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.tipoEstado(), "0"});
+                                    musica.getGenero(), musica.tipoEstado(), "0" , musica.getRatingMedia()});
                         }
                     }
                     tabelaListaMusicas.setModel(listaMusicas);
@@ -992,6 +992,7 @@ public class InterfaceArtista implements Serializable {
         modelo.addColumn("GENERO");
         modelo.addColumn("ESTADO");
         modelo.addColumn("PREÇO (€)");
+        modelo.addColumn("RATING");
 
     }
 
@@ -999,10 +1000,10 @@ public class InterfaceArtista implements Serializable {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
                 modelo.addRow(new Object[]{musica.getTitulo(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), ((MusicaPaga) musica).tipoEstado(), ((MusicaPaga) musica).getPreco()});
+                        musica.getGenero(), ((MusicaPaga) musica).tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
             }else {
                 modelo.addRow(new Object[]{musica.getTitulo(),musica.getDataCriacao(), musica.getDuracao(),
-                        musica.getGenero(), musica.tipoEstado(), "0"});
+                        musica.getGenero(), musica.tipoEstado(), "0" , musica.getRatingMedia()});
             }
         }
     }

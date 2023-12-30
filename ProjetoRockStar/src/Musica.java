@@ -11,10 +11,9 @@ public class Musica implements Serializable {
     protected LocalDateTime dataCriacao;
     protected double duracao;
     protected String genero;
-    //protected ArrayList<Integer> rating=new ArrayList<>();
     protected double ratingMedia;
     protected boolean estado;
-    protected Map<Cliente, Integer> rating = new HashMap<>();
+    protected Map<String, Integer> rating;
 
     //Construtor que recebe titulo,ano,duracao,genero,estado
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
@@ -24,15 +23,15 @@ public class Musica implements Serializable {
         this.duracao = duracao;
         this.genero = genero;
         this.estado = estado;
-        this.ratingMedia = ratingMedia;
-        this.rating=rating;
+        this.rating = new HashMap<>();
+
     }
 
     public Musica() {
     }
 
     //adicionar Rating à respetiva
-    public void addRating(Cliente cl ,int valor){
+    public void addRating(String cl ,int valor){
         rating.put(cl,valor);
     }
 
@@ -41,11 +40,11 @@ public class Musica implements Serializable {
         if (rating.size()==0){
             return "NA";
         }else{
-            Set<Cliente> chaves = rating.keySet();
+            Set<String> chaves = rating.keySet();
             int soma=0;
             int cont=0;
-            for (Cliente c : chaves){
-                int valor = rating.get(c);
+            for (String username : chaves){
+                int valor = rating.get(username);
                 soma+=valor;
                 cont++;
             }
@@ -59,6 +58,14 @@ public class Musica implements Serializable {
     //get título
     public String getTitulo() {
         return titulo;
+    }
+
+    public void adicionarRatingMusica(String username, Integer valor){
+        rating.put(username , valor);
+    }
+
+    public boolean usuarioTemRating (String username){
+        return rating.containsKey(username);
     }
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
