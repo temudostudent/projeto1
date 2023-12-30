@@ -11,7 +11,6 @@ public abstract class Utilizador implements Serializable {
     }
     public Utilizador (){}
 
-    public abstract void verListas();
     public abstract int getTipo();
 
     public String getUsername() {

@@ -24,13 +24,6 @@ public class Cliente extends Utilizador implements Serializable {
 
     public Cliente(){}
 
-    @Override
-    public void verListas() {
-        for(PlayList f : playlists){
-            System.out.println(f);
-        }
-    }
-
     public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);

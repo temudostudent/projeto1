@@ -209,9 +209,16 @@ public class InterfaceCliente implements Serializable {
         adicionarPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
+                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
                 if(cliente.verPlayListCliente().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
-                }else {
+                } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
+                    JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
+                } else {
                     janelaDasPlaylists(true);
                 }
             }
