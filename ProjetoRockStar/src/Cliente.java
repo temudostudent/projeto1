@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,35 +57,36 @@ public class Cliente extends Utilizador implements Serializable {
         return objeto;
     }
 
-
-    // Criar uma playList indicando o género e tamanho
-    public void criarPlayListGenero(String genero, int tamanho, ArrayList <Musica> listaMusicas) {
-        String nome = genero + "list";
-        PlayList nova = new PlayList(genero+"list", true);
-
-        // Cria uma lista com musicas do genero selecionado
-        ArrayList<Musica> musicasGenero = new ArrayList<>();
-        //Percorre a lista de musicas global e adiciona as musicas do genero selecionado
-        for(Musica musica: listaMusicas ) {
+    //Cria uma playlist com todas as musicas do mesmo genero
+    public ArrayList listaMusicaGenero(String genero, ArrayList <Musica> listaMusicasGlobal){
+        ArrayList <Musica> musicasGenero = new ArrayList<>();
+        for(Musica musica: listaMusicasGlobal ) {
             if (musica.getGenero().equals(genero)) {
                 musicasGenero.add(musica);
             }
-        }
+        }return musicasGenero;
+    }
 
-        //Baralhar a lista de musicas do genero
-        Collections.shuffle(musicasGenero);
 
-        //Adicona musicas à nova playList até ao tamanho desejado
-        int cont = 0;
-        do {
-            for (Musica musica : musicasGenero) {
-                nova.adicionarMusica(musica);
-                cont++;
+    // Criar uma playList indicando o género e tamanho
+    public void criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
+        PlayList nova = new PlayList(titulo, true);
+
+        // Cria uma lista com musicas do genero selecionado
+        ArrayList<Musica> lmusicasGenero = new ArrayList<>();
+
+
+            //Baralhar a lista de musicas do genero
+            Collections.shuffle(listaMusicaGenero);
+
+            //Adicona musicas à nova playList até ao tamanho desejado
+            for (int i = 0; i < tamanho; i++) {
+                nova.adicionarMusica((Musica)listaMusicaGenero.get(i));
+
+                //Adicionar a nova playList à lista das playLists
+                playlists.add(nova);
+
             }
-        }while(cont<tamanho);
-
-        //Adicionar a nova playList à lista das playLists
-        playlists.add(nova);
 
     }
 

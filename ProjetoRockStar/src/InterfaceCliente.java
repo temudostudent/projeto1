@@ -527,22 +527,11 @@ public class InterfaceCliente implements Serializable {
         criarPlaylistPreenchida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                String genero = JOptionPane.showInputDialog(frame, "Indique o género da nova playlist:");
-                String tamanho = JOptionPane.showInputDialog(frame, "Indique o tamanho da nova playlist:");
-                if (tamanho != null && !tamanho.isEmpty()) {
-                        // Tenta converter a string para um inteiro
-                        int tamanho1 = Integer.parseInt(tamanho);
-
-
-                        //  Cria a playlist com genero e tamanho pretendido.
-                    cliente.criarPlayListGenero(genero, tamanho1, app.getRockstar().getMusicas());
-
-                } else {
-
-                }
+                janelaDadosNovaPlaylist();
             }
         });
+
+
 
         //Adicionar componentes ao painel
         painelPlayList.add(caixaListarPlayLists);painelPlayList.add(listaMusicasPlayList);
@@ -876,6 +865,81 @@ public class InterfaceCliente implements Serializable {
             }
         });
     }
+    //Cria uma janela auxiliar para o utilizador inserir os dados da nova playlist previamente preenchida
+    private void janelaDadosNovaPlaylist(){
+
+        //Cria nova janela e configura
+        JFrame janelaPlaylist = new JFrame();
+        janelaPlaylist.setSize(300,200);
+        janelaPlaylist.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janelaPlaylist.setLocationRelativeTo(null);
+        janelaPlaylist.setVisible(true);
+
+        // Criação dos componentes
+        JTextField nomePlaylist = new JTextField();
+        JTextField generoPlaylist = new JTextField();
+        JTextField numeroMusicas = new JTextField();
+        JButton botaoOk = new JButton("OK");
+        JButton botaoCancelar = new JButton("CANCELAR");
+
+        // Adiciona os componentes ao layout
+        janelaPlaylist.setLayout(new GridLayout(4, 2));
+        janelaPlaylist.add(new JLabel("Nome da Playlist:"));
+        janelaPlaylist.add(nomePlaylist);
+        janelaPlaylist.add(new JLabel("Género:"));
+        janelaPlaylist.add(generoPlaylist);
+        janelaPlaylist.add(new JLabel("Número de Músicas:"));
+        janelaPlaylist.add(numeroMusicas);
+        janelaPlaylist.add(botaoOk);
+        janelaPlaylist.add(botaoCancelar);
+
+
+        botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String titulo = nomePlaylist.getText();
+                String genero = generoPlaylist.getText();
+                String tamanho = numeroMusicas.getText();
+                if(titulo.isEmpty() || genero.isEmpty() || tamanho.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Por favor preencha todos os campos");
+                }else{
+                    try {
+                        int tamanho1 = Integer.parseInt(tamanho);
+                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(genero, app.rockstar.getMusicas());
+                        if (musicasGenero.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Não há músicas disponíveis do género " + genero,
+                                    "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+
+                            //Verifica se o tamanho desejado é maior que o numero de musicas do genero solicitado
+                            if (tamanho1 > musicasGenero.size()) {
+                                //Envia mensagem ao tutilizador
+                                JOptionPane.showMessageDialog(null, "Apenas existem " + musicasGenero.size() + " musicas do género " +
+                                        genero, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+
+                                cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero);
+                                JOptionPane.showMessageDialog(null, "Playlist criada com sucesso");
+
+                                janelaPlaylist.setVisible(false);
+                            }
+                        }
+                        }catch(NumberFormatException ex){
+                            JOptionPane.showMessageDialog(null, "Numeros de musicas deve ser um valor inteiro");
+                        }
+
+                }
+            }
+
+        });
+        botaoCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaPlaylist.setVisible(false);
+            }
+        });
+    }
+
 }
 
 
