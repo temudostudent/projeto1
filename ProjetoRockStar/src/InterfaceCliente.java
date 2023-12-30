@@ -15,7 +15,7 @@ public class InterfaceCliente implements Serializable {
     private Cliente cliente;
     private GestaoApp app;
     private ArrayList<Musica> listaM;
-    private JFrame janelaCliente, janelaPlaylists;
+    private JFrame janelaCliente, janelaPlaylists, janelaCarregarSaldo;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
     private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
@@ -209,9 +209,16 @@ public class InterfaceCliente implements Serializable {
         adicionarPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
+                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
                 if(cliente.verPlayListCliente().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
-                }else {
+                } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
+                    JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
+                } else {
                     janelaDasPlaylists(true);
                 }
             }
@@ -232,6 +239,7 @@ public class InterfaceCliente implements Serializable {
 
                 if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco()>0){
                     cliente.compra.adicionarMusica((MusicaPaga) object);
+                    JOptionPane.showMessageDialog(null, "Música '" + object.getTitulo() + "' adicionada ao carrinho");
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
                 tabelaCarrinho();
@@ -423,9 +431,7 @@ public class InterfaceCliente implements Serializable {
 
                     // Configura o modelo na tabela
                     listaMusicasPlayList.setModel(modeloTabela);
-
                 }
-
             }
         });
 
@@ -579,13 +585,31 @@ public class InterfaceCliente implements Serializable {
         carregarSaldo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor= Double.parseDouble(valorACarregar.getText());
-                cliente.alterarSaldo(valor);
-                mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                janelaCarregarSaldo(true);
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
         finalizarPagamento.setBounds(400,150,250,40);
+        finalizarPagamento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double valorAPagar= cliente.compra.totalCarrinhoCliente();
+                if (cliente.getSaldo()<valorAPagar){
+                    JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
+                }else{
+                    cliente.alterarSaldo(-valorAPagar);
+                    mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+
+
+
+                    cliente.compra.limparCarrinho();
+                    cliente.abrirCompra();
+                    tabelaCarrinho();
+
+                    JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+                }
+            }
+        });
         valorTotalPagar = new JLabel("VALOR TOTAL");
         valorTotalPagar.setBounds(400, 200, 250,40);
 
@@ -599,8 +623,7 @@ public class InterfaceCliente implements Serializable {
         mostrarSaldoCliente = new JTextField(String.format("%.2f",cliente.getSaldo()) + " €");
         mostrarSaldoCliente.setBounds(550,250,100,40);
         mostrarSaldoCliente.setEditable(false);
-        valorACarregar = new JTextField("€ a carregar");
-        valorACarregar.setBounds(660,100,100,40);
+
 
 
         //Adicionar Componentes ao Carrinho
@@ -614,7 +637,7 @@ public class InterfaceCliente implements Serializable {
         painelCarrinho.add(mostrarValorPagar);
         painelCarrinho.add(mostrarSaldoCliente);
         painelCarrinho.add(saldoCliente);
-        painelCarrinho.add(valorACarregar);
+
 
 
         //Criar painel fixo Titulo  ----------------------------------------------
@@ -864,6 +887,31 @@ public class InterfaceCliente implements Serializable {
                 janelaPlaylists.setVisible(false);
             }
         });
+    }
+    public void janelaCarregarSaldo(boolean visivel){
+        janelaCarregarSaldo = new JFrame("Carregamento Saldo");
+        valorACarregar = new JTextField("€ a carregar");
+        JButton okCarregamento = new JButton("Carregar Saldo");
+        okCarregamento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double valor= Double.parseDouble(valorACarregar.getText());
+                if (valor>0 && valor<1000){
+                    cliente.alterarSaldo(valor);
+                    mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                    janelaCarregarSaldo.setVisible(false);
+                }else JOptionPane.showMessageDialog(null, "Valor inválido");
+
+            }
+        });
+
+        janelaCarregarSaldo.add(valorACarregar,BorderLayout.CENTER);
+        janelaCarregarSaldo.add(okCarregamento,BorderLayout.SOUTH);
+
+        janelaCarregarSaldo.pack();
+        janelaCarregarSaldo.setLocationRelativeTo(null);
+        janelaCarregarSaldo.setResizable(false);
+        janelaCarregarSaldo.setVisible(visivel);
     }
     //Cria uma janela auxiliar para o utilizador inserir os dados da nova playlist previamente preenchida
     private void janelaDadosNovaPlaylist(){

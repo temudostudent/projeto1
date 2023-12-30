@@ -26,12 +26,6 @@ public class Artista extends Utilizador implements Serializable {
     public Artista() {
     }
 
-    //Imprimir todos os albuns do artista
-    @Override
-    public void verListas() {
-        albuns.forEach(System.out::println);
-    }
-
     //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
     public void criarAlbum(String nomeDoAlbum, String genero) {
         Album novoA = new Album(nomeDoAlbum, this.username, genero);

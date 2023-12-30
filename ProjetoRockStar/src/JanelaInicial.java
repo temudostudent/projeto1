@@ -343,12 +343,12 @@ public class JanelaInicial {
                 Artista artista = gestaoApp.rockstar.loginArtista(username, password);
 
                 if (artista!= null){
-                    fPin.setVisible(true);
                     if(gestaoApp.rockstar.verificarPINArtista(username, pin)){
 
                         InterfaceArtista ia = new InterfaceArtista(artista, gestaoApp);
                         ia.run();
                         f.setVisible(false);
+                        fPin.setVisible(false);
                     }
                 }
 

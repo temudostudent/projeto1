@@ -18,7 +18,6 @@ public class Aplicacao implements Serializable {
         this.musicas = new ArrayList<Musica>();
         this.playlists = new ArrayList<PlayList>();
         this.compras = new ArrayList<Compra>();
-
     }
 
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
@@ -30,7 +29,6 @@ public class Aplicacao implements Serializable {
                     JOptionPane.INFORMATION_MESSAGE);
         } else JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
                 "Aviso!", JOptionPane.INFORMATION_MESSAGE);
-        ;
     }
 
     public Cliente registarCliente(String username, String password) {
@@ -66,14 +64,11 @@ public class Aplicacao implements Serializable {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
-
         }else {
             JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-
         return cliente;
     }
 
@@ -86,7 +81,6 @@ public class Aplicacao implements Serializable {
                     artista = a;
                 }
             }
-
                 if (artista == null){
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -96,8 +90,6 @@ public class Aplicacao implements Serializable {
                 JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
                         JOptionPane.INFORMATION_MESSAGE);
         }
-
-
         return artista;
     }
 
@@ -124,9 +116,6 @@ public class Aplicacao implements Serializable {
         return false;
     }
 
-    public void addMusica(Musica m){
-        musicas.add(m);
-    }
     public boolean validarPassword(String password){
         //Tamanho entre 4 e 6 caracteres
         if(password.length() < 4 || password.length() > 6){
@@ -146,30 +135,6 @@ public class Aplicacao implements Serializable {
         return temLetra && temNumero;
     }
 
-
-    //Listar músicas
-    public void listarMusicas(){
-        musicas.forEach(System.out::println);
-    }
-
-    //Listar playlists
-    public void listarPlaylists(){
-        playlists.forEach(System.out::println);
-    }
-
-    //Ordenar a lista de musicas pelo título de forma ascendente
-    public void ordenarCrescentePorTitulo(){
-        //Criar um comparador
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo);
-        //Ordenar lista usando o comparador
-        musicas.sort(comparador);
-    }
-
-    //Ordenar a lista de musicas pelo título de forma descendente
-    public void ordenarDecrescentePorTitulo(){
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
-        musicas.sort(comparador);
-    }
 
     //Verifica se o username já existe
     private boolean procurarUserArtista(String username){
@@ -217,8 +182,16 @@ public class Aplicacao implements Serializable {
         return tipo;
     }
 
-    //Métodos de ORDENAÇÃO
+    //Encontrar objeto música
+    public Musica estaMusica(Musica m){
+        for (Musica musica : musicas){
+            if (musica.equals(m)){
+                return musica;
+            }
+        }
+    return null;}
 
+    //Métodos de ORDENAÇÃO
     public void ordenarMusicasCrescentePorTitulo(ArrayList lista){
 
         //Criar um comparador
@@ -272,6 +245,16 @@ public class Aplicacao implements Serializable {
             }
         }
         return objeto;
+    }
+
+    public int encontrarPosicao(Musica m){
+        int posicao = 0;
+        for(Musica musica : musicas){
+            if(musica.equals(m)){
+                posicao = musicas.indexOf(musica);
+            }
+        }
+        return posicao;
     }
 
     public ArrayList<Cliente> getClientes() {

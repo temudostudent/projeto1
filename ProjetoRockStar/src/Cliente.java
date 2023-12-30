@@ -15,7 +15,6 @@ public class Cliente extends Utilizador implements Serializable {
 
 
     // Construtor classe
-
     public Cliente(String username,String password) {
         super(username, password);
         this.playlists = playlists;
@@ -24,13 +23,6 @@ public class Cliente extends Utilizador implements Serializable {
     }
 
     public Cliente(){}
-
-    @Override
-    public void verListas() {
-        for(PlayList f : playlists){
-            System.out.println(f);
-        }
-    }
 
     public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
@@ -83,10 +75,9 @@ public class Cliente extends Utilizador implements Serializable {
             for (int i = 0; i < tamanho; i++) {
                 nova.adicionarMusica((Musica)listaMusicaGenero.get(i));
 
-                //Adicionar a nova playList à lista das playLists
-                playlists.add(nova);
-
-            }
+        //Adicionar a nova playList à lista das playLists
+        playlists.add(nova);
+    }
 
     }
 
@@ -97,7 +88,9 @@ public class Cliente extends Utilizador implements Serializable {
 
     //
     public void abrirCompra(){
+
         this.compra=new Compra();
+        historicoCompras.add(compra);
     }
 
     //Método para finalizar a compra
