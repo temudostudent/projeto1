@@ -53,7 +53,7 @@ public class Cliente extends Utilizador implements Serializable {
     public ArrayList listaMusicaGenero(String genero, ArrayList <Musica> listaMusicasGlobal){
         ArrayList <Musica> musicasGenero = new ArrayList<>();
         for(Musica musica: listaMusicasGlobal ) {
-            if (musica.getGenero().equals(genero)) {
+            if (musica.getGenero().equalsIgnoreCase(genero)) {
                 musicasGenero.add(musica);
             }
         }return musicasGenero;
