@@ -14,7 +14,6 @@ public class Cliente extends Utilizador implements Serializable {
 
 
     // Construtor classe
-
     public Cliente(String username,String password) {
         super(username, password);
         this.playlists = playlists;
@@ -78,7 +77,6 @@ public class Cliente extends Utilizador implements Serializable {
 
         //Adicionar a nova playList à lista das playLists
         playlists.add(nova);
-
     }
 
     //Remover playList através do objeto
@@ -88,7 +86,9 @@ public class Cliente extends Utilizador implements Serializable {
 
     //
     public void abrirCompra(){
+
         this.compra=new Compra();
+        historicoCompras.add(compra);
     }
 
     //Método para finalizar a compra
@@ -107,7 +107,6 @@ public class Cliente extends Utilizador implements Serializable {
 
         //Esvaziar carrinho
         compra.limparCarrinho();
-
     }
 
     // alterar saldo do cliente informando a quantidade
