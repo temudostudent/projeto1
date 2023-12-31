@@ -145,7 +145,6 @@ public class InterfaceCliente implements Serializable {
         rating.setResizable(false);
         rating.setSize(400, 200);
         rating.setLocationRelativeTo(null);
-
         rating.setVisible(false);
 
 
@@ -181,7 +180,6 @@ public class InterfaceCliente implements Serializable {
 
                     if (object != null) {
 
-
                         if (object.usuarioTemRating(cliente.getUsername())) {
                             JOptionPane.showMessageDialog(null, "Já avaliou esta musica");
 
@@ -202,7 +200,6 @@ public class InterfaceCliente implements Serializable {
             }
         });
         //FINAL DO RATING----------------------------------------
-
 
         adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
         adicionarPlayList.setBounds(310,450,200,40);
@@ -239,7 +236,6 @@ public class InterfaceCliente implements Serializable {
 
                 if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco()>0){
                     cliente.compra.adicionarMusica((MusicaPaga) object);
-                    JOptionPane.showMessageDialog(null, "Música '" + object.getTitulo() + "' adicionada ao carrinho");
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
                 tabelaCarrinho();
@@ -593,20 +589,29 @@ public class InterfaceCliente implements Serializable {
         finalizarPagamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valorAPagar= cliente.compra.totalCarrinhoCliente();
-                if (cliente.getSaldo()<valorAPagar){
-                    JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
-                }else{
-                    cliente.alterarSaldo(-valorAPagar);
-                    mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                if (cliente.compra == null){
+                    JOptionPane.showMessageDialog(null, "Carrinho de compras vazio");
+                }else {
+                    double valorAPagar= cliente.compra.totalCarrinhoCliente();
+                    if (cliente.getSaldo()<valorAPagar){
+                        JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
+                    }else{
+                        //altera o saldo
+                        cliente.alterarSaldo(-valorAPagar);
+                        //atualiza a caixa que mostra o saldo
+                        mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                        //coloca músicas na playlist
 
+                        //adiciona saldo aos artistas
+                        app.rockstar.pagarArtistas(cliente.compra.getCarrinho());
+                        //limpa o carrinho
+                        cliente.compra.limparCarrinho();
+                        cliente.abrirCompra();
+                        //atualiza tabela do carrinho
+                        tabelaCarrinho();
 
-
-                    cliente.compra.limparCarrinho();
-                    cliente.abrirCompra();
-                    tabelaCarrinho();
-
-                    JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+                        JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+                    }
                 }
             }
         });

@@ -257,6 +257,16 @@ public class Aplicacao implements Serializable {
         return posicao;
     }
 
+    public void pagarArtistas(ArrayList<MusicaPaga> carrinho){
+        for (MusicaPaga musica : carrinho){
+            for (Artista a : artistas){
+                if (a.getUsername().equals(musica.getNomeArtista())){
+                    a.alterarSaldo(musica.getPreco());
+                }
+            }
+        }
+    }
+
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }

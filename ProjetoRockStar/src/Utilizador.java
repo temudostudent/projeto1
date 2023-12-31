@@ -12,6 +12,7 @@ public abstract class Utilizador implements Serializable {
     public Utilizador (){}
 
     public abstract int getTipo();
+    public abstract void alterarSaldo(double quantia);
 
     public String getUsername() {
         return username;

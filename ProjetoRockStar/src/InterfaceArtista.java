@@ -798,6 +798,7 @@ public class InterfaceArtista implements Serializable {
                     listaAlbumGenero1.setModel(listaMusicas);
                     caixaTotalMusicas.setText(String.valueOf(artista.totalMusicas()));
                     caixaValorTotalColecao.setText(String.valueOf(artista.valorTotalColecao() + " €"));
+                    caixaValorTotalVendas.setText(String.valueOf(artista.getSaldo() + " €"));
                     tabelaEstatisticas.setViewportView(listaAlbumGenero1);
 
                 }

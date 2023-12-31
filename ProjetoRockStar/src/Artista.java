@@ -117,15 +117,8 @@ public class Artista extends Utilizador implements Serializable {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    //Remover música de Album
-    public void removeMusica(String nomeAlbum, String tituloMusica) {
-        for (Album a : albuns) {
-            if (a.getNome().equalsIgnoreCase(nomeAlbum)) {   //descobrir album pelo nome
-                albuns.get(albuns.indexOf(a)).removeMusica(a.encontraMusica(tituloMusica));
-            } else {
-                System.out.println("Álbum '" + nomeAlbum + "' não encontrado");
-            }
-        }
+    public void alterarSaldo(double quantia) {
+        saldo += quantia;
     }
 
     //Altera o título
