@@ -137,8 +137,24 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                rating.setVisible(true);
+                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
 
+                if (indexMusicaSelect != -1) {
+                    String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                    Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
+                    if (object != null) {
+
+                        if (object.usuarioTemRating(cliente.getUsername())) {
+                            JOptionPane.showMessageDialog(null, "Já avaliou esta musica");
+
+                        } else rating.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Não foi possível encontrar a música");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma música");
+                }
             }
         });
 
@@ -178,25 +194,13 @@ public class InterfaceCliente implements Serializable {
                     String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                     Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                    if (object != null) {
+                    int numeroSelecionado = resultado[0];
+                    object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
 
-                        if (object.usuarioTemRating(cliente.getUsername())) {
-                            JOptionPane.showMessageDialog(null, "Já avaliou esta musica");
+                    JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
 
-                        } else {
-                            int numeroSelecionado = resultado[0];
-                            object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
-
-                            JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Não foi possível encontrar a música");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione uma música");
+                    rating.setVisible(false);
                 }
-
-                rating.setVisible(false);
             }
         });
         //FINAL DO RATING----------------------------------------
