@@ -599,7 +599,9 @@ public class InterfaceCliente implements Serializable {
                     double valorAPagar= cliente.compra.totalCarrinhoCliente();
                     if (cliente.getSaldo()<valorAPagar){
                         JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
-                    }else{
+                    } else if (cliente.compra.getCarrinho().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Carrinho vazio");
+                    } else{
                         //altera o saldo
                         cliente.alterarSaldo(-valorAPagar);
                         //atualiza a caixa que mostra o saldo
