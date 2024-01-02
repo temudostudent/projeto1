@@ -200,7 +200,7 @@ public class Aplicacao implements Serializable {
         lista.sort(comparador);
     }
 
-    public void ordendarMusicasDecrescentePorTitulo(ArrayList lista){
+    public void ordenarMusicasDecrescentePorTitulo(ArrayList lista){
 
         Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
         lista.sort(comparador);
@@ -266,6 +266,37 @@ public class Aplicacao implements Serializable {
             }
         }
     }
+
+    //Quantificar utilizadores que têm pelo menos 1 música de um artista
+    public int totalUtilizadores(Artista a){
+        int ut=0;
+        for (Cliente c : clientes){
+            if (ouveArtista(c,a)){
+                ut++;
+            }
+        }
+    return ut;}
+
+    //Saber se o Cliente tem pelo menos 1 música de um determinado artista
+    private boolean ouveArtista(Cliente c, Artista a){
+        for (PlayList pl: clientes.get(indexCliente(c)).getPlaylists()){
+            for (Musica m : pl.getMusicas()){
+                if (m.getNomeArtista().equals(a.getUsername())){
+                    return true;
+                }
+            }
+        }
+    return false;}
+
+    private int indexCliente(Cliente c){
+        int index=0;
+        for (int i=0;i<clientes.size();i++){
+            if (clientes.get(i).equals(c)){
+                index=i;
+                break;
+            }
+        }
+    return index;}
 
     public ArrayList<Cliente> getClientes() {
         return clientes;

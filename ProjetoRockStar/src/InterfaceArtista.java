@@ -762,15 +762,19 @@ public class InterfaceArtista implements Serializable {
             totalUtilizadores = new JLabel("TOTAL UTILIZADORES");
             totalUtilizadores.setBounds(50,50,180,30);
             caixaTotalUtilizadores = new JTextField(); caixaTotalUtilizadores.setBounds(250,50,180,30);
+            caixaTotalUtilizadores.setEditable(false);
             totalMusicas = new JLabel("TOTAL MUSICAS");
             totalMusicas.setBounds(50,100,180,30);
             caixaTotalMusicas = new JTextField(); caixaTotalMusicas.setBounds(250,100,180,30);
+            caixaTotalMusicas.setEditable(false);
             valorTotalColecao = new JLabel("VALOR TOTAL COLEÇÃO");
             valorTotalColecao.setBounds(50,150,180,30);
             caixaValorTotalColecao = new JTextField(); caixaValorTotalColecao.setBounds(250,150,180,30);
+            caixaValorTotalColecao.setEditable(false);
             valorTotalVendas = new JLabel("VALOR TOTAL DE VENDAS");
             valorTotalVendas.setBounds(50,200,180,30);
             caixaValorTotalVendas = new JTextField(); caixaValorTotalVendas.setBounds(250,200,180,30);
+            caixaValorTotalVendas.setEditable(false);
             botaorefresh = new JButton("ATUALIZAR");
             botaorefresh.setBounds(400,400,200,40);
             listaAlbumGenero1 = new JTable();
@@ -796,6 +800,7 @@ public class InterfaceArtista implements Serializable {
                     }
 
                     listaAlbumGenero1.setModel(listaMusicas);
+                    caixaTotalUtilizadores.setText(String.valueOf(app.rockstar.totalUtilizadores(artista)));
                     caixaTotalMusicas.setText(String.valueOf(artista.totalMusicas()));
                     caixaValorTotalColecao.setText(String.valueOf(artista.valorTotalColecao() + " €"));
                     caixaValorTotalVendas.setText(String.valueOf(artista.getSaldo() + " €"));

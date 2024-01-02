@@ -266,7 +266,7 @@ public class InterfaceCliente implements Serializable {
                     if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
                     } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
+                        app.rockstar.ordenarMusicasDecrescentePorTitulo(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
@@ -289,7 +289,7 @@ public class InterfaceCliente implements Serializable {
                     if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
                     } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.rockstar.ordendarMusicasDecrescentePorTitulo(listaM);
+                        app.rockstar.ordenarMusicasDecrescentePorTitulo(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {

@@ -15,6 +15,8 @@ public class Musica implements Serializable {
     protected boolean estado;
     protected Map<String, Integer> rating;
 
+    private int id;
+
     //Construtor que recebe titulo,ano,duracao,genero,estado
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
         this.titulo = titulo;

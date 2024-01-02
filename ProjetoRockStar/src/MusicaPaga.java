@@ -9,6 +9,7 @@ public class MusicaPaga extends Musica implements Serializable {
 
     private double preco;
     private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
+    private int id;
 
     public MusicaPaga(String titulo, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
         super(titulo, nomeArtista, duracao, genero, estado);
