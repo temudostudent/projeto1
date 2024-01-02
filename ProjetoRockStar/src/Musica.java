@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Musica implements Serializable {
     //Atributos
-    private int idMusica;
-    private static int ultimoId = 0;
+    protected int idMusica;
+    protected static int ultimoId = 0;
     protected String titulo;
     protected String nomeArtista;
     protected LocalDateTime dataCriacao;
@@ -36,7 +36,7 @@ public class Musica implements Serializable {
         this.duracao = String.format("%02d:%02d", min, s);
     }
 
-    public Musica(String titulo, String nomeArtista, String genero, boolean estado) {
+    public Musica() {
     }
 
 
@@ -114,6 +114,10 @@ public class Musica implements Serializable {
         return nomeArtista;
     }
 
+    public LocalDateTime getOriginalDataCriacao(){
+        return dataCriacao;
+    }
+
     public String getDataCriacao() {
         DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dataCriacao.format(dataFormatada);
@@ -143,14 +147,15 @@ public class Musica implements Serializable {
     @Override
     public String toString() {
         return "Musica{" +
-                "titulo='" + titulo + '\'' +
-                ", artista=" + nomeArtista +
-                ", ano=" + dataCriacao +
-                ", duracao=" + duracao +
+                "idMusica=" + idMusica +
+                ", titulo='" + titulo + '\'' +
+                ", nomeArtista='" + nomeArtista + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", duracao='" + duracao + '\'' +
                 ", genero='" + genero + '\'' +
-                ", rating=" + rating +
                 ", ratingMedia=" + ratingMedia +
                 ", estado=" + estado +
+                ", rating=" + rating +
                 '}';
     }
 }

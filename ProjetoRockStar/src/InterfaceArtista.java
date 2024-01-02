@@ -528,6 +528,7 @@ public class InterfaceArtista implements Serializable {
                                     app.rockstar.getMusicas().get(app.rockstar.encontrarPosicao(object)).setTitulo(caixaAlteracao.getText());
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
+                                    System.out.println(object);
                                 }else {
                                     JOptionPane.showMessageDialog(null, "Música não encontrada!");
                                 }
@@ -553,9 +554,10 @@ public class InterfaceArtista implements Serializable {
                                     atualizarTabelaMusicas();
 
                                 }else{
-                                    MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(), object.getDataCriacao(),
+                                    MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(), object.getOriginalDataCriacao(),
                                             object.getNomeArtista(), object.getDuracao(), object.getGenero(),
-                                            object.getEstado(), Double.parseDouble(caixaAlteracao.getText()), object.getIdMusica());
+                                            object.getEstado(), Double.parseDouble(caixaAlteracao.getText()), object.getIdMusica()
+                                            , object.getRating());
                                     artista.getMusicas().set(artista.encontrarPosicao(object),musicaPaga);
                                     app.rockstar.getMusicas().set(app.rockstar.encontrarPosicao(object),musicaPaga);
                                     JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");

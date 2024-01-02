@@ -7,8 +7,6 @@ import java.util.Map;
 
 public class MusicaPaga extends Musica implements Serializable {
 
-    private int idMusicaPaga;
-    private int idultimoID = 0;
     private double preco;
     private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
 
@@ -17,22 +15,27 @@ public class MusicaPaga extends Musica implements Serializable {
         this.dataCriacao = LocalDateTime.now();
         this.preco = preco;
         this.historicoPreco = new HashMap<>();
-        this.idMusicaPaga = idultimoID;
-        idultimoID++;
+        this.rating = new HashMap<>();
+        this.idMusica=getNextId();
         adicionarRegisto(preco);
 
     }
 
     //Construtor quando Música já existe gratuita e quer passar a ser paga
-    public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, String duracao, String genero, boolean estado, double preco, int id) {
-        super(titulo, nomeArtista, genero, estado);
+    public MusicaPaga(String titulo, LocalDateTime dataCriacao, String nomeArtista, String duracao, String genero, boolean estado, double preco, int id, Map rating) {
+        this.titulo=titulo;
+        this.nomeArtista=nomeArtista;
+        this.genero=genero;
+        this.estado=estado;
         this.duracao=duracao;
-        this.dataCriacao = LocalDateTime.parse(dataCriacao);
+        this.dataCriacao = dataCriacao;
         this.preco = preco;
         this.historicoPreco = historicoPreco;
-        this.idMusicaPaga=id;
+        this.rating = rating;
+        this.idMusica=id;
         adicionarRegisto(preco);
     }
+
 
     private void adicionarRegisto(double novoPreco) {
         this.historicoPreco.put(LocalDateTime.now(), novoPreco);
@@ -76,7 +79,4 @@ public class MusicaPaga extends Musica implements Serializable {
         return true;
     }
 
-    public Integer getIdMusicaPaga() {
-        return idMusicaPaga;
-    }
 }
