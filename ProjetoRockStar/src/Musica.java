@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Musica implements Serializable {
     //Atributos
-    private Integer idMusica;
-    private static int ultimoID = 0;
+    private int idMusica;
+    private static int ultimoId = 0;
     protected String titulo;
     protected String nomeArtista;
     protected LocalDateTime dataCriacao;
@@ -16,8 +16,6 @@ public class Musica implements Serializable {
     protected double ratingMedia;
     protected boolean estado;
     protected Map<String, Integer> rating;
-
-    private int id;
 
     //Construtor que recebe titulo,ano,duracao,genero,estado
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
@@ -28,11 +26,15 @@ public class Musica implements Serializable {
         this.genero = genero;
         this.estado = estado;
         this.rating = new HashMap<>();
-        this.idMusica = ++ultimoID;
+        this.idMusica = getNextId();
 
     }
 
     public Musica() {
+    }
+
+    public static synchronized int getNextId() {
+        return ++ultimoId;
     }
 
     //adicionar Rating à respetiva

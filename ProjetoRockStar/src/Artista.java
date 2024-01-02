@@ -12,7 +12,6 @@ public class Artista extends Utilizador implements Serializable {
     //Atributos
     private Integer idArtista;
     private Integer ultimoID = 0;
-
     private String pin;
     private ArrayList<Album> albuns = new ArrayList<>();
     private ArrayList<Musica> musicas = new ArrayList<>();

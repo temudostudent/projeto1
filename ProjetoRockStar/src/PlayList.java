@@ -48,11 +48,21 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
 
     public boolean musicasJaExistem (ArrayList<Musica> lista){
         for (Musica m: lista) {
-            if (getMusicas().contains(m)) {
-                JOptionPane.showMessageDialog(null, "A música '" + m.getTitulo() + "' já existe na playlist");
-                return true;
+            for (Musica mPl : getMusicas()){
+                if (m.getIdMusica().equals(mPl.getIdMusica())){
+                    JOptionPane.showMessageDialog(null, "A música '" + m.getTitulo() + "' já existe na playlist");
+                    return true;
+                }
             }
         }
+    return false;}
+
+    public boolean estaMusicaJaExiste (Musica m){
+        for (Musica mPl : getMusicas()){
+            if (m.getIdMusica().equals(mPl.getIdMusica())){
+                return true;
+        }
+    }
     return false;}
 
 
