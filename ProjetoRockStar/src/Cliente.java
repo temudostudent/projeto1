@@ -76,6 +76,10 @@ public class Cliente extends Utilizador implements Serializable {
         }return musicasGenero;
     }
 
+    public void removerMusicaPlayList(){
+        removerMusicaPlayList();
+    }
+
 
     // Criar uma playList indicando o género e tamanho
     public void criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
@@ -142,6 +146,7 @@ public class Cliente extends Utilizador implements Serializable {
     public Integer getIdCliente() {
         return idCliente;
     }
+
 
     public ArrayList<PlayList> getPlaylists() {
         return playlists;

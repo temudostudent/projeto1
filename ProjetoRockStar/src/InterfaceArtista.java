@@ -108,6 +108,7 @@ public class InterfaceArtista implements Serializable {
                             artista.ordenarMusicasDecrescentePorGenero(listaM);
                         }
                         // Adicionar uma coluna à tabela e respetivos titulos
+                        listarItems.addColumn("idMusica");
                         listarItems.addColumn("TÍTULO");
                         listarItems.addColumn("DATA");
                         listarItems.addColumn("DURACAO");
@@ -120,10 +121,10 @@ public class InterfaceArtista implements Serializable {
                         // Adicionar os elementos do ArrayList à tabela
                         for (Musica musica : listaM) {
                             if (musica instanceof MusicaPaga) {
-                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                listarItems.addRow(new Object[]{musica.getIdMusica(),musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                         musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                             }else {
-                                listarItems.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
+                                listarItems.addRow(new Object[]{musica.getIdMusica(),musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                         musica.getGenero(), musica.tipoEstado(), "0" , musica.getRatingMedia()});
                             }
                         }

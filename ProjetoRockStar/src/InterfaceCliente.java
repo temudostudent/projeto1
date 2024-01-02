@@ -1,3 +1,4 @@
+import javax.management.modelmbean.InvalidTargetObjectTypeException;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -17,12 +18,13 @@ public class InterfaceCliente implements Serializable {
     private ArrayList<Musica> listaM;
     private JFrame janelaCliente, janelaPlaylists, janelaCarregarSaldo;
     private JPanel painelPesquisarCliente, painelTituloCliente, painelMenu, painelPlayList, painelCarrinho;
-    private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras, valorTotalPagar, saldoCliente;
+    private JLabel atributoPesquisarLegenda, tituloCliente, username, ordenarMusicasCliente, listacompras,
+            valorTotalPagar, saldoCliente, nomePlaylist;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
-            criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, removerMusicaPlayList,
+            criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists,
             botaoLogout;
-    private JComboBox atributoPesquisa, ordenarMusicaPor, caixaListarPlayLists;
+    private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
@@ -301,7 +303,6 @@ public class InterfaceCliente implements Serializable {
                 adicionarElementosTabela(listaM,listarItems);
 
 
-
             }
         });
 
@@ -401,81 +402,67 @@ public class InterfaceCliente implements Serializable {
         painelPlayList.setLayout(null);
 
         //Criar Componentes painel PlayList
-        caixaListarPlayLists = new JComboBox<>();
-        caixaListarPlayLists.setBounds(50,0,400,40);
+
+        nomePlaylist = new JLabel();
+        nomePlaylist.setBounds(50,60,400,30);
         listaMusicasPlayList = new JTable();
         listaPlaylist = new JScrollPane(listaMusicasPlayList);
-        listaPlaylist.setBounds(50,50,400,380);
+        listaPlaylist.setBounds(50,80,400,300);
         botaoAtualizarPlaylists = new JButton("ATUALIZAR PLAYLISTS");
-        botaoAtualizarPlaylists.setBounds(500,0,220,40);
-        caixaListarPlayLists.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtém o índice da playlist selecionada
-                PlayList playlistSelecionada = (PlayList) caixaListarPlayLists.getSelectedItem();
-                PlayList selecionada = cliente.pesquisaPlaylistTitulo(playlistSelecionada.getNome());
-
-
-                // Verifica se alguma playlist está selecionada
-                if (playlistSelecionada != null) {
-                    // Obtém as músicas da playlist
-                    ArrayList<Musica> musicas1 = selecionada.getMusicas();
-
-
-                    // Cria um modelo de tabela para as músicas
-                    DefaultTableModel modeloTabela = new DefaultTableModel();
-                    modeloTabela.addColumn("Nome da Música");
-
-                    // Adiciona as músicas ao modelo de tabela
-                    for (Musica musica : musicas1) {
-                        modeloTabela.addRow(new Object[]{musica.getTitulo()});
-                    }
-
-                    // Configura o modelo na tabela
-                    listaMusicasPlayList.setModel(modeloTabela);
-                    listaPlaylist.setViewportView(listaMusicasPlayList);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Não existem playlists");
-                }
-            }
-        });
-
+        botaoAtualizarPlaylists.setBounds(50,0,220,40);
         botaoAtualizarPlaylists.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                    // Ver as playLists do Cliente
-                    ArrayList<PlayList> playList = cliente.verPlayListCliente();
 
-                    // Crie um array de objetos PlayList
-                    PlayList[] playlistsArray = playList.toArray(new PlayList[0]);
 
-                    DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
-                    caixaListarPlayLists.setModel(model);
+                // Ver as playLists do Cliente
+                ArrayList<PlayList> playList = cliente.verPlayListCliente();
+
+                DefaultTableModel modeloTabela = new DefaultTableModel();
+
+                modeloTabela.addColumn("Nome");
+                modeloTabela.addColumn("Visibilidade");
+
+
+
+                listaMusicasPlayList.setModel(modeloTabela);
+                listaPlaylist.setViewportView(listaMusicasPlayList);
+
+
+                for (PlayList play : playList) {
+                    modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
+
                 }
+
+
+            }
         });
+
+
         removerPlayList = new JButton("REMOVER PLAYLIST");
         removerPlayList.setBounds(500, 100, 220,40);
         removerPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtém o índice da playlist selecionada
-                PlayList playlistSelecionada = (PlayList) caixaListarPlayLists.getSelectedItem();
 
-                // Verifica se alguma playlist está selecionada
-                if (playlistSelecionada != null) {
-                    cliente.removerPlaylist(playlistSelecionada);
+                int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
 
-                    //Obter o modelo da JComboBox
-                    DefaultComboBoxModel<PlayList> model = (DefaultComboBoxModel<PlayList>) caixaListarPlayLists.getModel();
+                if(linhaSelecionada != -1) {
 
-                    //Remover a playlist do modelo da JComBox
-                    model.removeElement(playlistSelecionada);
+                    String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
+                    PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
 
-                    JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
+                    // Verifica se alguma playlist está selecionada
+                    if (playlistSelecionada != null) {
+                        cliente.removerPlaylist(playlistSelecionada);
 
-                } else {
-                    JOptionPane.showMessageDialog( null, "Nenhuma playlist selecionada para remover.");
+                        JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
 
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
+
+                    }
                 }
 
             }
@@ -485,27 +472,29 @@ public class InterfaceCliente implements Serializable {
         alterarVisibilidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obtém a playlist selecionada
-                int indiceSelecionado = caixaListarPlayLists.getSelectedIndex();
+                int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
+
+                if(linhaSelecionada != -1) {
+
+                    String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
+                    PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
+                    ;
 
 
-                // Verifica se alguma playlist está selecionada
-                if (indiceSelecionado != -1) {
-                    // Remove a playlist da lista da JComboBox
-                    PlayList playlistSelecionada = (PlayList) caixaListarPlayLists.getSelectedItem();
+                    // Verifica se alguma playlist está selecionada
+                    if (playlistSelecionada != null) {
+
+                        //Altera a visibilidade da playList na JComboBox
+                        boolean novaVisibilidade = !playlistSelecionada.isVisibilidade(); // Inverte a visibilidade
+                        playlistSelecionada.setVisibilidade(novaVisibilidade);
 
 
-                    //Altera a visibilidade da playList na JComboBox
-                    boolean novaVisibilidade = !playlistSelecionada.isVisibilidade(); // Inverte a visibilidade
-                    playlistSelecionada.setVisibilidade(novaVisibilidade);
-                    atualizaListaPlayList();
+                        JOptionPane.showMessageDialog(null, "Visibilidade alterada  com sucesso.");
 
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para alterar.");
 
-                    JOptionPane.showMessageDialog(null, "Visibilidade alterada  com sucesso.");
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para alterar.");
-
+                    }
                 }
             }
         });
@@ -528,8 +517,6 @@ public class InterfaceCliente implements Serializable {
                         // Cria a nova playlist no cliente com visibilidade true
                         cliente.criarPlaylist(nomeNovaPlaylist, true);
 
-                        // Atualiza a  JComboBox
-                        atualizaListaPlayList();
                     }else{
                         JOptionPane.showMessageDialog(null, "Titulo palylista já existe.");
                     }
@@ -539,8 +526,26 @@ public class InterfaceCliente implements Serializable {
                 }
             }
         });
-        removerMusicaPlayList = new JButton("REMOVER MÚSICA PLAYLIST");
-        removerMusicaPlayList.setBounds(500, 250, 220,40);
+        verMusicasPlayListSelecionada = new JButton("VER MÚSICAS PLAYLIST");
+        verMusicasPlayListSelecionada.setBounds(500, 250, 220,40);
+
+        verMusicasPlayListSelecionada.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
+
+                if (linhaSelecionada != -1) {
+
+                    String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
+                    PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
+
+                    janelaMusicaPlayLis(playlistSelecionada);
+                }
+            }
+
+        });
+
+
         criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
         criarPlaylistPreenchida.setBounds(500,300,220,40);
 
@@ -554,11 +559,11 @@ public class InterfaceCliente implements Serializable {
 
 
         //Adicionar componentes ao painel
-        painelPlayList.add(caixaListarPlayLists);painelPlayList.add(listaMusicasPlayList);
+        painelPlayList.add(listaMusicasPlayList);
         painelPlayList.add(removerPlayList);painelPlayList.add(alterarVisibilidade);
-        painelPlayList.add(criarNovaPlayList);painelPlayList.add(removerMusicaPlayList);
+        painelPlayList.add(criarNovaPlayList);painelPlayList.add(verMusicasPlayListSelecionada);
         painelPlayList.add(botaoAtualizarPlaylists); painelPlayList.add(criarPlaylistPreenchida);
-        painelPlayList.add(listaPlaylist);
+        painelPlayList.add(listaPlaylist); painelPlayList.add(nomePlaylist);
 
         //Criar painel Carrinho  ------------------------------------------------------------------------
         painelCarrinho = new JPanel();
@@ -761,17 +766,7 @@ public class InterfaceCliente implements Serializable {
 
         novoPainel.setVisible(true);
     }
-    private void atualizaListaPlayList() {
-        // Ver as playLists do Cliente
 
-        ArrayList<PlayList> playList = cliente.verPlayListCliente();
-
-        // Cria um array de objetos PlayList
-        PlayList[] playlistsArray = playList.toArray(new PlayList[0]);
-
-        DefaultComboBoxModel<PlayList> model = new DefaultComboBoxModel<>(playlistsArray);
-        caixaListarPlayLists.setModel(model);
-    }
     private void adicionarElementosTabela(ArrayList<Musica> lista,DefaultTableModel modelo){
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
@@ -952,11 +947,11 @@ public class InterfaceCliente implements Serializable {
         janelaCarregarSaldo.setVisible(visivel);
     }
     //Cria uma janela auxiliar para o utilizador inserir os dados da nova playlist previamente preenchida
-    private void janelaDadosNovaPlaylist(){
+    private void janelaDadosNovaPlaylist() {
 
         //Cria nova janela e configura
         JFrame janelaPlaylist = new JFrame();
-        janelaPlaylist.setSize(300,200);
+        janelaPlaylist.setSize(300, 200);
         janelaPlaylist.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janelaPlaylist.setLocationRelativeTo(null);
         janelaPlaylist.setVisible(true);
@@ -980,7 +975,7 @@ public class InterfaceCliente implements Serializable {
         janelaPlaylist.add(botaoCancelar);
 
 
-        botaoOk.addActionListener(new ActionListener() {
+            botaoOk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String titulo = nomePlaylist.getText();
@@ -1025,6 +1020,70 @@ public class InterfaceCliente implements Serializable {
             }
         });
     }
+
+    public void janelaMusicaPlayLis(PlayList p){
+        JFrame janelaMusicas = new JFrame();
+        JButton botaoOk = new JButton("OK");
+        JButton botaoRemover = new JButton("REMOVER MUSICA");
+        janelaMusicas.add(botaoRemover); janelaMusicas.add(botaoOk);
+        janelaMusicas.setLocationRelativeTo(null);
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoRemover);
+        painelBotoes.add(botaoOk);
+        janelaMusicas.add(painelBotoes, BorderLayout.SOUTH);
+
+
+        janelaMusicas.setSize(400,300);
+        janelaMusicas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        ArrayList<Musica> musicas = p.getMusicas();
+
+        //Cria a tabela modelo
+        DefaultTableModel modeloTabela = new DefaultTableModel();
+        modeloTabela.addColumn("Músicas");
+        JTable tabelaMusicas = new JTable(modeloTabela);
+        JScrollPane srollTabelaMusicas = new JScrollPane(tabelaMusicas);
+        janelaMusicas.add(srollTabelaMusicas);
+
+
+        if(!musicas.isEmpty()) {
+            //Adiciona as músicas a tabela
+            for (Musica m : musicas) {
+                modeloTabela.addRow(new Object[]{m.getTitulo()});
+            }
+            //Cria a tabela
+
+
+            janelaMusicas.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "PlayList vazia.");
+        }
+
+       botaoOk.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               janelaMusicas.setVisible(false);
+           }
+       });
+
+       botaoRemover.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               int linhaSelecionada = tabelaMusicas.getSelectedRow();
+               if(linhaSelecionada != -1){
+                   String nomeMusica = (String) tabelaMusicas.getValueAt(linhaSelecionada, 0);
+                   p.removeMusica(p.pesquisaMusicaTitulo(nomeMusica));
+                   JOptionPane.showMessageDialog(null, "Música Removida com Sucesso");
+                   janelaMusicas.setVisible(false);
+
+               }
+           }
+
+       });
+
+
+    }
+
 
 }
 

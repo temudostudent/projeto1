@@ -15,14 +15,23 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         this.visibilidade = visibilidade;
         this.idPlaylist = ultimoID++;
     }
-    public String toString() {
+    public String getVisibilidade() {
         if (visibilidade) {
-            return nome + ",   PÚBLICA";
+            return "   PÚBLICA";
         } else {
-            return nome + ",   PRIVADA";
+            return "   PRIVADA";
         }
     }
 
+    public Musica pesquisaMusicaTitulo(String titulo){
+        Musica musica = null;
+        for(Musica m : musicas){
+            if(m.getTitulo().equalsIgnoreCase(titulo)){
+                musica = m;
+            }
+        }
+        return musica;
+    }
 
 
     //Adiciona música
