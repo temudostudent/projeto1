@@ -25,7 +25,8 @@ public class InterfaceCliente implements Serializable {
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists,
             botaoLogout;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
-    private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas, botaoParaPesquisarMusicas;
+    private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
+            botaoParaPesquisarMusicas, botaoMinhasMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
@@ -347,6 +348,28 @@ public class InterfaceCliente implements Serializable {
             }
         });
 
+        botaoMinhasMusicas = new JRadioButton("Minhas músicas");
+        botaoMinhasMusicas.setBounds(50,45,150,40);
+        botaoMinhasMusicas.setBackground(null);
+
+        botaoMinhasMusicas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                DefaultTableModel listarMusicas = new DefaultTableModel();
+                listaM = cliente.getMusicasCompradas();
+
+                titulosDasColunasTabela(listarMusicas);
+
+                adicionarElementosTabela(listaM,listarMusicas);
+                tabelaResultadoPesquisa.setModel(listarMusicas);
+                scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
+                tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+            }
+        });
+
         botaoParaPesquisarMusicas = new JRadioButton("Pesquisar música");
         botaoParaPesquisarMusicas.setBounds(50,70,150,40);
         botaoParaPesquisarMusicas.setBackground(null);
@@ -371,6 +394,8 @@ public class InterfaceCliente implements Serializable {
         //ButtonGroup
         grupoPesquisa = new ButtonGroup();
         grupoPesquisa.add(botaoTodasAsMusicas);
+        grupoPesquisa.add(botaoMinhasMusicas);
+
         grupoPesquisa.add(botaoParaPesquisarMusicas);
         botaoOrdem = new ButtonGroup();
         botaoOrdem.add(botaoAscendenteCliente);
@@ -394,6 +419,7 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.add(adicionarRating);
         painelPesquisarCliente.add(okPesquisa);
         painelPesquisarCliente.add(scroljListarMusicas);
+        painelPesquisarCliente.add(botaoMinhasMusicas);
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();
