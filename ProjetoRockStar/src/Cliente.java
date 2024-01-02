@@ -11,16 +11,18 @@ public class Cliente extends Utilizador implements Serializable {
     private Integer idCliente;
     private Integer ultimoID = 0;
 
-    private ArrayList<PlayList> playlists=new ArrayList<>();
-    private ArrayList<Compra> historicoCompras=new ArrayList<>();
+    private ArrayList<PlayList> playlists;
+    private ArrayList<Compra> historicoCompras;
+
+    private ArrayList<Musica>musicasCompradas;
     protected Compra compra;
 
 
     // Construtor classe
     public Cliente(String username,String password) {
         super(username, password);
-        this.playlists = playlists;
-        this.historicoCompras = historicoCompras;
+        this.playlists = new ArrayList<>();
+        this.historicoCompras = new ArrayList<>();
         super.saldo = 0;
         this.idCliente = ultimoID++;
     }
@@ -30,6 +32,13 @@ public class Cliente extends Utilizador implements Serializable {
     public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
+    }
+    public void adicionarMusicaComprada( Musica m){
+        musicasCompradas.add(m);
+    }
+
+    public ArrayList<Musica> getMusicasCompradas() {
+        return musicasCompradas;
     }
 
     //Método para verificar se já existe uma playlist com o mesmo nome
