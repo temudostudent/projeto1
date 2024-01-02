@@ -15,10 +15,13 @@ public abstract class ConjuntoMusicas implements Serializable {
         this.dataCriacao = LocalDateTime.now();
         musicas=new ArrayList<>();
     }
+    public void removeMusica(Musica m){
+        musicas.remove(m);
+    }
+
 
     public abstract void adicionarMusica(Musica m);
 
-    public abstract void removeMusica(Musica m);
 
 
     public ArrayList<Musica> getMusicas() {
