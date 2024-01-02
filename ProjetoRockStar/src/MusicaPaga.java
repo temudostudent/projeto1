@@ -24,11 +24,13 @@ public class MusicaPaga extends Musica implements Serializable {
     }
 
     //Construtor quando Música já existe gratuita e quer passar a ser paga
-    public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
-        super(titulo, nomeArtista, duracao, genero, estado);
+    public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, String duracao, String genero, boolean estado, double preco, int id) {
+        super(titulo, nomeArtista, genero, estado);
+        this.duracao=duracao;
         this.dataCriacao = LocalDateTime.parse(dataCriacao);
         this.preco = preco;
         this.historicoPreco = historicoPreco;
+        this.idMusicaPaga=id;
         adicionarRegisto(preco);
     }
 

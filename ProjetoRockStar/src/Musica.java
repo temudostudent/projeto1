@@ -1,5 +1,5 @@
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -11,7 +11,7 @@ public class Musica implements Serializable {
     protected String titulo;
     protected String nomeArtista;
     protected LocalDateTime dataCriacao;
-    protected double duracao;
+    protected String duracao;
     protected String genero;
     protected double ratingMedia;
     protected boolean estado;
@@ -22,16 +22,23 @@ public class Musica implements Serializable {
         this.titulo = titulo;
         this.nomeArtista = nomeArtista;
         this.dataCriacao = LocalDateTime.now();
-        this.duracao = duracao;
         this.genero = genero;
         this.estado = estado;
         this.rating = new HashMap<>();
         this.idMusica = getNextId();
 
+        double duracaoEmSegundos = duracao * 60;
+        Duration d = Duration.ofSeconds((long) duracaoEmSegundos);
+
+        long min = d.toMinutes();
+        long s = d.toSeconds() - (min * 60);
+
+        this.duracao = String.format("%02d:%02d", min, s);
     }
 
-    public Musica() {
+    public Musica(String titulo, String nomeArtista, String genero, boolean estado) {
     }
+
 
     public static synchronized int getNextId() {
         return ++ultimoId;
@@ -83,7 +90,7 @@ public class Musica implements Serializable {
     public String getGenero() {
         return genero;
     }
-    public Double getDuracao(){return duracao;}
+    public String getDuracao(){return duracao;}
 
     public boolean isEstado() {
         return estado;
