@@ -8,7 +8,7 @@ import java.util.Map;
 public class MusicaPaga extends Musica implements Serializable {
 
     private double preco;
-   private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
+    private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
 
     public MusicaPaga(String titulo, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
         super(titulo, nomeArtista, duracao, genero, estado);
@@ -17,6 +17,7 @@ public class MusicaPaga extends Musica implements Serializable {
         this.historicoPreco = historicoPreco;
         adicionarRegisto(preco);
     }
+
     //Construtor quando Música já existe gratuita e quer passar a ser paga
     public MusicaPaga(String titulo, String dataCriacao, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
         super(titulo, nomeArtista, duracao, genero, estado);
@@ -26,8 +27,8 @@ public class MusicaPaga extends Musica implements Serializable {
         adicionarRegisto(preco);
     }
 
-    private void adicionarRegisto(double novoPreco){
-        this.historicoPreco.put(LocalDateTime.now(),novoPreco);
+    private void adicionarRegisto(double novoPreco) {
+        this.historicoPreco.put(LocalDateTime.now(), novoPreco);
     }
 
 
@@ -35,21 +36,36 @@ public class MusicaPaga extends Musica implements Serializable {
         return historicoPreco;
     }
 
-    public double getPreco() {return preco;}
+    public double getPreco() {
+        return preco;
+    }
 
     public void setPreco(double preco) {
-        if (preco<0){
-            this.preco=0;
-        }else this.preco = preco;
+        if (preco < 0) {
+            this.preco = 0;
+        } else this.preco = preco;
 
         adicionarRegisto(preco);
     }
+
     @Override
-    public String tipoEstado(){
-        if(getEstado() == true){
+    public String tipoEstado() {
+        if (getEstado() == true) {
             return "ATIVA";
-        }else{
+        } else {
             return "INATIVA";
         }
+    }
+
+    @Override
+    public boolean equals(Object m){
+        if (this == m) {
+            return true;
+        }
+        if (m == null || getClass() != m.getClass()) {
+            return false;
+        }
+        MusicaPaga objeto = (MusicaPaga) m;
+        return true;
     }
 }

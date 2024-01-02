@@ -220,7 +220,7 @@ public class InterfaceCliente implements Serializable {
                 } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
                     JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
                 } else {
-                    janelaDasPlaylists(true);
+                    janelaDasPlaylists(true,false);
                 }
             }
         });
@@ -293,7 +293,7 @@ public class InterfaceCliente implements Serializable {
                     } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
                     } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
-                        app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
+                        app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
                 }
                 titulosDasColunasTabela(listarItems);
@@ -602,21 +602,8 @@ public class InterfaceCliente implements Serializable {
                     } else if (cliente.compra.getCarrinho().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Carrinho vazio");
                     } else{
-                        //altera o saldo
-                        cliente.alterarSaldo(-valorAPagar);
-                        //atualiza a caixa que mostra o saldo
-                        mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
-                        //coloca músicas na playlist
-
-                        //adiciona saldo aos artistas
-                        app.rockstar.pagarArtistas(cliente.compra.getCarrinho());
-                        //limpa o carrinho
-                        cliente.compra.limparCarrinho();
-                        cliente.abrirCompra();
-                        //atualiza tabela do carrinho
-                        tabelaCarrinho();
-
-                        JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+                        //abre janela das playlists
+                        janelaDasPlaylists(true,true);
                     }
                 }
             }
@@ -817,7 +804,7 @@ public class InterfaceCliente implements Serializable {
         }
     }
 
-    private void janelaDasPlaylists(boolean visivel) {
+    private void janelaDasPlaylists(boolean visivel,boolean variasMusicas) {
 
         janelaPlaylists = new JFrame();
         JTable tabPlaylists = new JTable();
@@ -827,7 +814,6 @@ public class InterfaceCliente implements Serializable {
 
         listarPlaylists.addColumn("Título da Playlist");
         listarPlaylists.addColumn("Número de músicas");
-
 
         for (PlayList p : listaP) {
             listarPlaylists.addRow(new Object[]{p.getNome(), p.getNumMusicas()});
@@ -850,45 +836,71 @@ public class InterfaceCliente implements Serializable {
 
         janelaPlaylists.add(painelBotoes, BorderLayout.SOUTH);
 
-
-
         janelaPlaylists.pack();
         janelaPlaylists.setLocationRelativeTo(null);
         janelaPlaylists.setResizable(false);
         janelaPlaylists.setVisible(visivel);
         janelaPlaylists.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
         okButtonPl.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
+                PlayList p=null;
+                String tituloPlaylist=new String();
+
                 int indexPlaylistSelect = tabPlaylists.getSelectedRow();
+                if (indexPlaylistSelect != -1){
+                    tituloPlaylist = (String) tabPlaylists.getValueAt(indexPlaylistSelect, 0);
+                    p = cliente.pesquisaPlaylistTitulo(tituloPlaylist);
+                }else JOptionPane.showMessageDialog(null, "Erro ao obter playlist. ");
 
+                //Adicionar 1 música à playlist
+                if (!variasMusicas) {
 
-                if (indexMusicaSelect != -1 && indexPlaylistSelect != -1) {
-                    String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
-                    Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
-                    String tituloPlaylist = (String) tabPlaylists.getValueAt(indexPlaylistSelect, 0);
-                    PlayList p = cliente.pesquisaPlaylistTitulo(tituloPlaylist);
+                    int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
 
-                    if (m != null && p != null) {
+                    if (indexMusicaSelect != -1) {
+                        String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                        Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                        if (!p.getMusicas().contains(m)) {
-                            cliente.adicionarMusica(p, m);
-                            JOptionPane.showMessageDialog(null, "Música adicionada à playlist " + tituloPlaylist);
+                        if (m != null && p != null) {
+                            if (!p.getMusicas().contains(m)) {
+                                cliente.adicionarMusica(p, m);
+                                JOptionPane.showMessageDialog(null, "Música adicionada à playlist " + tituloPlaylist);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Música já existe na " + tituloPlaylist);
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Música já existe na " + tituloPlaylist);
+                            JOptionPane.showMessageDialog(null, "Erro ao obter música");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Erro ao obter música ou playlist. ");
+                        JOptionPane.showMessageDialog(null, "Selecione uma música e uma playlist");
                     }
+                //Adicionar várias músicas à playlist
+                }else{
+                    ArrayList<Musica> carrinho = new ArrayList<>();
+                    carrinho.addAll(cliente.compra.getCarrinho());
+                    if (p!= null && !p.musicasJaExistem(carrinho)){
+                        p.getMusicas().addAll(cliente.compra.getCarrinho());
+                        JOptionPane.showMessageDialog(null, "Músicas adicionadas à playlist " + p.getNome());
+                        double valorAPagar= cliente.compra.totalCarrinhoCliente();
+                        //altera o saldo
+                        cliente.alterarSaldo(-valorAPagar);
+                        //atualiza a caixa que mostra o saldo
+                        mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                        //adiciona saldo aos artistas
+                        app.rockstar.pagarArtistas(cliente.compra.getCarrinho());
+                        //limpa o carrinho
+                        cliente.compra.limparCarrinho();
+                        cliente.abrirCompra();
+                        //atualiza tabela do carrinho
+                        tabelaCarrinho();
 
-                    janelaPlaylists.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione uma música e uma playlist");
+                        JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+                    }
                 }
+                janelaPlaylists.setVisible(false);
             }
         });
 

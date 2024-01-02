@@ -41,7 +41,7 @@ public class Musica implements Serializable {
             return "NA";
         }else{
             Set<String> chaves = rating.keySet();
-            int soma=0;
+            double soma=0.0;
             int cont=0;
             for (String username : chaves){
                 int valor = rating.get(username);
