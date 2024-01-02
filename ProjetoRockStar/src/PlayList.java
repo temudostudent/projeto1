@@ -19,6 +19,8 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     }
 
+
+
     //Adiciona música
     @Override
     public void adicionarMusica(Musica m) {

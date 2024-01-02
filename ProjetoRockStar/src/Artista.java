@@ -35,12 +35,13 @@ public class Artista extends Utilizador implements Serializable {
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
     public Musica novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {
         Musica novaM = null;
+        String tituloMaiuscula = titulo.substring(0, 1).toUpperCase() + titulo.substring(1);
         if (preco <= 0) {
-            novaM = new Musica(titulo, this.username, duracao, genero, estado);
+            novaM = new Musica(tituloMaiuscula, this.username, duracao, genero, estado);
             JOptionPane.showMessageDialog(null, "Musica grátis criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
-            novaM = new MusicaPaga(titulo, this.username, duracao, genero, estado, preco);
+            novaM = new MusicaPaga(tituloMaiuscula, this.username, duracao, genero, estado, preco);
             JOptionPane.showMessageDialog(null, "Musica com o preço " + preco + " criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }

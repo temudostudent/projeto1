@@ -29,6 +29,18 @@ public class Cliente extends Utilizador implements Serializable {
         playlists.add(nova);
     }
 
+    //Método para verificar se já existe uma playlist com o mesmo nome
+    public boolean verificarNomePlaylist(String nome){
+        boolean nomeOK = true;
+        for(PlayList play : playlists){
+            if (play.getNome().equals(nome)) {
+               nomeOK = false;
+            }else{
+                nomeOK = true;
+            }
+        }
+        return nomeOK;
+    }
     public ArrayList<PlayList> verPlayListCliente(){
         return playlists;
     }
@@ -54,7 +66,9 @@ public class Cliente extends Utilizador implements Serializable {
         ArrayList <Musica> musicasGenero = new ArrayList<>();
         for(Musica musica: listaMusicasGlobal ) {
             if (musica.getGenero().equalsIgnoreCase(genero)) {
-                musicasGenero.add(musica);
+                if(musica instanceof Musica) {
+                    musicasGenero.add(musica);
+                }
             }
         }return musicasGenero;
     }
@@ -126,7 +140,5 @@ public class Cliente extends Utilizador implements Serializable {
         return playlists;
     }
 
-    public void verPlayListCliente(int indiceSelecionado) {
-    }
 }
 

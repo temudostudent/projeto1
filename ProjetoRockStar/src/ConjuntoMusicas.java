@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public abstract class ConjuntoMusicas implements Serializable {
 
     protected String nome;
-    protected ArrayList<Musica> musicas=new ArrayList<>();
+    protected ArrayList<Musica> musicas;
     protected LocalDateTime dataCriacao;
 
     public ConjuntoMusicas(String nome) {

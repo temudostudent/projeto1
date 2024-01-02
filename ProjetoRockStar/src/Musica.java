@@ -37,7 +37,7 @@ public class Musica implements Serializable {
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
     public String getRatingMedia() {
-        if (rating.size()==0){
+        if (rating.isEmpty()){
             return "NA";
         }else{
             Set<String> chaves = rating.keySet();
@@ -49,10 +49,10 @@ public class Musica implements Serializable {
                 cont++;
             }
 
-            this.ratingMedia=(double)(soma/cont);
+            this.ratingMedia=(double)soma/cont;
         }
 
-        return String.valueOf(ratingMedia);
+        return String.format("%.2f", ratingMedia);
     }
 
     //get título
@@ -62,6 +62,8 @@ public class Musica implements Serializable {
 
     public void adicionarRatingMusica(String username, Integer valor){
         rating.put(username , valor);
+        //Sempre que um rating é adicionado a média é novamente calculada
+        getRatingMedia();
     }
 
     public boolean usuarioTemRating (String username){
