@@ -6,6 +6,8 @@ import java.util.*;
 
 public class Musica implements Serializable {
     //Atributos
+    private Integer idMusica;
+    private Integer ultimoId = 0;
     protected String titulo;
     protected String nomeArtista;
     protected LocalDateTime dataCriacao;
@@ -24,6 +26,7 @@ public class Musica implements Serializable {
         this.genero = genero;
         this.estado = estado;
         this.rating = new HashMap<>();
+        this.idMusica = ultimoId++;
 
     }
 
@@ -117,6 +120,14 @@ public class Musica implements Serializable {
         return true;
     }
 
+
+    public Integer getIdMusica() {
+        return idMusica;
+    }
+
+    public Map<String, Integer> getRating() {
+        return rating;
+    }
 
     @Override
     public String toString() {

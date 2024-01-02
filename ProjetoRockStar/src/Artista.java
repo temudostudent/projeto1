@@ -10,17 +10,21 @@ import java.util.*;
 public class Artista extends Utilizador implements Serializable {
 
     //Atributos
+    private Integer idArtista;
+    private Integer ultimoID = 0;
+    public static
     private String pin;
     private ArrayList<Album> albuns = new ArrayList<>();
     private ArrayList<Musica> musicas = new ArrayList<>();
 
     //Construtor que recebe username, password, pin
     public Artista(String username, String password, String pin) {
-        super(username, password);
+        super(username, password, idUtilizador);
         this.pin = pin;
         this.musicas = musicas;
         this.albuns = albuns;
         super.saldo = 0;
+        this.idArtista = ultimoID++;
     }
 
     public Artista() {
@@ -255,6 +259,10 @@ public class Artista extends Utilizador implements Serializable {
 
         Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
         lista.sort(comparador);
+    }
+
+    public Integer getIdArtista() {
+        return idArtista;
     }
 
     public String getPin() {

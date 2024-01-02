@@ -8,6 +8,8 @@ import java.util.Random;
 public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
+    private Integer idCliente;
+    private Integer ultimoID = 0;
 
     private ArrayList<PlayList> playlists=new ArrayList<>();
     private ArrayList<Compra> historicoCompras=new ArrayList<>();
@@ -20,6 +22,7 @@ public class Cliente extends Utilizador implements Serializable {
         this.playlists = playlists;
         this.historicoCompras = historicoCompras;
         super.saldo = 0;
+        this.idCliente = ultimoID++;
     }
 
     public Cliente(){}
@@ -134,6 +137,10 @@ public class Cliente extends Utilizador implements Serializable {
     @Override
     public int getTipo() {
         return 1;
+    }
+
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
     public ArrayList<PlayList> getPlaylists() {
