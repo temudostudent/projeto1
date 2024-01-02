@@ -8,6 +8,8 @@ import java.util.Random;
 public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
+    private Integer idCliente;
+    private Integer ultimoID = 0;
 
     private ArrayList<PlayList> playlists=new ArrayList<>();
     private ArrayList<Compra> historicoCompras=new ArrayList<>();
@@ -20,6 +22,7 @@ public class Cliente extends Utilizador implements Serializable {
         this.playlists = playlists;
         this.historicoCompras = historicoCompras;
         super.saldo = 0;
+        this.idCliente = ultimoID++;
     }
 
     public Cliente(){}
@@ -29,6 +32,18 @@ public class Cliente extends Utilizador implements Serializable {
         playlists.add(nova);
     }
 
+    //Método para verificar se já existe uma playlist com o mesmo nome
+    public boolean verificarNomePlaylist(String nome){
+        boolean nomeOK = true;
+        for(PlayList play : playlists){
+            if (play.getNome().equals(nome)) {
+               nomeOK = false;
+            }else{
+                nomeOK = true;
+            }
+        }
+        return nomeOK;
+    }
     public ArrayList<PlayList> verPlayListCliente(){
         return playlists;
     }
@@ -54,7 +69,9 @@ public class Cliente extends Utilizador implements Serializable {
         ArrayList <Musica> musicasGenero = new ArrayList<>();
         for(Musica musica: listaMusicasGlobal ) {
             if (musica.getGenero().equalsIgnoreCase(genero)) {
-                musicasGenero.add(musica);
+                if(musica instanceof Musica) {
+                    musicasGenero.add(musica);
+                }
             }
         }return musicasGenero;
     }
@@ -122,11 +139,13 @@ public class Cliente extends Utilizador implements Serializable {
         return 1;
     }
 
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
     public ArrayList<PlayList> getPlaylists() {
         return playlists;
     }
 
-    public void verPlayListCliente(int indiceSelecionado) {
-    }
 }
 

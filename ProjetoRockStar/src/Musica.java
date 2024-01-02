@@ -6,6 +6,8 @@ import java.util.*;
 
 public class Musica implements Serializable {
     //Atributos
+    private Integer idMusica;
+    private Integer ultimoId = 0;
     protected String titulo;
     protected String nomeArtista;
     protected LocalDateTime dataCriacao;
@@ -26,6 +28,7 @@ public class Musica implements Serializable {
         this.genero = genero;
         this.estado = estado;
         this.rating = new HashMap<>();
+        this.idMusica = ultimoId++;
 
     }
 
@@ -39,7 +42,7 @@ public class Musica implements Serializable {
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
     public String getRatingMedia() {
-        if (rating.size()==0){
+        if (rating.isEmpty()){
             return "NA";
         }else{
             Set<String> chaves = rating.keySet();
@@ -51,10 +54,10 @@ public class Musica implements Serializable {
                 cont++;
             }
 
-            this.ratingMedia=(double)(soma/cont);
+            this.ratingMedia=(double)soma/cont;
         }
 
-        return String.valueOf(ratingMedia);
+        return String.format("%.2f", ratingMedia);
     }
 
     //get título
@@ -64,6 +67,8 @@ public class Musica implements Serializable {
 
     public void adicionarRatingMusica(String username, Integer valor){
         rating.put(username , valor);
+        //Sempre que um rating é adicionado a média é novamente calculada
+        getRatingMedia();
     }
 
     public boolean usuarioTemRating (String username){
@@ -117,6 +122,14 @@ public class Musica implements Serializable {
         return true;
     }
 
+
+    public Integer getIdMusica() {
+        return idMusica;
+    }
+
+    public Map<String, Integer> getRating() {
+        return rating;
+    }
 
     @Override
     public String toString() {

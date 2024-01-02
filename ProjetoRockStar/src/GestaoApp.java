@@ -41,7 +41,7 @@ public class GestaoApp implements Serializable {
 
         //File Clientes
         if (!this.fileClientes.exists()) {
-            Cliente cliente = new Cliente("vania", "1234");
+            Cliente cliente = new Cliente("vania", "1234a");
 
             // De seguida � efectuada a criação do ficheiro:
             try {
@@ -74,7 +74,7 @@ public class GestaoApp implements Serializable {
 
         // File Artistas
         if (!this.fileArtistas.exists()) {
-            Artista artista = new Artista("cesar", "1234", "0000");
+            Artista artista = new Artista("cesar", "1234a", "0000");
 
             rockstar.adicionarArtista(artista);
 

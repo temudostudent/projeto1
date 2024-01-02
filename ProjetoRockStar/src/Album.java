@@ -3,6 +3,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Album extends ConjuntoMusicas implements Serializable {
+    private Integer idAlbum;
+    private Integer ultimoID = 0;
 
     private String genero;
     private String nomeArtista;
@@ -13,6 +15,7 @@ public class Album extends ConjuntoMusicas implements Serializable {
         this.nomeArtista=nomeArtista;
         this.genero = genero;
         this.musicas=new ArrayList<>();
+        this.idAlbum = ultimoID++;
     }
 
 
@@ -49,4 +52,8 @@ public class Album extends ConjuntoMusicas implements Serializable {
     }
 
     public String getNomeArtista() { return nomeArtista;}
+
+    public Integer getIdAlbum() {
+        return idAlbum;
+    }
 }

@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas implements Serializable {
+    private Integer idPlaylist;
+    private Integer ultimoID = 0;
    private  boolean visibilidade;
 
 
     public PlayList(String nome, boolean visibilidade) {
         super(nome);
         this.visibilidade = visibilidade;
+        this.idPlaylist = ultimoID++;
     }
     public String toString() {
         if (visibilidade) {
@@ -19,6 +22,8 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
             return nome + ",   PRIVADA";
         }
     }
+
+
 
     //Adiciona música
     @Override
@@ -44,6 +49,10 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
 
     public String getNome() {
         return this.nome;
+    }
+
+    public Integer getIdPlaylist() {
+        return idPlaylist;
     }
 
     public int getNumMusicas(){return this.musicas.size();}

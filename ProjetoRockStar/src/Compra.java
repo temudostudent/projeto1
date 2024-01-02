@@ -56,4 +56,8 @@ public class Compra implements Serializable{
     public ArrayList<MusicaPaga> getCarrinho() {
         return carrinho;
     }
+
+    public Integer getId_compra() {
+        return id_compra;
+    }
 }

@@ -10,17 +10,21 @@ import java.util.*;
 public class Artista extends Utilizador implements Serializable {
 
     //Atributos
+    private Integer idArtista;
+    private Integer ultimoID = 0;
+    public static
     private String pin;
     private ArrayList<Album> albuns = new ArrayList<>();
     private ArrayList<Musica> musicas = new ArrayList<>();
 
     //Construtor que recebe username, password, pin
     public Artista(String username, String password, String pin) {
-        super(username, password);
+        super(username, password, idUtilizador);
         this.pin = pin;
         this.musicas = musicas;
         this.albuns = albuns;
         super.saldo = 0;
+        this.idArtista = ultimoID++;
     }
 
     public Artista() {
@@ -35,12 +39,13 @@ public class Artista extends Utilizador implements Serializable {
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
     public Musica novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {
         Musica novaM = null;
+        String tituloMaiuscula = titulo.substring(0, 1).toUpperCase() + titulo.substring(1);
         if (preco <= 0) {
-            novaM = new Musica(titulo, this.username, duracao, genero, estado);
+            novaM = new Musica(tituloMaiuscula, this.username, duracao, genero, estado);
             JOptionPane.showMessageDialog(null, "Musica grátis criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
-            novaM = new MusicaPaga(titulo, this.username, duracao, genero, estado, preco);
+            novaM = new MusicaPaga(tituloMaiuscula, this.username, duracao, genero, estado, preco);
             JOptionPane.showMessageDialog(null, "Musica com o preço " + preco + " criada!", "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -254,6 +259,10 @@ public class Artista extends Utilizador implements Serializable {
 
         Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
         lista.sort(comparador);
+    }
+
+    public Integer getIdArtista() {
+        return idArtista;
     }
 
     public String getPin() {

@@ -860,6 +860,8 @@ public class InterfaceArtista implements Serializable {
             botaoLogout.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    app.atualizaficheiro(app.rockstar.getClientes(), app.rockstar.getArtistas(),
+                            app.rockstar.getMusicas(), app.rockstar.getPlaylists(), app.rockstar.getCompras());
                     janelaArtista.setVisible(false);
 
                     try {
