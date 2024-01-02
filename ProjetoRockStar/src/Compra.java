@@ -12,10 +12,6 @@ public class Compra implements Serializable{
         this.id_compra  = ++ultimoID;
     }
 
-    public void criarCarrinho(){
-        Compra compra = new Compra();
-    }
-
     public void adicionarMusica(MusicaPaga m){
         if (!musicaEstaNoCarrinho(m)) {
             carrinho.add(m);

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,9 +30,18 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
 
     //Remove música
     @Override
-    public  void removeMusica(Musica m){
+    public void removeMusica(Musica m){
         this.musicas.remove(m);
     }
+
+    public boolean musicasJaExistem (ArrayList<Musica> lista){
+        for (Musica m: lista) {
+            if (getMusicas().contains(m)) {
+                JOptionPane.showMessageDialog(null, "A música '" + m.getTitulo() + "' já existe na playlist");
+                return true;
+            }
+        }
+    return false;}
 
 
     public String getNome() {
