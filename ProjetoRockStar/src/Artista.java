@@ -12,14 +12,13 @@ public class Artista extends Utilizador implements Serializable {
     //Atributos
     private Integer idArtista;
     private Integer ultimoID = 0;
-    public static
     private String pin;
     private ArrayList<Album> albuns = new ArrayList<>();
     private ArrayList<Musica> musicas = new ArrayList<>();
 
     //Construtor que recebe username, password, pin
     public Artista(String username, String password, String pin) {
-        super(username, password, idUtilizador);
+        super(username, password);
         this.pin = pin;
         this.musicas = musicas;
         this.albuns = albuns;

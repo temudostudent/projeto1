@@ -763,7 +763,7 @@ public class InterfaceArtista implements Serializable {
             totalUtilizadores.setBounds(50,50,180,30);
             caixaTotalUtilizadores = new JTextField(); caixaTotalUtilizadores.setBounds(250,50,180,30);
             caixaTotalUtilizadores.setEditable(false);
-            totalMusicas = new JLabel("TOTAL MUSICAS");
+            totalMusicas = new JLabel("TOTAL MÚSICAS");
             totalMusicas.setBounds(50,100,180,30);
             caixaTotalMusicas = new JTextField(); caixaTotalMusicas.setBounds(250,100,180,30);
             caixaTotalMusicas.setEditable(false);
@@ -802,16 +802,18 @@ public class InterfaceArtista implements Serializable {
                     listaAlbumGenero1.setModel(listaMusicas);
                     caixaTotalUtilizadores.setText(String.valueOf(app.rockstar.totalUtilizadores(artista)));
                     caixaTotalMusicas.setText(String.valueOf(artista.totalMusicas()));
-                    caixaValorTotalColecao.setText(String.valueOf(artista.valorTotalColecao() + " €"));
-                    caixaValorTotalVendas.setText(String.valueOf(artista.getSaldo() + " €"));
+                    caixaValorTotalColecao.setText(String.format("%.2f",artista.valorTotalColecao()) + " €");
+                    caixaValorTotalVendas.setText(String.format("%.2f",artista.getSaldo()) + " €");
+                    caixaMusicaMaisGravada.setText(app.rockstar.musicaMaisAdicionada(artista));
                     tabelaEstatisticas.setViewportView(listaAlbumGenero1);
 
                 }
             });
-            musicaMaisGravada = new JLabel("MUSICA MAIS GRAVADA");
+            musicaMaisGravada = new JLabel("MÚSICA MAIS GRAVADA");
             musicaMaisGravada.setBounds(50,250,180,30);
             caixaMusicaMaisGravada = new JTextField(); caixaMusicaMaisGravada.setBounds(250,250,180,30);
-            musicaMaisComprada = new JLabel("MUSICA MAIS COMPRADA");
+            caixaMusicaMaisGravada.setEditable(false);
+            musicaMaisComprada = new JLabel("MÚSICA MAIS COMPRADA");
             musicaMaisComprada.setBounds(50,300,180,30);
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");

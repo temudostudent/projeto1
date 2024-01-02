@@ -288,6 +288,7 @@ public class Aplicacao implements Serializable {
         }
     return false;}
 
+    //local do Cliente na Arraylist
     private int indexCliente(Cliente c){
         int index=0;
         for (int i=0;i<clientes.size();i++){
@@ -297,6 +298,38 @@ public class Aplicacao implements Serializable {
             }
         }
     return index;}
+
+    //Título da música mais selecionada
+    public String musicaMaisAdicionada(Artista a){
+        String nomeMusica=new String();
+        int contMax=0;
+        for (Musica m : a.getMusicas()){
+            int cont=0;
+            for (Cliente c : clientes) {
+                for (PlayList pl : c.getPlaylists()){
+                    if (musicaExisteNaPlaylist(m, pl)) {
+                        cont++;
+                    }
+                }
+            }
+            System.out.println(m.getTitulo() + " ," + m.getIdMusica() + " ," + cont);
+            if (cont>contMax){
+                contMax=cont;
+                nomeMusica=m.getTitulo();
+            }
+        }
+    return nomeMusica;}
+
+    //Saber se música está na playlist
+    private boolean musicaExisteNaPlaylist(Musica m, PlayList pl){
+        if (!pl.getMusicas().isEmpty()){
+            for (Musica mtemp : pl.getMusicas()) {
+                if (mtemp.getIdMusica().equals(m.getIdMusica())) {
+                    return true;
+                }
+            }
+        }
+    return false;}
 
     public ArrayList<Cliente> getClientes() {
         return clientes;

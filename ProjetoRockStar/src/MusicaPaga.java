@@ -7,9 +7,8 @@ import java.util.Map;
 
 public class MusicaPaga extends Musica implements Serializable {
 
-    private Integer idMusicaPaga;
-    private Integer idultimoID = 0;
-
+    private int idMusicaPaga;
+    private int idultimoID = 0;
     private double preco;
     private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
 
@@ -18,7 +17,8 @@ public class MusicaPaga extends Musica implements Serializable {
         this.dataCriacao = LocalDateTime.now();
         this.preco = preco;
         this.historicoPreco = new HashMap<>();
-        this.idMusicaPaga = idultimoID++;
+        this.idMusicaPaga = idultimoID;
+        idultimoID++;
         adicionarRegisto(preco);
 
     }

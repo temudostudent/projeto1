@@ -652,7 +652,6 @@ public class InterfaceCliente implements Serializable {
         painelCarrinho.add(saldoCliente);
 
 
-
         //Criar painel fixo Titulo  ----------------------------------------------
         painelTituloCliente = new JPanel();
         painelTituloCliente.setBackground(new Color(255,178,102));
@@ -880,7 +879,7 @@ public class InterfaceCliente implements Serializable {
                         Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
                         if (m != null && p != null) {
-                            if (!p.getMusicas().contains(m)) {
+                            if (!p.estaMusicaJaExiste(m)) {
                                 cliente.adicionarMusica(p, m);
                                 JOptionPane.showMessageDialog(null, "Música adicionada à playlist " + tituloPlaylist);
                             } else {
@@ -906,8 +905,7 @@ public class InterfaceCliente implements Serializable {
                         mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
                         //adiciona saldo aos artistas
                         app.rockstar.pagarArtistas(cliente.compra.getCarrinho());
-                        //limpa o carrinho
-                        cliente.compra.limparCarrinho();
+                        //abre nova compra
                         cliente.abrirCompra();
                         //atualiza tabela do carrinho
                         tabelaCarrinho();
