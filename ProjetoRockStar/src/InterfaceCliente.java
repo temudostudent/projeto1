@@ -219,12 +219,16 @@ public class InterfaceCliente implements Serializable {
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                 Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if(cliente.verPlayListCliente().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
-                } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
-                    JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
-                } else {
+                if (cliente.estaMusicaJaExiste(m)){
                     janelaDasPlaylists(true,false);
+                }else{
+                    if(cliente.verPlayListCliente().isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
+                    } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
+                        JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
+                    } else {
+                        janelaDasPlaylists(true,false);
+                    }
                 }
             }
         });
@@ -617,14 +621,18 @@ public class InterfaceCliente implements Serializable {
         removerMusicaCarrinho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int indexMusicaSelect = listaMusicasCarrinho.getSelectedRow();
-                String valorTituloMusica = (String) listaMusicasCarrinho.getValueAt(indexMusicaSelect, 0);
-                MusicaPaga object = (MusicaPaga) app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (object!=null){
-                    cliente.compra.removerMusica(object);
-                    tabelaCarrinho();
-                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+                int indexMusicaSelect = listaMusicasCarrinho.getSelectedRow();
+
+                if (indexMusicaSelect != -1) {
+                    String valorTituloMusica = (String) listaMusicasCarrinho.getValueAt(indexMusicaSelect, 0);
+                    MusicaPaga m = (MusicaPaga) app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
+                    if (m!=null){
+                        cliente.compra.removerMusica(m);
+                        tabelaCarrinho();
+                    }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+                }
             }
         });
         carregarSaldo = new JButton("CARREGAR SALDO");
