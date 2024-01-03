@@ -293,7 +293,7 @@ public class Aplicacao implements Serializable {
     private int indexCliente(Cliente c){
         int index=0;
         for (int i=0;i<clientes.size();i++){
-            if (clientes.get(i).equals(c)){
+            if (clientes.get(i).getIdCliente().equals(c.getIdCliente())){
                 index=i;
                 break;
             }
