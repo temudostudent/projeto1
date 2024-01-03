@@ -129,7 +129,7 @@ public class InterfaceCliente implements Serializable {
 
         //RATING----------------------------------------------------------
         JFrame rating = new JFrame("Rating");
-        JLabel lblResult = new JLabel("Resultado: ");
+        JLabel resultadoInst = new JLabel("Resultado: ");
         JButton okR=new JButton("Avaliar");
 
         adicionarRating = new JButton("ADICIONAR RATING");
@@ -145,11 +145,7 @@ public class InterfaceCliente implements Serializable {
                     Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
                     if (object != null) {
-
-                        if (object.usuarioTemRating(cliente.getUsername())) {
-                            JOptionPane.showMessageDialog(null, "Já avaliou esta musica");
-
-                        } else rating.setVisible(true);
+                        rating.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível encontrar a música");
                     }
@@ -165,8 +161,8 @@ public class InterfaceCliente implements Serializable {
         rating.setVisible(false);
 
 
-        lblResult.setBounds(150, 100, 200, 25);
-        rating.add(lblResult);
+        resultadoInst.setBounds(150, 100, 200, 25);
+        rating.add(resultadoInst);
 
         JSlider sldResult = new JSlider(JSlider.HORIZONTAL, 0, 10, 0);
         sldResult.setBounds(50, 100, 200, 25);
@@ -183,7 +179,7 @@ public class InterfaceCliente implements Serializable {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 resultado[0] = (int) source.getValue();
-                lblResult.setText("Resultado: " + resultado[0]);
+                resultadoInst.setText("Resultado: " + resultado[0]);
             }
         });
         okR.addActionListener(new ActionListener() {
@@ -194,10 +190,13 @@ public class InterfaceCliente implements Serializable {
                 if (indexMusicaSelect != -1) {
                     String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                     Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
-
                     int numeroSelecionado = resultado[0];
-                    object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
 
+                    if (object.usuarioTemRating(cliente.getUsername())) {
+                        object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
+                    }else {
+                        object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
+                    }
 
                     JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
 
