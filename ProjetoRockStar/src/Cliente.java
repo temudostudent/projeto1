@@ -24,6 +24,7 @@ public class Cliente extends Utilizador implements Serializable {
         this.playlists = new ArrayList<>();
         this.historicoCompras = new ArrayList<>();
         super.saldo = 0;
+        this.musicasCompradas=new ArrayList<>();
         this.idCliente = ultimoID++;
     }
 
@@ -107,8 +108,7 @@ public class Cliente extends Utilizador implements Serializable {
 
         //Adicionar a nova playList à lista das playLists
         playlists.add(nova);
-    }
-
+        }
     }
 
     //Remover playList através do objeto
@@ -118,10 +118,17 @@ public class Cliente extends Utilizador implements Serializable {
 
     //
     public void abrirCompra(){
-
         this.compra=new Compra();
         historicoCompras.add(compra);
     }
+
+    public boolean estaMusicaJaExiste (Musica m){
+        for (Musica mTemp : getMusicasCompradas()){
+            if (m.getIdMusica().equals(mTemp.getIdMusica())){
+                return true;
+            }
+        }
+        return false;}
 
     //Método para finalizar a compra
     public void finalizarcompra(){

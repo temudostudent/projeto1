@@ -528,7 +528,6 @@ public class InterfaceArtista implements Serializable {
                                     app.rockstar.getMusicas().get(app.rockstar.encontrarPosicao(object)).setTitulo(caixaAlteracao.getText());
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
-                                    System.out.println(object);
                                 }else {
                                     JOptionPane.showMessageDialog(null, "Música não encontrada!");
                                 }
@@ -564,6 +563,8 @@ public class InterfaceArtista implements Serializable {
                                     atualizarTabelaMusicas();
                                 }
                             }
+                            
+                            System.out.println(object);
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Preencha o campo!");

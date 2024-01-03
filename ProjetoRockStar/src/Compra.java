@@ -25,9 +25,10 @@ public class Compra implements Serializable{
 
     private boolean musicaEstaNoCarrinho(MusicaPaga m){
         for (MusicaPaga mCarrinho : carrinho){
-            if (mCarrinho.equals(m)) return true;
+            if (mCarrinho.getIdMusica().equals(m.getIdMusica())) return true;
         }
     return false;}
+
 
     public double totalCarrinhoCliente(){
         double valorTotal = 0;

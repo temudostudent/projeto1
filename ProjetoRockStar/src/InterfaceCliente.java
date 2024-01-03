@@ -200,6 +200,7 @@ public class InterfaceCliente implements Serializable {
                     int numeroSelecionado = resultado[0];
                     object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
 
+
                     JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
 
                     rating.setVisible(false);
@@ -242,7 +243,9 @@ public class InterfaceCliente implements Serializable {
                 Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
                 if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco()>0){
-                    cliente.compra.adicionarMusica((MusicaPaga) object);
+                    if (!cliente.estaMusicaJaExiste(object)){
+                        cliente.compra.adicionarMusica((MusicaPaga) object);
+                    }else JOptionPane.showMessageDialog( null, "A música que selecionou já foi comprada");
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
                 tabelaCarrinho();
@@ -262,9 +265,9 @@ public class InterfaceCliente implements Serializable {
                 scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                 tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-                if (botaoTodasAsMusicas.isSelected()) {
+                listaM.addAll(app.rockstar.getMusicas());
 
-                    listaM.addAll(app.rockstar.getMusicas());
+                if (botaoTodasAsMusicas.isSelected()) {
 
                     if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
@@ -484,10 +487,8 @@ public class InterfaceCliente implements Serializable {
                         cliente.removerPlaylist(playlistSelecionada);
 
                         JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
-
                     } else {
                         JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
-
                     }
                 }
 
@@ -917,7 +918,10 @@ public class InterfaceCliente implements Serializable {
                     ArrayList<Musica> carrinho = new ArrayList<>();
                     carrinho.addAll(cliente.compra.getCarrinho());
                     if (p!= null && !p.musicasJaExistem(carrinho)){
+                        //Adiciona todas as músicas à playlist selecionada
                         p.getMusicas().addAll(cliente.compra.getCarrinho());
+                        //Adiciona todas as músicas do carrinho à lista de músicas compradas
+                        cliente.getMusicasCompradas().addAll(cliente.compra.getCarrinho());
                         JOptionPane.showMessageDialog(null, "Músicas adicionadas à playlist " + p.getNome());
                         double valorAPagar= cliente.compra.totalCarrinhoCliente();
                         //altera o saldo
