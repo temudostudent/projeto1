@@ -73,7 +73,6 @@ public class InterfaceCliente implements Serializable {
         atributoPesquisarLegenda.setBounds(250,10,150,40);
         atributoPesquisarLegenda.setVisible(false);
 
-
         //JTextField
         caixaTextoPesquisa = new JTextField("pesquisa");
         caixaTextoPesquisa.setBounds(50,120,180,40);
@@ -92,7 +91,6 @@ public class InterfaceCliente implements Serializable {
                 tabelaResultadoPesquisa.setModel(listarMusicas);
                 scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                 tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
 
                 String selecao = (String) atributoPesquisa.getSelectedItem();
 
@@ -365,14 +363,21 @@ public class InterfaceCliente implements Serializable {
 
 
                 DefaultTableModel listarMusicas = new DefaultTableModel();
+                listaM = new ArrayList<>();
                 listaM = cliente.getMusicasCompradas();
 
-                titulosDasColunasTabela(listarMusicas);
+                if(listaM != null && !listaM.isEmpty()) {
 
-                adicionarElementosTabela(listaM,listarMusicas);
-                tabelaResultadoPesquisa.setModel(listarMusicas);
-                scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
-                tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                    titulosDasColunasTabela(listarMusicas);
+
+                    adicionarElementosTabela(listaM, listarMusicas);
+                    tabelaResultadoPesquisa.setModel(listarMusicas);
+                    scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
+                    tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ainda não tem nenhuma música comprada");
+                }
+
 
             }
         });
@@ -457,7 +462,6 @@ public class InterfaceCliente implements Serializable {
                 modeloTabela.addColumn("Visibilidade");
 
 
-
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
 
@@ -488,9 +492,10 @@ public class InterfaceCliente implements Serializable {
 
                     // Verifica se alguma playlist está selecionada
                     if (playlistSelecionada != null) {
-                        cliente.removerPlaylist(playlistSelecionada);
+                        //cliente.removerPlaylist(linhaSelecionada-1);
+                        cliente.getPlaylists().remove(linhaSelecionada);
 
-                        JOptionPane.showMessageDialog(null, "PlayList removida com sucesso.");
+                        JOptionPane.showMessageDialog(null, "PlayList  " + playlistSelecionada.getNome() +  "   removida com sucesso.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
                     }
@@ -509,7 +514,6 @@ public class InterfaceCliente implements Serializable {
 
                     String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
                     PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
-                    ;
 
 
                     // Verifica se alguma playlist está selecionada
@@ -549,7 +553,7 @@ public class InterfaceCliente implements Serializable {
                         cliente.criarPlaylist(nomeNovaPlaylist, true);
 
                     }else{
-                        JOptionPane.showMessageDialog(null, "Titulo palylista já existe.");
+                        JOptionPane.showMessageDialog(null, "Titulo playlist já existe.");
                     }
                 } else {
                     // Nome da playlist não fornecido ou cancelado pelo usuário
@@ -635,6 +639,7 @@ public class InterfaceCliente implements Serializable {
                 }
             }
         });
+
         carregarSaldo = new JButton("CARREGAR SALDO");
         carregarSaldo.setBounds(400,100,250,40);
         carregarSaldo.addActionListener(new ActionListener() {
@@ -942,6 +947,10 @@ public class InterfaceCliente implements Serializable {
                         cliente.abrirCompra();
                         //atualiza tabela do carrinho
                         tabelaCarrinho();
+
+                        JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
+
+
 
                         JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
                     }

@@ -74,6 +74,7 @@ public class Cliente extends Utilizador implements Serializable {
         return objeto;
     }
 
+
     //Cria uma playlist com todas as musicas do mesmo genero
     public ArrayList listaMusicaGenero(String genero, ArrayList <Musica> listaMusicasGlobal){
         ArrayList <Musica> musicasGenero = new ArrayList<>();
@@ -104,17 +105,20 @@ public class Cliente extends Utilizador implements Serializable {
 
             //Adicona musicas à nova playList até ao tamanho desejado
             for (int i = 0; i < tamanho; i++) {
-                nova.adicionarMusica((Musica)listaMusicaGenero.get(i));
+                nova.adicionarMusica((Musica) listaMusicaGenero.get(i));
+            }
 
         //Adicionar a nova playList à lista das playLists
         playlists.add(nova);
         }
-    }
+
+
 
     //Remover playList através do objeto
     public void removerPlaylist(PlayList playlist) {
         playlists.remove(playlist);
     }
+
 
     //
     public void abrirCompra(){
