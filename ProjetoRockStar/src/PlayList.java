@@ -7,7 +7,7 @@ import java.util.Random;
 public class PlayList extends ConjuntoMusicas implements Serializable {
     private Integer idPlaylist;
     private Integer ultimoID = 0;
-   private  boolean visibilidade;
+    private  boolean visibilidade;
 
 
     public PlayList(String nome, boolean visibilidade) {
