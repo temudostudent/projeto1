@@ -625,14 +625,14 @@ public class InterfaceCliente implements Serializable {
                 int indexMusicaSelect = listaMusicasCarrinho.getSelectedRow();
 
                 if (indexMusicaSelect != -1) {
-                    String valorTituloMusica = (String) listaMusicasCarrinho.getValueAt(indexMusicaSelect, 0);
+                    String valorTituloMusica = (String) listaMusicasCarrinho.getModel().getValueAt(indexMusicaSelect, 0);
                     MusicaPaga m = (MusicaPaga) app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
                     if (m!=null){
-                        cliente.compra.removerMusica(m);
+                        cliente.compra.removerMusica(indexMusicaSelect-1);
                         tabelaCarrinho();
-                    }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
-                }
+                    }
+                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
             }
         });
         carregarSaldo = new JButton("CARREGAR SALDO");
@@ -1108,7 +1108,7 @@ public class InterfaceCliente implements Serializable {
                int linhaSelecionada = tabelaMusicas.getSelectedRow();
                if(linhaSelecionada != -1){
                    String nomeMusica = (String) tabelaMusicas.getValueAt(linhaSelecionada, 0);
-                   p.removeMusica(p.pesquisaMusicaTitulo(nomeMusica));
+                   p.removeMusica(linhaSelecionada);
                    JOptionPane.showMessageDialog(null, "Música Removida com Sucesso");
                    janelaMusicas.setVisible(false);
 
