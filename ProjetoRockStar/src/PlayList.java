@@ -52,6 +52,7 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     return false;}
 
+
     public boolean estaMusicaJaExiste (Musica m){
         for (Musica mPl : getMusicas()){
             if (m.getIdMusica().equals(mPl.getIdMusica())){

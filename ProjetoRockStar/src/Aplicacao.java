@@ -20,6 +20,7 @@ public class Aplicacao implements Serializable {
         this.compras = new ArrayList<Compra>();
     }
 
+
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
     public void registarArtista(String username, String password, String pin) {
         if (procurarUserArtista(username) == false && procurarUserCliente(username) == false) {
