@@ -25,12 +25,6 @@ public class Album extends ConjuntoMusicas implements Serializable {
         this.musicas.add(m);
     }
 
-    //Remove música da Playlist
-    @Override
-    public void removeMusica(Musica m) {
-        this.musicas.remove(m);
-    }
-
 
     //Procura música no álbum pelo título da música
     public Musica encontraMusica(String tituloMusica){

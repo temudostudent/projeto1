@@ -40,11 +40,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         this.musicas.add(m);
     }
 
-    //Remove música
-    @Override
-    public void removeMusica(Musica m){
-        this.musicas.remove(m);
-    }
 
     public boolean musicasJaExistem (ArrayList<Musica> lista){
         for (Musica m: lista) {
