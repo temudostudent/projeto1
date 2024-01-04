@@ -465,7 +465,6 @@ public class InterfaceCliente implements Serializable {
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
 
-
                 for (PlayList play : playList) {
                     if(play.isVisibilidade())
                     modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
@@ -540,9 +539,10 @@ public class InterfaceCliente implements Serializable {
                     // Verifica se alguma playlist está selecionada
                     if (playlistSelecionada != null) {
 
-                        //Altera a visibilidade da playList na JComboBox
-                        boolean novaVisibilidade = !playlistSelecionada.isVisibilidade(); // Inverte a visibilidade
+                        //Altera a visibilidade da playList invertendo a atual
+                        boolean novaVisibilidade = !playlistSelecionada.isVisibilidade();
                         playlistSelecionada.setVisibilidade(novaVisibilidade);
+                        app.rockstar.alterarVisibilidade(playlistSelecionada.getIdPlaylist(), novaVisibilidade);
                         atualizarListaPlayList();
 
 
@@ -1170,10 +1170,8 @@ public class InterfaceCliente implements Serializable {
         modeloTabela.addColumn("Nome");
         modeloTabela.addColumn("Visibilidade");
 
-
         listaMusicasPlayList.setModel(modeloTabela);
         listaPlaylist.setViewportView(listaMusicasPlayList);
-
 
         for (PlayList play : playList) {
             modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});

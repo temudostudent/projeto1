@@ -426,6 +426,15 @@ public class Aplicacao implements Serializable {
             }
         }
     }
+    public void alterarVisibilidade (int id, boolean visibilidade){
+        for(PlayList play : playlists){
+            if(play.getIdPlaylist() == id){
+                play.setVisibilidade(visibilidade);
+            }
+        }
+    }
+
+
     public void removerPlayList(PlayList p){ playlists.remove(p);}
     public void adicionarCompra(Compra com) {compras.add(com);}
 
