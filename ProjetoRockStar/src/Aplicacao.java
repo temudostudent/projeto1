@@ -423,7 +423,7 @@ public class Aplicacao implements Serializable {
     public void removerPlayListID (int id){
         for (int i=0;i<getPlaylists().size();i++){
             if (getPlaylists().get(i).getIdPlaylist()==id){
-                playlists.remove(i-1);
+                playlists.remove(i);
             }
         }
     }
