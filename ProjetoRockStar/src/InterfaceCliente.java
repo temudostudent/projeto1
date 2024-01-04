@@ -360,16 +360,18 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 DefaultTableModel listarMusicas = new DefaultTableModel();
-                listaM = new ArrayList<>();
-                listaM = cliente.getMusicasCompradas();
+                ArrayList<MusicaPaga> listaMPagas = new ArrayList<>();
+                listaMPagas = cliente.getMusicasCompradas();
 
-                if(listaM != null && !listaM.isEmpty()) {
+                if(listaMPagas != null && !listaMPagas.isEmpty()) {
 
                     titulosDasColunasTabela(listarMusicas);
 
-                    adicionarElementosTabela(listaM, listarMusicas);
+                    for (MusicaPaga musica : listaMPagas) {
+                        listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € ", musica.getRatingMedia()});
+                    }
                     tabelaResultadoPesquisa.setModel(listarMusicas);
                     scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                     tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -946,10 +948,6 @@ public class InterfaceCliente implements Serializable {
                         cliente.abrirCompra();
                         //atualiza tabela do carrinho
                         tabelaCarrinho();
-
-                        JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
-
-
 
                         JOptionPane.showMessageDialog(null, "Compra efetuada com sucesso");
                     }

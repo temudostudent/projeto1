@@ -14,7 +14,7 @@ public class Cliente extends Utilizador implements Serializable {
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
 
-    private ArrayList<Musica>musicasCompradas;
+    private ArrayList<MusicaPaga> musicasCompradas;
     protected Compra compra;
 
 
@@ -34,11 +34,11 @@ public class Cliente extends Utilizador implements Serializable {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         playlists.add(nova);
     }
-    public void adicionarMusicaComprada( Musica m){
+    public void adicionarMusicaComprada( MusicaPaga m){
         musicasCompradas.add(m);
     }
 
-    public ArrayList<Musica> getMusicasCompradas() {
+    public ArrayList<MusicaPaga> getMusicasCompradas() {
         return musicasCompradas;
     }
 

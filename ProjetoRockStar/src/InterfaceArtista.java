@@ -809,6 +809,7 @@ public class InterfaceArtista implements Serializable {
                     caixaValorTotalColecao.setText(String.format("%.2f",artista.valorTotalColecao()) + " €");
                     caixaValorTotalVendas.setText(String.format("%.2f",artista.getSaldo()) + " €");
                     caixaMusicaMaisGravada.setText(app.rockstar.musicaMaisAdicionada(artista));
+                    caixaMusicaMaisComprada.setText(app.rockstar.musicaMaisComprada(artista));
                     tabelaEstatisticas.setViewportView(listaAlbumGenero1);
 
                 }
@@ -820,9 +821,9 @@ public class InterfaceArtista implements Serializable {
             musicaMaisComprada = new JLabel("MÚSICA MAIS COMPRADA");
             musicaMaisComprada.setBounds(50,300,180,30);
             caixaMusicaMaisComprada = new JTextField(); caixaMusicaMaisComprada.setBounds(250,300,180,30);
+            caixaMusicaMaisComprada.setEditable(false);
             totalAlbumGenero = new JLabel("TOTAL ÁLBUNS POR GÉNERO");
             totalAlbumGenero.setBounds(500, 50, 180,30);
-
 
 
             //Adicionar componentes do painel Estatísticas

@@ -45,7 +45,6 @@ public class Compra implements Serializable{
         Artista a;
         for(MusicaPaga m : carrinho){
             valorMusica = m.getPreco();
-
         }
     }
     public void limparCarrinho(){

@@ -300,6 +300,27 @@ public class Aplicacao implements Serializable {
         }
     return index;}
 
+    //Título da música mais comprada
+    public String musicaMaisComprada(Artista a){
+        String nomeMusica=new String();
+        int contMax=0;
+        for (Musica m : a.getMusicas()){
+            if (m instanceof MusicaPaga){
+                int cont=0;
+                for (Cliente c : clientes) {
+                    for (MusicaPaga mp : c.getMusicasCompradas()){
+                        if (mp.getIdMusica().equals(m.getIdMusica()))
+                            cont++;
+                    }
+                }
+                if (cont>contMax){
+                    contMax=cont;
+                    nomeMusica=m.getTitulo();
+                }
+            }
+        }
+        return nomeMusica + " - " + contMax + " vezes";}
+
     //Título da música mais selecionada
     public String musicaMaisAdicionada(Artista a){
         String nomeMusica=new String();
@@ -319,7 +340,7 @@ public class Aplicacao implements Serializable {
                 nomeMusica=m.getTitulo();
             }
         }
-    return nomeMusica;}
+    return nomeMusica + " - " + contMax + " vezes";}
 
     //Saber se música está na playlist
     private boolean musicaExisteNaPlaylist(Musica m, PlayList pl){
