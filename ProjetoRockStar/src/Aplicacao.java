@@ -421,9 +421,9 @@ public class Aplicacao implements Serializable {
     }
 
     public void removerPlayListID (int id){
-        for(PlayList play : playlists){
-            if(play.getIdPlaylist().equals(id)){
-                playlists.remove(play);
+        for (int i=0;i<getPlaylists().size();i++){
+            if (getPlaylists().get(i).getIdPlaylist()==id){
+                playlists.remove(i-1);
             }
         }
     }

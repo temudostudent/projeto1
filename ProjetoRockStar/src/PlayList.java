@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas implements Serializable {
-    private Integer idPlaylist;
+    private int idPlaylist;
     protected static int ultimoId = 0;
     private  boolean visibilidade;
 
@@ -69,7 +69,7 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         return this.nome;
     }
 
-    public Integer getIdPlaylist() {
+    public int getIdPlaylist() {
         return idPlaylist;
     }
 
