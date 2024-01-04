@@ -365,6 +365,14 @@ public class Aplicacao implements Serializable {
         }
     return false;}
 
+    public void removePlaylistPorID (int id){
+        for (PlayList pl : playlists){
+            if (pl.getIdPlaylist().equals(id)){
+                playlists.remove(pl);
+            }
+        }
+    }
+
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }

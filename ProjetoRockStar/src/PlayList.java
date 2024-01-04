@@ -81,4 +81,13 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
     public void setVisibilidade(boolean visibilidade) {
         this.visibilidade = visibilidade;
     }
+
+    @Override
+    public String toString() {
+        return "PlayList{" +
+                "idPlaylist=" + idPlaylist +
+                ", ultimoID=" + ultimoID +
+                ", visibilidade=" + visibilidade +
+                '}';
+    }
 }

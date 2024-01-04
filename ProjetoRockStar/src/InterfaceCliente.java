@@ -488,6 +488,11 @@ public class InterfaceCliente implements Serializable {
                 verMusicasPlayListSelecionada.setVisible(true);
                 criarPlaylistPreenchida.setVisible(true);
 
+                for (int i=0;i<cliente.getPlaylists().size();i++){
+                    System.out.println(cliente.getPlaylists().get(i));
+                }
+
+
 
             }
         });
@@ -511,6 +516,8 @@ public class InterfaceCliente implements Serializable {
                     if (playlistSelecionada != null) {
 
                         cliente.getPlaylists().remove(linhaSelecionada);
+
+                        app.rockstar.removePlaylistPorID(cliente.getPlaylists().get(linhaSelecionada).getIdPlaylist());
 
                         atualizarListaPlayList();
 
