@@ -34,7 +34,7 @@ public class Cliente extends Utilizador implements Serializable {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         return nova;
     }
-    public void adicionarMusicaComprada(MusicaPaga m){
+    public void adicionarMusicaComprada( MusicaPaga m){
         musicasCompradas.add(m);
     }
 

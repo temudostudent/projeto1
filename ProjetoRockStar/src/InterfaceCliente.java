@@ -516,6 +516,7 @@ public class InterfaceCliente implements Serializable {
                     if (playlistSelecionada != null) {
 
                         cliente.getPlaylists().remove(linhaSelecionada);
+                        app.rockstar.removerPlayListID(playlistSelecionada.getIdPlaylist());
 
                         app.rockstar.removePlaylistPorID(cliente.getPlaylists().get(linhaSelecionada).getIdPlaylist());
 
@@ -540,6 +541,7 @@ public class InterfaceCliente implements Serializable {
 
                     String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
                     PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
+                    playlistSelecionada.getIdPlaylist();
 
 
                     // Verifica se alguma playlist está selecionada

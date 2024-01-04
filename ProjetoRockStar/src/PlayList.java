@@ -6,14 +6,14 @@ import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas implements Serializable {
     private Integer idPlaylist;
-    private Integer ultimoID = 0;
+    protected static int ultimoId = 0;
     private  boolean visibilidade;
 
 
     public PlayList(String nome, boolean visibilidade) {
         super(nome);
         this.visibilidade = visibilidade;
-        this.idPlaylist = ultimoID++;
+        this.idPlaylist = getNextId();
     }
     public String getVisibilidade() {
         if (visibilidade) {
@@ -21,6 +21,9 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         } else {
             return "   PRIVADA";
         }
+    }
+    public static synchronized int getNextId() {
+        return ++ultimoId;
     }
 
     public Musica pesquisaMusicaTitulo(String titulo){
