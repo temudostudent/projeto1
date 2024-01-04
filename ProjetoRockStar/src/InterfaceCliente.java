@@ -1,4 +1,3 @@
-import javax.management.modelmbean.InvalidTargetObjectTypeException;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -22,8 +21,8 @@ public class InterfaceCliente implements Serializable {
             valorTotalPagar, saldoCliente, nomePlaylist;
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
-            ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, botaoAtualizarPlaylists,
-            botaoLogout;
+            ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, minhasPlayLists,
+            botaoLogout, todasPlayLists;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
@@ -445,16 +444,16 @@ public class InterfaceCliente implements Serializable {
         nomePlaylist.setBounds(50,60,400,30);
         listaMusicasPlayList = new JTable();
         listaPlaylist = new JScrollPane(listaMusicasPlayList);
-        listaPlaylist.setBounds(50,80,400,300);
-        botaoAtualizarPlaylists = new JButton("ATUALIZAR PLAYLISTS");
-        botaoAtualizarPlaylists.setBounds(50,0,220,40);
-        botaoAtualizarPlaylists.addActionListener(new ActionListener() {
+        listaPlaylist.setBounds(50,80,400,250);
+        minhasPlayLists = new JButton("MINHAS PLAYLISTS");
+        minhasPlayLists.setBounds(50,0,220,40);
+        todasPlayLists = new JButton("TODAS PLAYLISTS");
+        todasPlayLists.setBounds(280,0,220,40);
+
+        todasPlayLists.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-
-
-                // Ver as playLists do Cliente
-                ArrayList<PlayList> playList = cliente.verPlayListCliente();
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<PlayList> playList = app.rockstar.getPlaylists();
 
                 DefaultTableModel modeloTabela = new DefaultTableModel();
 
@@ -467,9 +466,26 @@ public class InterfaceCliente implements Serializable {
 
 
                 for (PlayList play : playList) {
+                    if(play.isVisibilidade())
                     modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
-
                 }
+
+                removerPlayList.setVisible(false);
+                alterarVisibilidade.setVisible(false);
+                criarNovaPlayList.setVisible(false);
+                verMusicasPlayListSelecionada.setVisible(false);
+                criarPlaylistPreenchida.setVisible(false);
+            }
+        });
+        minhasPlayLists.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                atualizarListaPlayList();
+                removerPlayList.setVisible(true);
+                alterarVisibilidade.setVisible(true);
+                criarNovaPlayList.setVisible(true);
+                verMusicasPlayListSelecionada.setVisible(true);
+                criarPlaylistPreenchida.setVisible(true);
 
 
             }
@@ -492,8 +508,10 @@ public class InterfaceCliente implements Serializable {
 
                     // Verifica se alguma playlist está selecionada
                     if (playlistSelecionada != null) {
-                        //cliente.removerPlaylist(linhaSelecionada-1);
+
                         cliente.getPlaylists().remove(linhaSelecionada);
+
+                        atualizarListaPlayList();
 
                         JOptionPane.showMessageDialog(null, "PlayList  " + playlistSelecionada.getNome() +  "   removida com sucesso.");
                     } else {
@@ -522,6 +540,7 @@ public class InterfaceCliente implements Serializable {
                         //Altera a visibilidade da playList na JComboBox
                         boolean novaVisibilidade = !playlistSelecionada.isVisibilidade(); // Inverte a visibilidade
                         playlistSelecionada.setVisibilidade(novaVisibilidade);
+                        atualizarListaPlayList();
 
 
                         JOptionPane.showMessageDialog(null, "Visibilidade alterada  com sucesso.");
@@ -550,7 +569,10 @@ public class InterfaceCliente implements Serializable {
 
                     if(ehPossivel) {
                         // Cria a nova playlist no cliente com visibilidade true
-                        cliente.criarPlaylist(nomeNovaPlaylist, true);
+
+                        cliente.adicionarPlayList(cliente.criarPlaylist(nomeNovaPlaylist, true));
+                        app.rockstar.adicionarPlayList(cliente.criarPlaylist(nomeNovaPlaylist, true));
+                        atualizarListaPlayList();
 
                     }else{
                         JOptionPane.showMessageDialog(null, "Titulo playlist já existe.");
@@ -597,8 +619,8 @@ public class InterfaceCliente implements Serializable {
         painelPlayList.add(listaMusicasPlayList);
         painelPlayList.add(removerPlayList);painelPlayList.add(alterarVisibilidade);
         painelPlayList.add(criarNovaPlayList);painelPlayList.add(verMusicasPlayListSelecionada);
-        painelPlayList.add(botaoAtualizarPlaylists); painelPlayList.add(criarPlaylistPreenchida);
-        painelPlayList.add(listaPlaylist); painelPlayList.add(nomePlaylist);
+        painelPlayList.add(minhasPlayLists); painelPlayList.add(criarPlaylistPreenchida);
+        painelPlayList.add(listaPlaylist); painelPlayList.add(nomePlaylist); painelPlayList.add(todasPlayLists);
 
         //Criar painel Carrinho  ------------------------------------------------------------------------
         painelCarrinho = new JPanel();
@@ -759,7 +781,14 @@ public class InterfaceCliente implements Serializable {
 
 
         //Trocar de painéis
-        botaoPlayList.addActionListener(e->trocarPainel(painelPlayList));
+        botaoPlayList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                trocarPainel(painelPlayList);
+                atualizarListaPlayList();
+            }
+        });
+
         botaoPesquisar.addActionListener(e->trocarPainel(painelPesquisarCliente));
         botaoCarrinho.addActionListener(e->trocarPainel(painelCarrinho));
         botaoCarrinho.addActionListener(new ActionListener() {
@@ -1025,13 +1054,14 @@ public class InterfaceCliente implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 String titulo = nomePlaylist.getText();
                 String genero = generoPlaylist.getText();
-                String tamanho = numeroMusicas.getText();
+                String  tamanho = numeroMusicas.getText();
                 if(titulo.isEmpty() || genero.isEmpty() || tamanho.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Por favor preencha todos os campos");
                 }else{
                     try {
                         int tamanho1 = Integer.parseInt(tamanho);
-                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(genero, app.rockstar.getMusicas());
+                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(genero, app.rockstar.musicasGratuitasGenero(genero));
+
                         if (musicasGenero.isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Não há músicas disponíveis do género " + genero,
                                     "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -1040,14 +1070,18 @@ public class InterfaceCliente implements Serializable {
                             //Verifica se o tamanho desejado é maior que o numero de musicas do genero solicitado
                             if (tamanho1 > musicasGenero.size()) {
                                 //Envia mensagem ao tutilizador
-                                JOptionPane.showMessageDialog(null, "Apenas existem " + musicasGenero.size() + " musicas do género " +
+                                JOptionPane.showMessageDialog(null, "Apenas existem " + (musicasGenero.size() )+ " musicas do género " +
                                         genero, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                                System.out.println(musicasGenero.size());
                             } else {
 
-                                cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero);
+                                cliente.adicionarPlayList(cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero));
+                                app.rockstar.adicionarPlayList(cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero));
                                 JOptionPane.showMessageDialog(null, "Playlist criada com sucesso");
 
+
                                 janelaPlaylist.setVisible(false);
+                                atualizarListaPlayList();
                             }
                         }
                         }catch(NumberFormatException ex){
@@ -1125,6 +1159,27 @@ public class InterfaceCliente implements Serializable {
            }
 
        });
+
+
+    }
+    public void atualizarListaPlayList(){
+        // Ver as playLists do Cliente
+        ArrayList<PlayList> playList = cliente.verPlayListCliente();
+
+        DefaultTableModel modeloTabela = new DefaultTableModel();
+
+        modeloTabela.addColumn("Nome");
+        modeloTabela.addColumn("Visibilidade");
+
+
+        listaMusicasPlayList.setModel(modeloTabela);
+        listaPlaylist.setViewportView(listaMusicasPlayList);
+
+
+        for (PlayList play : playList) {
+            modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
+
+        }
 
 
     }

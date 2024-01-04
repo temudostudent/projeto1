@@ -14,27 +14,29 @@ public class Cliente extends Utilizador implements Serializable {
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
 
-    private ArrayList<Musica>musicasCompradas;
+    private ArrayList<Musica> musicasCompradas;
     protected Compra compra;
 
 
     // Construtor classe
-    public Cliente(String username,String password) {
+    public Cliente(String username, String password) {
         super(username, password);
         this.playlists = new ArrayList<>();
         this.historicoCompras = new ArrayList<>();
         super.saldo = 0;
-        this.musicasCompradas=new ArrayList<>();
+        this.musicasCompradas = new ArrayList<>();
         this.idCliente = ultimoID++;
     }
 
-    public Cliente(){}
-
-    public void criarPlaylist(String nomeDaLista, boolean visibilidade) {
-        PlayList nova = new PlayList(nomeDaLista, visibilidade);
-        playlists.add(nova);
+    public Cliente() {
     }
-    public void adicionarMusicaComprada( Musica m){
+
+    public PlayList criarPlaylist(String nomeDaLista, boolean visibilidade) {
+        PlayList nova = new PlayList(nomeDaLista, visibilidade);
+        return nova;
+    }
+
+    public void adicionarMusicaComprada(Musica m) {
         musicasCompradas.add(m);
     }
 
@@ -43,18 +45,19 @@ public class Cliente extends Utilizador implements Serializable {
     }
 
     //Método para verificar se já existe uma playlist com o mesmo nome
-    public boolean verificarNomePlaylist(String nome){
+    public boolean verificarNomePlaylist(String nome) {
         boolean nomeOK = true;
-        for(PlayList play : playlists){
+        for (PlayList play : playlists) {
             if (play.getNome().equals(nome)) {
-               nomeOK = false;
-            }else{
+                nomeOK = false;
+            } else {
                 nomeOK = true;
             }
         }
         return nomeOK;
     }
-    public ArrayList<PlayList> verPlayListCliente(){
+
+    public ArrayList<PlayList> verPlayListCliente() {
         return playlists;
     }
 
@@ -64,10 +67,10 @@ public class Cliente extends Utilizador implements Serializable {
     }
 
     //Encontra uma playlist pelo nome
-    public PlayList pesquisaPlaylistTitulo(String titulo){
+    public PlayList pesquisaPlaylistTitulo(String titulo) {
         PlayList objeto = null;
-        for(PlayList p : playlists){
-            if(p.getNome().equals(titulo)){
+        for (PlayList p : playlists) {
+            if (p.getNome().equals(titulo)) {
                 objeto = p;
             }
         }
@@ -76,41 +79,45 @@ public class Cliente extends Utilizador implements Serializable {
 
 
     //Cria uma playlist com todas as musicas do mesmo genero
-    public ArrayList listaMusicaGenero(String genero, ArrayList <Musica> listaMusicasGlobal){
-        ArrayList <Musica> musicasGenero = new ArrayList<>();
-        for(Musica musica: listaMusicasGlobal ) {
+    public ArrayList listaMusicaGenero(String genero, ArrayList<Musica> listaMusicasGlobal) {
+        ArrayList<Musica> musicasGenero = new ArrayList<>();
+        for (Musica musica : listaMusicasGlobal) {
             if (musica.getGenero().equalsIgnoreCase(genero)) {
-                if(musica instanceof Musica) {
+                if (musica instanceof Musica) {
                     musicasGenero.add(musica);
                 }
             }
-        }return musicasGenero;
+        }
+        return musicasGenero;
     }
 
-    public void removerMusicaPlayList(){
+    public void removerMusicaPlayList() {
         removerMusicaPlayList();
     }
 
-
     // Criar uma playList indicando o género e tamanho
-    public void criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
+    public PlayList criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
         PlayList nova = new PlayList(titulo, true);
-
-        // Cria uma lista com musicas do genero selecionado
-        ArrayList<Musica> lmusicasGenero = new ArrayList<>();
-
-
-            //Baralhar a lista de musicas do genero
-            Collections.shuffle(listaMusicaGenero);
-
-            //Adicona musicas à nova playList até ao tamanho desejado
-            for (int i = 0; i < tamanho; i++) {
-                nova.adicionarMusica((Musica) listaMusicaGenero.get(i));
+        if (!musicasCompradas.isEmpty()) {
+            for (Musica m : musicasCompradas) {
+                listaMusicaGenero.add(m);
             }
-
-        //Adicionar a nova playList à lista das playLists
-        playlists.add(nova);
         }
+
+        //Baralhar a lista de musicas do genero
+        Collections.shuffle(listaMusicaGenero);
+
+        //Adicona musicas à nova playList até ao tamanho desejado
+        for (int i = 0; i < tamanho; i++) {
+            nova.adicionarMusica((Musica) listaMusicaGenero.get(i));
+
+        }
+        return nova;
+    }
+
+    public void adicionarPlayList(PlayList play){
+        playlists.add(play);
+    }
 
 
 

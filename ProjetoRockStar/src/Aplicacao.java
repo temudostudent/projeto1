@@ -190,6 +190,18 @@ public class Aplicacao implements Serializable {
             }
         }
     return null;}
+    //Méotodo criar lista genero gratuitas
+    public ArrayList<Musica> musicasGratuitasGenero(String genero){
+        ArrayList<Musica> novaLista = new ArrayList<>();
+
+        for(Musica m : musicas){
+            if(m.getGenero().equalsIgnoreCase(genero) && !(m instanceof MusicaPaga)){
+                    novaLista.add(m);
+
+            }
+        }
+        return novaLista;
+    }
 
     //Métodos de ORDENAÇÃO
     public void ordenarMusicasCrescentePorTitulo(ArrayList lista){
@@ -384,6 +396,7 @@ public class Aplicacao implements Serializable {
     public void adicionarArtista(Artista a){
         artistas.add(a);
     }
+    public void removerPlayList(PlayList p){ playlists.remove(p);}
     public void adicionarCompra(Compra com) {compras.add(com);}
 
 }
