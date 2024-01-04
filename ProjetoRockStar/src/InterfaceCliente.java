@@ -514,7 +514,7 @@ public class InterfaceCliente implements Serializable {
                     if (playlistSelecionada != null) {
 
                         cliente.getPlaylists().remove(linhaSelecionada);
-                        app.rockstar.removerPlayListID(idplaylistSelecionada);
+                        app.rockstar.removerPlayListID(playlistSelecionada.getIdPlaylist());
 
                         atualizarListaPlayList();
 
