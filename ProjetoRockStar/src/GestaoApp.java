@@ -107,8 +107,6 @@ public class GestaoApp implements Serializable {
         }
         //File Músicas
         if (!this.fileMusicas.exists()) {
-            Musica musica = new Musica("Hero", "beyonce", 3.4, "rock", true);
-            rockstar.adicionarMusica(musica);
 
             try {
                 this.fileMusicas.createNewFile();

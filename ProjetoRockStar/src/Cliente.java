@@ -14,33 +14,31 @@ public class Cliente extends Utilizador implements Serializable {
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
 
-    private ArrayList<Musica> musicasCompradas;
+    private ArrayList<MusicaPaga> musicasCompradas;
     protected Compra compra;
 
 
     // Construtor classe
-    public Cliente(String username, String password) {
+    public Cliente(String username,String password) {
         super(username, password);
         this.playlists = new ArrayList<>();
         this.historicoCompras = new ArrayList<>();
         super.saldo = 0;
-        this.musicasCompradas = new ArrayList<>();
+        this.musicasCompradas=new ArrayList<>();
         this.idCliente = ultimoID++;
     }
 
-    public Cliente() {
-    }
+    public Cliente(){}
 
     public PlayList criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade);
         return nova;
     }
-
-    public void adicionarMusicaComprada(Musica m) {
+    public void adicionarMusicaComprada( Musica m){
         musicasCompradas.add(m);
     }
 
-    public ArrayList<Musica> getMusicasCompradas() {
+    public ArrayList<MusicaPaga> getMusicasCompradas() {
         return musicasCompradas;
     }
 
@@ -94,6 +92,7 @@ public class Cliente extends Utilizador implements Serializable {
     public void removerMusicaPlayList() {
         removerMusicaPlayList();
     }
+
 
     // Criar uma playList indicando o género e tamanho
     public PlayList criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
