@@ -265,6 +265,8 @@ public class InterfaceCliente implements Serializable {
                 scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                 tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+                titulosDasColunasTabela(listarItems);
+
                 listaM.addAll(app.rockstar.getMusicas());
 
                 if (botaoTodasAsMusicas.isSelected()) {
@@ -279,6 +281,25 @@ public class InterfaceCliente implements Serializable {
                         app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
 
+                    adicionarElementosTabela(listaM,listarItems);
+
+                } else if (botaoMinhasMusicas.isSelected()) {
+
+                    if ("TÍTULO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorTitulo(cliente.getMusicasCompradas());
+                    } else if ("TÍTULO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasDecrescentePorTitulo(cliente.getMusicasCompradas());
+                    } else if ("GÉNERO".equals(selecao) && botaoAscendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasCrescentePorGenero(cliente.getMusicasCompradas());
+                    } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
+                        app.rockstar.ordenarMusicasDecrescentePorGenero(cliente.getMusicasCompradas());
+                    }
+
+                    for (MusicaPaga musica : cliente.getMusicasCompradas()) {
+                        listarItems.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
+                                musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € ", musica.getRatingMedia()});
+                    }
+
                 } else if (botaoParaPesquisarMusicas.isSelected()) {
 
                     String pesquisa = caixaTextoPesquisa.getText();
@@ -287,7 +308,6 @@ public class InterfaceCliente implements Serializable {
 
                     if ("TÍTULO".equals(selecaoAtributo)){
                         listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
-
                     } else if ("ARTISTA".equals(selecaoAtributo)) {
                         listaM = app.rockstar.listaMusicasDeArtista(pesquisa);
                     }
@@ -301,12 +321,9 @@ public class InterfaceCliente implements Serializable {
                     } else if ("GÉNERO".equals(selecao) && botaoDescendenteCliente.isSelected()) {
                         app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
+
+                    adicionarElementosTabela(listaM,listarItems);
                 }
-                titulosDasColunasTabela(listarItems);
-
-                adicionarElementosTabela(listaM,listarItems);
-
-
             }
         });
 
@@ -341,7 +358,6 @@ public class InterfaceCliente implements Serializable {
                 listaM = new ArrayList<>();
                 listaM = app.rockstar.getMusicas();
 
-
                 titulosDasColunasTabela(listarMusicas);
 
                 adicionarElementosTabela(listaM,listarMusicas);
@@ -358,6 +374,11 @@ public class InterfaceCliente implements Serializable {
         botaoMinhasMusicas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                caixaTextoPesquisa.setVisible(!botaoMinhasMusicas.isSelected());
+                atributoPesquisa.setVisible(!botaoMinhasMusicas.isSelected());
+                atributoPesquisarLegenda.setVisible(!botaoMinhasMusicas.isSelected());
+                okPesquisa.setVisible(!botaoMinhasMusicas.isSelected());
 
                 DefaultTableModel listarMusicas = new DefaultTableModel();
                 ArrayList<MusicaPaga> listaMPagas = new ArrayList<>();
