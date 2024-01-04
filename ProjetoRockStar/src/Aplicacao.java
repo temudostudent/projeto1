@@ -418,6 +418,14 @@ public class Aplicacao implements Serializable {
     public void adicionarArtista(Artista a){
         artistas.add(a);
     }
+
+    public void removerPlayListID (int id){
+        for(PlayList play : playlists){
+            if(play.getIdPlaylist() == id){
+                playlists.remove(play);
+            }
+        }
+    }
     public void removerPlayList(PlayList p){ playlists.remove(p);}
     public void adicionarCompra(Compra com) {compras.add(com);}
 
