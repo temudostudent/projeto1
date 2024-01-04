@@ -589,26 +589,28 @@ public class InterfaceCliente implements Serializable {
                 JFrame frame = new JFrame();
                 String nomeNovaPlaylist = JOptionPane.showInputDialog(frame, "Indique o nome da nova playlist:");
 
-                if ( !nomeNovaPlaylist.isEmpty()) {
+                if(nomeNovaPlaylist != null) {
 
-                    //Verifica se já existe alguma playList com o mesmo nome
+                    if (!nomeNovaPlaylist.isEmpty()) {
 
-                    boolean ehPossivel = cliente.verificarNomePlaylist(nomeNovaPlaylist);
+                        //Verifica se já existe alguma playList com o mesmo nome
 
-                    if(ehPossivel) {
-                        // Cria a nova playlist no cliente com visibilidade true
-                        PlayList nova=cliente.criarPlaylist(nomeNovaPlaylist, true);
+                        boolean ehPossivel = cliente.verificarNomePlaylist(nomeNovaPlaylist);
 
-                        cliente.adicionarPlayList(nova);
-                        app.rockstar.adicionarPlayList(nova);
-                        atualizarListaPlayList();
+                        if (ehPossivel) {
+                            // Cria a nova playlist no cliente com visibilidade true
+                            PlayList nova = cliente.criarPlaylist(nomeNovaPlaylist, true);
 
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Titulo playlist já existe.");
+                            cliente.adicionarPlayList(nova);
+                            app.rockstar.adicionarPlayList(nova);
+                            atualizarListaPlayList();
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Titulo playlist já existe.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Preencha o titulo para a playlist");
                     }
-                } else {
-                    // Nome da playlist não fornecido ou cancelado pelo usuário
-                    // Adicione a lógica apropriada para lidar com essa situação
                 }
             }
         });
@@ -1085,7 +1087,7 @@ public class InterfaceCliente implements Serializable {
                 }else{
                     try {
                         int tamanho1 = Integer.parseInt(tamanho);
-                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(genero, app.rockstar.musicasGratuitasGenero(genero));
+                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(app.rockstar.musicasGratuitasGenero(genero));
 
                         if (musicasGenero.isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Não há músicas disponíveis do género " + genero,
@@ -1095,12 +1097,12 @@ public class InterfaceCliente implements Serializable {
                             //Verifica se o tamanho desejado é maior que o numero de musicas do genero solicitado
                             if (tamanho1 > musicasGenero.size()) {
                                 //Envia mensagem ao tutilizador
-                                JOptionPane.showMessageDialog(null, "Apenas existem " + (musicasGenero.size() )+ " musicas do género " +
+                                JOptionPane.showMessageDialog(null, "Apenas existem " + musicasGenero.size() + " musicas do género " +
                                         genero, "Aviso", JOptionPane.INFORMATION_MESSAGE);
                                 System.out.println(musicasGenero.size());
                             } else {
 
-                                PlayList nova=cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero);
+                                PlayList nova=cliente.criarPlayListGenero(titulo, tamanho1, musicasGenero);
 
                                 cliente.adicionarPlayList(nova);
                                 app.rockstar.adicionarPlayList(nova);

@@ -77,14 +77,11 @@ public class Cliente extends Utilizador implements Serializable {
 
 
     //Cria uma playlist com todas as musicas do mesmo genero
-    public ArrayList listaMusicaGenero(String genero, ArrayList<Musica> listaMusicasGlobal) {
-        ArrayList<Musica> musicasGenero = new ArrayList<>();
-        for (Musica musica : listaMusicasGlobal) {
-            if (musica.getGenero().equalsIgnoreCase(genero)) {
-                if (musica instanceof Musica) {
-                    musicasGenero.add(musica);
-                }
-            }
+    public ArrayList listaMusicaGenero(ArrayList<Musica> listaMusicasGratuitas) {
+        ArrayList<Musica> musicasGenero = listaMusicasGratuitas;
+        for (Musica musica : musicasCompradas) {
+            musicasGenero.add(musica);
+
         }
         return musicasGenero;
     }
@@ -95,13 +92,8 @@ public class Cliente extends Utilizador implements Serializable {
 
 
     // Criar uma playList indicando o género e tamanho
-    public PlayList criarPlayListGenero(String titulo, String genero, int tamanho, ArrayList listaMusicaGenero) {
+    public PlayList criarPlayListGenero(String titulo, int tamanho, ArrayList listaMusicaGenero) {
         PlayList nova = new PlayList(titulo, true);
-        if (!musicasCompradas.isEmpty()) {
-            for (Musica m : musicasCompradas) {
-                listaMusicaGenero.add(m);
-            }
-        }
 
         //Baralhar a lista de musicas do genero
         Collections.shuffle(listaMusicaGenero);
