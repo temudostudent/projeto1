@@ -461,6 +461,10 @@ public class InterfaceCliente implements Serializable {
                 modeloTabela.addColumn("Nome");
                 modeloTabela.addColumn("Visibilidade");
 
+                for (int i=0;i<app.rockstar.getPlaylists().size();i++){
+                    System.out.println(app.rockstar.getPlaylists().get(i));
+                }
+
 
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
@@ -488,12 +492,6 @@ public class InterfaceCliente implements Serializable {
                 verMusicasPlayListSelecionada.setVisible(true);
                 criarPlaylistPreenchida.setVisible(true);
 
-                for (int i=0;i<cliente.getPlaylists().size();i++){
-                    System.out.println(cliente.getPlaylists().get(i));
-                }
-
-
-
             }
         });
 
@@ -516,9 +514,7 @@ public class InterfaceCliente implements Serializable {
                     if (playlistSelecionada != null) {
 
                         cliente.getPlaylists().remove(linhaSelecionada);
-                        app.rockstar.removerPlayListID(playlistSelecionada.getIdPlaylist());
-
-                        app.rockstar.removePlaylistPorID(cliente.getPlaylists().get(linhaSelecionada).getIdPlaylist());
+                        app.rockstar.removerPlayListID(cliente.getPlaylists().get(linhaSelecionada).getIdPlaylist());
 
                         atualizarListaPlayList();
 
@@ -579,9 +575,10 @@ public class InterfaceCliente implements Serializable {
 
                     if(ehPossivel) {
                         // Cria a nova playlist no cliente com visibilidade true
+                        PlayList nova=cliente.criarPlaylist(nomeNovaPlaylist, true);
 
-                        cliente.adicionarPlayList(cliente.criarPlaylist(nomeNovaPlaylist, true));
-                        app.rockstar.adicionarPlayList(cliente.criarPlaylist(nomeNovaPlaylist, true));
+                        cliente.adicionarPlayList(nova);
+                        app.rockstar.adicionarPlayList(nova);
                         atualizarListaPlayList();
 
                     }else{
@@ -1081,10 +1078,11 @@ public class InterfaceCliente implements Serializable {
                                 System.out.println(musicasGenero.size());
                             } else {
 
-                                cliente.adicionarPlayList(cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero));
-                                app.rockstar.adicionarPlayList(cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero));
-                                JOptionPane.showMessageDialog(null, "Playlist criada com sucesso");
+                                PlayList nova=cliente.criarPlayListGenero(titulo, genero, tamanho1, musicasGenero);
 
+                                cliente.adicionarPlayList(nova);
+                                app.rockstar.adicionarPlayList(nova);
+                                JOptionPane.showMessageDialog(null, "Playlist criada com sucesso");
 
                                 janelaPlaylist.setVisible(false);
                                 atualizarListaPlayList();
