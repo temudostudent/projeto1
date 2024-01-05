@@ -332,10 +332,13 @@ public class InterfaceArtista implements Serializable {
                             double duracao1 = Double.parseDouble(duracao);
                             double preco1 = Double.parseDouble(preco);
                             Musica m = artista.novaMusica(titulo,duracao1,genero,estadoMusica,preco1);
-                            artista.addMusica(m);
-                            //Se a estado for ativo adiciona a musica à lista global de musicas
-                            if (m.getEstado()){
-                                app.rockstar.adicionarMusica(m);
+
+
+                            if(m != null ) {
+                                artista.addMusica(m);
+                                if (m.getEstado()) {
+                                    app.rockstar.adicionarMusica(m);
+                                }
                             }
                             caixaTituloMusica.setText("");
                             caixaDuracao.setText("");
