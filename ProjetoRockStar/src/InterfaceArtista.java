@@ -99,13 +99,13 @@ public class InterfaceArtista implements Serializable {
                         listaM.addAll(artista.getMusicas());
 
                         if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
-                            artista.ordenarMusicasCrescentePorTitulo(listaM);
+                            app.rockstar.ordenarMusicasCrescentePorTitulo(listaM);
                         } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
-                            artista.ordendarMusicasDecrescentePorTitulo(listaM);
+                            app.rockstar.ordenarMusicasDecrescentePorTitulo(listaM);
                         } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
-                            artista.ordenarMusicasCrescentePorGenero(listaM);
+                            app.rockstar.ordenarMusicasCrescentePorGenero(listaM);
                         } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
-                            artista.ordenarMusicasDecrescentePorGenero(listaM);
+                            app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                         }
                         // Adicionar uma coluna à tabela e respetivos titulos
 
@@ -135,29 +135,25 @@ public class InterfaceArtista implements Serializable {
                         listaA.addAll(artista.getAlbuns());
 
                             if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
-                                artista.ordenarAlbunsCrescentePorTitulo(listaA);
+                                app.rockstar.ordenarAlbunsCrescentePorTitulo(listaA);
                             } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
-                                artista.ordendarAlbunsDecrescentePorTitulo(listaA);
+                                app.rockstar.ordendarAlbunsDecrescentePorTitulo(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
-                                artista.ordenarAlbunsCrescentePorGenero(listaA);
+                                app.rockstar.ordenarAlbunsCrescentePorGenero(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){
-                                artista.ordenarAlbunsDecrescentePorGenero(listaA);
+                                app.rockstar.ordenarAlbunsDecrescentePorGenero(listaA);
                             }
-
 
                         // Adicionar as coluna à tabela e respetivos titulos
                         listarItems.addColumn("TÍTULO");
                         listarItems.addColumn("DATA");
                         listarItems.addColumn("GÉNERO");
 
-
                         // Adicionar os elementos do ArrayList à tabela
                         for (Album a : listaA) {
                             listarItems.addRow(new Object[]{a.getNome(), a.getDataCriacao(), a.getGenero()});
                         }
-
                     }
-
                 }
             });
 
@@ -421,7 +417,7 @@ public class InterfaceArtista implements Serializable {
                     } else if ("GÉNERO".equals(selecao)) {
                         String genero = inserirTitulo.getText();
                         DefaultTableModel listaMusicas = new DefaultTableModel();
-                        ArrayList<Musica> lista = artista.pesquisarMusicaGenero(genero);
+                        ArrayList<Musica> lista = artista.pesquisarMusicaPorGenero(genero);
 
                         titulosDasColunasTabela(listaMusicas);
                         adicionarElementosTabela(lista, listaMusicas);
@@ -473,7 +469,7 @@ public class InterfaceArtista implements Serializable {
                     int linhaSelecionada = tabelaListaMusicas.getSelectedRow();
                     if (linhaSelecionada >= 0) {
                         String tituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
-                        Musica object = artista.pesquisaObjetoTitulo(tituloMusica);
+                        Musica object = artista.pesquisaObjetoPorTitulo(tituloMusica);
                         if (object instanceof MusicaPaga) {
 
                             // Converter o Map para um DefaultTableModel
@@ -519,7 +515,7 @@ public class InterfaceArtista implements Serializable {
                     if (linhaSelecionada >= 0) {
 
                         String TituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
-                        Musica object = artista.pesquisaObjetoTitulo(TituloMusica);
+                        Musica object = artista.pesquisaObjetoPorTitulo(TituloMusica);
 
                         if (!caixaAlteracao.equals(null)) {
 
@@ -742,7 +738,7 @@ public class InterfaceArtista implements Serializable {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
 
-                    artista.addMusica(indexAlbum,indexMusicaSelect);
+                    artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
                 }
             });
 

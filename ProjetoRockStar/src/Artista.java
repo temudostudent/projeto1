@@ -29,7 +29,7 @@ public class Artista extends Utilizador implements Serializable {
         albuns.add(novoA);
     }
 
-    public boolean tituloJaExiste(String titulo){
+    private boolean tituloJaExiste(String titulo){
         for(Musica m : musicas){
             if(m.getTitulo().equalsIgnoreCase(titulo)){
                 return true;
@@ -58,8 +58,6 @@ public class Artista extends Utilizador implements Serializable {
             JOptionPane.showMessageDialog(null, "Titulo musica já existe. Escolha novo título" , "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-
-
         return novaM;
     }
 
@@ -78,7 +76,7 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-    public Musica pesquisaObjetoTitulo(String titulo){
+    public Musica pesquisaObjetoPorTitulo(String titulo){
         Musica objeto = null;
         for(Musica m : musicas){
             if(m.getTitulo().equalsIgnoreCase(titulo)){
@@ -89,7 +87,7 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Pesquisar Musica por Género
-    public ArrayList<Musica> pesquisarMusicaGenero(String genero) {
+    public ArrayList<Musica> pesquisarMusicaPorGenero(String genero) {
         ArrayList<Musica> novaLista = new ArrayList<>();
         for (Musica m : musicas) {
             if (m.getGenero().equalsIgnoreCase(genero)) {
@@ -121,7 +119,7 @@ public class Artista extends Utilizador implements Serializable {
 
     //Adiciona música a Album
     //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
-    public void addMusica(int indexAlbum, int indexMusica) {
+    public void addMusicaAAlbumPelosIndexes(int indexAlbum, int indexMusica) {
         Musica m = musicas.get(indexMusica);
         if (!albuns.get(indexAlbum).musicas.contains(m)){
             albuns.get(indexAlbum).adicionarMusica(m);
@@ -166,7 +164,6 @@ public class Artista extends Utilizador implements Serializable {
         ArrayList<String> listaGeneros = new ArrayList<>();
         for (Album album : albuns) {
             String genero = album.getGenero();
-
             // Verifica se o género ainda não está na lista e caso não estaja, adiciona
             if (!listaGeneros.stream().anyMatch(g -> g.equalsIgnoreCase(genero))) {
                 listaGeneros.add(genero);
@@ -188,73 +185,20 @@ public class Artista extends Utilizador implements Serializable {
 
         for(int i = 0; i < nova.length; i++){
                 nova[i][0] = listaGeneros1.get(i);
-                nova [i][1] = String.valueOf(totalAlbunsGenero(listaGeneros1.get(i)));
+                nova[i][1] = String.valueOf(totalAlbunsGenero(listaGeneros1.get(i)));
             }
         return nova;
-    }
-
-    public void ordenarMusicasCrescentePorTitulo(ArrayList lista){
-
-        //Criar um comparador
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo);
-        //Ordenar lista usando o comparador
-        lista.sort(comparador);
-    }
-
-    public void ordendarMusicasDecrescentePorTitulo(ArrayList lista){
-
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
-        lista.sort(comparador);
-    }
-
-    public void ordenarMusicasCrescentePorGenero(ArrayList lista){
-
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero);
-        lista.sort(comparador);
-    }
-
-    public void ordenarMusicasDecrescentePorGenero(ArrayList lista){
-
-        Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero).reversed();
-        lista.sort(comparador);
-    }
-
-    public void ordenarAlbunsCrescentePorTitulo(ArrayList lista){
-
-        Comparator<Album> comparador = Comparator.comparing(Album::getNome);
-        lista.sort(comparador);
-    }
-
-    public void ordendarAlbunsDecrescentePorTitulo(ArrayList lista){
-
-        Comparator<Album> comparador = Comparator.comparing(Album::getNome).reversed();
-        lista.sort(comparador);
-    }
-
-    public void ordenarAlbunsCrescentePorGenero(ArrayList lista){
-
-        Comparator<Album> comparador = Comparator.comparing(Album::getGenero);
-        lista.sort(comparador);
-    }
-
-    public void ordenarAlbunsDecrescentePorGenero(ArrayList lista){
-
-        Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
-        lista.sort(comparador);
     }
 
     public String getPin() {
         return pin;
     }
-
     public int getTipo(){
         return 2;
     }
-
     public ArrayList<Album> getAlbuns() {
         return albuns;
     }
-
     public ArrayList<Musica> getMusicas() {
         return musicas;
     }
