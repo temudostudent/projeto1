@@ -30,7 +30,7 @@ public class JanelaInicial {
         gestaoApp.run();
 
         //Criar Frame
-        f = new JFrame("Rockstar Inc");
+        f = new JFrame("Rockstar.Inc");
         JFrame fPin = new JFrame("PIN");
 
         //Criar Paineis
