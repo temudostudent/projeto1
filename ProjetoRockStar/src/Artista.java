@@ -10,8 +10,6 @@ import java.util.*;
 public class Artista extends Utilizador implements Serializable {
 
     //Atributos
-    private Integer idArtista;
-    private Integer ultimoID = 0;
     private String pin;
     private ArrayList<Album> albuns = new ArrayList<>();
     private ArrayList<Musica> musicas = new ArrayList<>();
@@ -23,7 +21,6 @@ public class Artista extends Utilizador implements Serializable {
         this.musicas = musicas;
         this.albuns = albuns;
         super.saldo = 0;
-        this.idArtista = ultimoID++;
     }
 
     //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
@@ -104,7 +101,6 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-
     //Adiciona música a Album
     //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
     public void addMusica(int indexAlbum, int indexMusica) {
@@ -116,26 +112,14 @@ public class Artista extends Utilizador implements Serializable {
         }else JOptionPane.showMessageDialog(null, "Musica não foi adicionada", "",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
     public void alterarSaldo(double quantia) {
         saldo += quantia;
-    }
-
-    //Altera o título
-    public void corrigirTitulo(Musica m, String novoTitulo){
-        m.setTitulo(novoTitulo);
-    }
-
-    //Altera o preço
-    public void alterarPreco(MusicaPaga m, double novoPreco){
-        m.setPreco(novoPreco);
     }
 
     //Número total de músicas
     public int totalMusicas(){
         return musicas.size();
     }
-
 
     //Valor total das músicas que tem na coleção neste momento
     public double valorTotalColecao(){
@@ -146,21 +130,6 @@ public class Artista extends Utilizador implements Serializable {
             }
         }
     return soma;
-    }
-
-    //Valor total de todas as músicas vendidas
-    public double valorTotalVendas(){
-        return getSaldo();
-    }
-
-    //Número total de álbuns
-    public int totalAlbuns(){
-        return albuns.size();
-    }
-
-    //Inativar música m
-    public void inativarMusica(Musica m){
-        m.setEstado(false);
     }
 
     //Número total de álbuns do género X
@@ -254,10 +223,6 @@ public class Artista extends Utilizador implements Serializable {
 
         Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
         lista.sort(comparador);
-    }
-
-    public Integer getIdArtista() {
-        return idArtista;
     }
 
     public String getPin() {
