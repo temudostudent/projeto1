@@ -137,21 +137,18 @@ public class Aplicacao implements Serializable {
         boolean existe=false;
         for (Artista a : artistas){
             if (a.getUsername().equals(username)) {
-                existe=true;
+                return true;
             }
         }
-    return existe;}
+    return false;}
 
-    public boolean procurarUserCliente(String username) {
-        for (Cliente c : clientes) {
+    public boolean procurarUserCliente(String username){
+        for (Cliente c : clientes){
             if (c.getUsername().equals(username)) {
                 return true;
             }
         }
-        return false;
-    }
-
-
+    return false;}
 
     //Gerador automático PIN
     public String gerarPin(){

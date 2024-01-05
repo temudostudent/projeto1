@@ -229,7 +229,6 @@ public class JanelaInicial {
 
                     case 2:
                     Artista artista = gestaoApp.rockstar.loginArtista(username,password);
-
                     if (artista != null) {
                         fPin.setVisible(true);
                     }
@@ -242,9 +241,6 @@ public class JanelaInicial {
 
         painelLogin.add(usernameLegendaL);
         painelLogin.add(passLegendaL);
-
-
-
         painelLogin.add(voltar);
         voltar.addActionListener(new ActionListener() {
             @Override
