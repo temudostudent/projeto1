@@ -339,6 +339,7 @@ public class InterfaceCliente implements Serializable {
                     Musica object = app.rockstar.pesquisaObjetoTitulo(tituloMusica);
                     if (object instanceof MusicaPaga) {
                         DefaultTableModel listaPrecos = new DefaultTableModel();
+                        listaPrecos.addColumn("Música '" + object.getTitulo() + "'");
                         listaPrecos.addColumn("Data e Hora");
                         listaPrecos.addColumn("Preço");
 
@@ -348,7 +349,7 @@ public class InterfaceCliente implements Serializable {
                         DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
                         for (Map.Entry<LocalDateTime, Double> entry : historicoPreco.entrySet()) {
-                            Object[] rowData = {formatoData.format(entry.getKey()), entry.getValue() + " € "};
+                            Object[] rowData = {"",formatoData.format(entry.getKey()), entry.getValue() + " € "};
                             listaPrecos.addRow(rowData);
                         }
 
