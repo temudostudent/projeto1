@@ -25,8 +25,7 @@ public class InterfaceCliente implements Serializable {
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, minhasPlayLists,
-            botaoLogout, todasPlayLists, botaoVerMusicas;
-            botaoLogout, todasPlayLists, historicoPrecos;
+            botaoLogout, todasPlayLists, botaoVerMusicas, historicoPrecos;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
@@ -434,7 +433,7 @@ public class InterfaceCliente implements Serializable {
         });
 
         botaoParaPesquisarMusicas = new JRadioButton("Pesquisar música");
-        botaoParaPesquisarMusicas.setBounds(50, 70, 150, 40);
+        botaoParaPesquisarMusicas.setBounds(50, 75, 150, 40);
         botaoParaPesquisarMusicas.setBackground(null);
         botaoParaPesquisarMusicas.addActionListener(new ActionListener() {
             @Override
@@ -443,7 +442,6 @@ public class InterfaceCliente implements Serializable {
                 atributoPesquisa.setVisible(botaoParaPesquisarMusicas.isSelected());
                 atributoPesquisarLegenda.setVisible(botaoParaPesquisarMusicas.isSelected());
                 okPesquisa.setVisible(botaoParaPesquisarMusicas.isSelected());
-
             }
         });
         botaoAscendenteCliente = new JRadioButton("Ascendente");
