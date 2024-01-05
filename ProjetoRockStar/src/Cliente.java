@@ -31,7 +31,7 @@ public class Cliente extends Utilizador implements Serializable {
     public Cliente(){}
 
     public PlayList criarPlaylist(String nomeDaLista, boolean visibilidade) {
-        PlayList nova = new PlayList(nomeDaLista, visibilidade);
+        PlayList nova = new PlayList(nomeDaLista, visibilidade, this.username);
         return nova;
     }
     public void adicionarMusicaComprada( MusicaPaga m){
@@ -93,7 +93,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     // Criar uma playList indicando o género e tamanho
     public PlayList criarPlayListGenero(String titulo, int tamanho, ArrayList listaMusicaGenero) {
-        PlayList nova = new PlayList(titulo, true);
+        PlayList nova = new PlayList(titulo, true, this.username);
 
         //Baralhar a lista de musicas do genero
         Collections.shuffle(listaMusicaGenero);

@@ -360,6 +360,17 @@ public class Aplicacao implements Serializable {
         }
     return false;}
 
+    public PlayList pesquisaPlaylistTitulo(String titulo) {
+        PlayList objeto = null;
+        for (PlayList p : playlists) {
+            if (p.getNome().equals(titulo)) {
+                objeto = p;
+            }
+        }
+        return objeto;
+    }
+
+
 
     public ArrayList<Cliente> getClientes() {
         return clientes;

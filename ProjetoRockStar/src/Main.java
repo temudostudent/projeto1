@@ -2,15 +2,13 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
 
         try {
             JanelaInicial run = new JanelaInicial();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
