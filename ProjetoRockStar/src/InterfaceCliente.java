@@ -150,9 +150,7 @@ public class InterfaceCliente implements Serializable {
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível encontrar a música");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione uma música");
-                }
+                } else JOptionPane.showMessageDialog(null, "Selecione uma música");
             }
         });
 
@@ -214,20 +212,23 @@ public class InterfaceCliente implements Serializable {
             public void actionPerformed(ActionEvent e) {
 
                 int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
-                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
-                Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (cliente.estaMusicaJaExiste(m)) {
-                    janelaDasPlaylists(true, false);
-                } else {
-                    if (cliente.verPlayListCliente().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
-                    } else if (m instanceof MusicaPaga && ((MusicaPaga) m).getPreco() != 0) {
-                        JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
-                    } else {
+                if (indexMusicaSelect != -1) {
+                    String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                    Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+
+                    if (cliente.estaMusicaJaExiste(m)) {
                         janelaDasPlaylists(true, false);
+                    } else {
+                        if (cliente.verPlayListCliente().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
+                        } else if (m instanceof MusicaPaga && ((MusicaPaga) m).getPreco() != 0) {
+                            JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
+                        } else {
+                            janelaDasPlaylists(true, false);
+                        }
                     }
-                }
+                }else JOptionPane.showMessageDialog(null, "Selecione uma música");
             }
         });
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
@@ -241,16 +242,18 @@ public class InterfaceCliente implements Serializable {
                 }
 
                 int indexMusicaSelect = tabelaResultadoPesquisa.getSelectedRow();
-                String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
-                Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
+                if (indexMusicaSelect != -1) {
+                    String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
+                    Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco() > 0) {
-                    if (!cliente.estaMusicaJaExiste(object)) {
-                        cliente.compra.adicionarMusica((MusicaPaga) object);
-                    } else JOptionPane.showMessageDialog(null, "A música que selecionou já foi comprada");
-                } else JOptionPane.showMessageDialog(null, "A música que selecionou é gratuita");
+                    if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco() > 0) {
+                        if (!cliente.estaMusicaJaExiste(object)) {
+                            cliente.compra.adicionarMusica((MusicaPaga) object);
+                        } else JOptionPane.showMessageDialog(null, "A música que selecionou já foi comprada");
+                    } else JOptionPane.showMessageDialog(null, "A música que selecionou é gratuita");
 
-                tabelaCarrinho();
+                    tabelaCarrinho();
+                }else JOptionPane.showMessageDialog(null, "Selecione uma música");
             }
         });
         ordenarPesquisa = new JButton("ORDENAR");
@@ -339,6 +342,7 @@ public class InterfaceCliente implements Serializable {
                     Musica object = app.rockstar.pesquisaObjetoTitulo(tituloMusica);
                     if (object instanceof MusicaPaga) {
                         DefaultTableModel listaPrecos = new DefaultTableModel();
+                        listaPrecos.addColumn("Música '" + object.getTitulo() + "'");
                         listaPrecos.addColumn("Data e Hora");
                         listaPrecos.addColumn("Preço");
 
@@ -348,14 +352,14 @@ public class InterfaceCliente implements Serializable {
                         DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
                         for (Map.Entry<LocalDateTime, Double> entry : historicoPreco.entrySet()) {
-                            Object[] rowData = {formatoData.format(entry.getKey()), entry.getValue() + " € "};
+                            Object[] rowData = {"",formatoData.format(entry.getKey()), entry.getValue() + " € "};
                             listaPrecos.addRow(rowData);
                         }
 
                         //Adicionar o modelo de tabela à tabela já existente
                         tabelaResultadoPesquisa.setModel(listaPrecos);
-                    }
-                }
+                    }else JOptionPane.showMessageDialog(null, "Música sempre foi gratuita");
+                }else JOptionPane.showMessageDialog(null, "Selecione uma música");
             }
         });
 
@@ -825,8 +829,8 @@ public class InterfaceCliente implements Serializable {
         botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
         username = new JLabel("Bem Vindo " + cliente.getUsername());
-        username.setFont(new Font("Arial", Font.BOLD, 18));
-        username.setBounds(70, 70, 250, 20);
+        username.setFont(new Font("Arial", Font.BOLD, 14));
+        username.setBounds(70, 70, 400, 20);
         botaoLogout = new JButton("LOGOUT");
         botaoLogout.setBounds(70, 460, 250, 30);
 

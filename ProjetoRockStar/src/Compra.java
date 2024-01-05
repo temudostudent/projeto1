@@ -27,7 +27,6 @@ public class Compra implements Serializable{
         }
     return false;}
 
-
     public double totalCarrinhoCliente(){
         double valorTotal = 0;
         if (carrinho.size()==0){
@@ -39,23 +38,7 @@ public class Compra implements Serializable{
         }
     return valorTotal;}
 
-    public void valorMusicaArtista(){
-        double valorMusica = 0;
-        double saldoArtista = 0;
-        Artista a;
-        for(MusicaPaga m : carrinho){
-            valorMusica = m.getPreco();
-        }
-    }
-    public void limparCarrinho(){
-        carrinho.clear();
-    }
-
     public ArrayList<MusicaPaga> getCarrinho() {
         return carrinho;
-    }
-
-    public Integer getId_compra() {
-        return id_compra;
     }
 }

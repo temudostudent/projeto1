@@ -19,10 +19,7 @@ public abstract class ConjuntoMusicas implements Serializable {
         musicas.remove(index);
     }
 
-
     public abstract void adicionarMusica(Musica m);
-
-
 
     public ArrayList<Musica> getMusicas() {
         return musicas;
