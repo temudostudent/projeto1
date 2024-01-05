@@ -354,7 +354,7 @@ public class InterfaceCliente implements Serializable {
 
                         //Adicionar o modelo de tabela à tabela já existente
                         tabelaResultadoPesquisa.setModel(listaPrecos);
-                    }
+                    }else JOptionPane.showMessageDialog(null, "Música sempre foi gratuita");
                 }
             }
         });

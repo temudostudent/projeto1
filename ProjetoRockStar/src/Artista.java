@@ -55,7 +55,6 @@ public class Artista extends Utilizador implements Serializable {
         musicas.add(m);
     }
 
-
     //Pesquisar música pelo titulo
     public ArrayList<Musica> pesquisarMusica(String titulo){
         ArrayList<Musica> novaLista = new ArrayList<>();
