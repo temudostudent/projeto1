@@ -428,7 +428,6 @@ public class InterfaceCliente implements Serializable {
                     JOptionPane.showMessageDialog(null, "Ainda não tem nenhuma música comprada");
                 }
 
-
             }
         });
 
@@ -495,13 +494,13 @@ public class InterfaceCliente implements Serializable {
         nomePlaylist.setBounds(50, 60, 400, 30);
         listaMusicasPlayList = new JTable();
         listaPlaylist = new JScrollPane(listaMusicasPlayList);
-        listaPlaylist.setBounds(50, 80, 400, 250);
+        listaPlaylist.setBounds(50, 120, 400, 250);
         minhasPlayLists = new JButton("MINHAS PLAYLISTS");
-        minhasPlayLists.setBounds(50, 0, 220, 40);
+        minhasPlayLists.setBounds(50, 50, 180, 40);
         todasPlayLists = new JButton("TODAS PLAYLISTS");
-        todasPlayLists.setBounds(280, 0, 220, 40);
+        todasPlayLists.setBounds(280, 50, 180, 40);
         botaoVerMusicas = new JButton("VER MÚSICAS PLAYLIST");
-        botaoVerMusicas.setBounds(500, 70, 220, 40);
+        botaoVerMusicas.setBounds(500, 120, 220, 40);
         painelPlayList.add(botaoVerMusicas);
 
 
@@ -540,8 +539,8 @@ public class InterfaceCliente implements Serializable {
 
                         if (linhaSelecionada != -1) {
 
-                            String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
-                            PlayList playlistSelecionada = app.rockstar.pesquisaPlaylistTitulo(nome);
+
+                            PlayList playlistSelecionada = app.rockstar.getPlaylists().get(linhaSelecionada);
 
                             janelaMusicaPlayLisGlobal(playlistSelecionada);
                         }
@@ -565,7 +564,7 @@ public class InterfaceCliente implements Serializable {
 
 
         removerPlayList = new JButton("REMOVER PLAYLIST");
-        removerPlayList.setBounds(500, 100, 220, 40);
+        removerPlayList.setBounds(500, 120, 220, 40);
         removerPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -596,7 +595,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         alterarVisibilidade = new JButton("ALTERAR VISIBILIDADE");
-        alterarVisibilidade.setBounds(500, 150, 220, 40);
+        alterarVisibilidade.setBounds(500, 170, 220, 40);
         alterarVisibilidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -629,7 +628,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         criarNovaPlayList = new JButton("CRIAR NOVA PLAYLIST");
-        criarNovaPlayList.setBounds(500, 200, 220, 40);
+        criarNovaPlayList.setBounds(500, 220, 220, 40);
         criarNovaPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -663,7 +662,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         verMusicasPlayListSelecionada = new JButton("VER MÚSICAS PLAYLIST");
-        verMusicasPlayListSelecionada.setBounds(500, 250, 220, 40);
+        verMusicasPlayListSelecionada.setBounds(500, 270, 220, 40);
 
         verMusicasPlayListSelecionada.addActionListener(new ActionListener() {
             @Override
@@ -683,7 +682,7 @@ public class InterfaceCliente implements Serializable {
 
 
         criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
-        criarPlaylistPreenchida.setBounds(500, 300, 220, 40);
+        criarPlaylistPreenchida.setBounds(500, 320, 220, 40);
 
         criarPlaylistPreenchida.addActionListener(new ActionListener() {
             @Override
