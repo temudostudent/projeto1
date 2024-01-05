@@ -494,9 +494,7 @@ public class InterfaceArtista implements Serializable {
                             tabelaListaMusicas.setModel(listaPrecos);
                         }
                     }
-
                 }
-
             });
             tabelaListaMusicas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
@@ -585,8 +583,6 @@ public class InterfaceArtista implements Serializable {
                     atualizarTabelaMusicas1();
                 }
             });
-
-
 
             //Adicionar componentes ao painel
             painelEditarDados.add(pesquisaTitulo);painelEditarDados.add(inserirTitulo);
@@ -859,7 +855,8 @@ public class InterfaceArtista implements Serializable {
             botaoEstatisticas = new JButton("ESTATÍSTICAS");
             botaoEstatisticas.setBounds(70,340, 250,100);
             botaoEstatisticas.setFont(new Font("Arial", Font.BOLD, 20));
-            username1 =new JLabel("Olá " + artista.getUsername());
+            username1 =new JLabel("Bem vindo " + artista.getUsername());
+            username1.setFont(new Font("Arial", Font.BOLD, 18));
             username1.setBounds(70,75,100,20);
             botaoLogout = new JButton("LOGOUT");
             botaoLogout.setBounds(70,460,250,30);

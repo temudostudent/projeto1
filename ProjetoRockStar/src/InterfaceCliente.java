@@ -9,7 +9,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class InterfaceCliente implements Serializable {
     private Cliente cliente;
@@ -22,7 +25,7 @@ public class InterfaceCliente implements Serializable {
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, minhasPlayLists,
-            botaoLogout, todasPlayLists;
+            botaoLogout, todasPlayLists, historicoPrecos;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
@@ -117,12 +120,7 @@ public class InterfaceCliente implements Serializable {
                         // Adicionar os elementos do ArrayList à tabela
                         adicionarElementosTabela(listaM, listarMusicas);
                     }
-
-                }else {
-
-
                 }
-
             }
         });
 
@@ -132,7 +130,7 @@ public class InterfaceCliente implements Serializable {
         JButton okR=new JButton("Avaliar");
 
         adicionarRating = new JButton("ADICIONAR RATING");
-        adicionarRating.setBounds(540,450,200,40);
+        adicionarRating.setBounds(470,410,180,30);
         adicionarRating.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -206,7 +204,7 @@ public class InterfaceCliente implements Serializable {
         //FINAL DO RATING----------------------------------------
 
         adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
-        adicionarPlayList.setBounds(310,450,200,40);
+        adicionarPlayList.setBounds(260,410,180,30);
         adicionarPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -229,7 +227,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
-        adicionarCarrinho.setBounds(80,450 ,200,40);
+        adicionarCarrinho.setBounds(40,410,190,30);
         adicionarCarrinho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -249,7 +247,6 @@ public class InterfaceCliente implements Serializable {
                 }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
 
                 tabelaCarrinho();
-
             }
         });
         ordenarPesquisa = new JButton("ORDENAR");
@@ -326,8 +323,37 @@ public class InterfaceCliente implements Serializable {
                 }
             }
         });
+        historicoPrecos=new JButton("HISTÓRICO DE PREÇOS");
+        historicoPrecos.setBounds(260,460,180,30);
+        historicoPrecos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                int linhaSelecionada = tabelaResultadoPesquisa.getSelectedRow();
+                if (linhaSelecionada >= 0) {
+                    String tituloMusica = (String) tabelaResultadoPesquisa.getValueAt(linhaSelecionada, 0);
+                    Musica object = app.rockstar.pesquisaObjetoTitulo(tituloMusica);
+                    if (object instanceof MusicaPaga) {
+                        DefaultTableModel listaPrecos = new DefaultTableModel();
+                        listaPrecos.addColumn("Data e Hora");
+                        listaPrecos.addColumn("Preço");
 
+                        //Criar um Map para armazenar os valores
+                        Map<LocalDateTime, Double> historicoPreco;
+                        historicoPreco = ((MusicaPaga) object).getHistoricoPreco();
+                        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                        for (Map.Entry<LocalDateTime, Double> entry : historicoPreco.entrySet()) {
+                            Object[] rowData = {formatoData.format(entry.getKey()), entry.getValue() + " € "};
+                            listaPrecos.addRow(rowData);
+                        }
+
+                        //Adicionar o modelo de tabela à tabela já existente
+                        tabelaResultadoPesquisa.setModel(listaPrecos);
+                    }
+                }
+            }
+        });
 
         //JComboBox
         ordenarMusicaPor = new JComboBox<>();
@@ -339,7 +365,6 @@ public class InterfaceCliente implements Serializable {
         atributoPesquisa.addItem("TÍTULO");
         atributoPesquisa.addItem("ARTISTA");
         atributoPesquisa.setVisible(false);
-
 
         //JRadioButton
         botaoTodasAsMusicas = new JRadioButton("Ver todas as músicas");
@@ -404,7 +429,7 @@ public class InterfaceCliente implements Serializable {
         });
 
         botaoParaPesquisarMusicas = new JRadioButton("Pesquisar música");
-        botaoParaPesquisarMusicas.setBounds(50,70,150,40);
+        botaoParaPesquisarMusicas.setBounds(50,75,150,40);
         botaoParaPesquisarMusicas.setBackground(null);
         botaoParaPesquisarMusicas.addActionListener(new ActionListener() {
             @Override
@@ -453,6 +478,7 @@ public class InterfaceCliente implements Serializable {
         painelPesquisarCliente.add(okPesquisa);
         painelPesquisarCliente.add(scroljListarMusicas);
         painelPesquisarCliente.add(botaoMinhasMusicas);
+        painelPesquisarCliente.add(historicoPrecos);
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();
@@ -774,6 +800,7 @@ public class InterfaceCliente implements Serializable {
         botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
         username = new JLabel("Bem Vindo " + cliente.getUsername());
+        username.setFont(new Font("Arial", Font.BOLD, 18));
         username.setBounds(70, 70, 250, 20);
         botaoLogout = new JButton("LOGOUT");
         botaoLogout.setBounds(70,460,250,30);
