@@ -10,13 +10,10 @@ public class Cliente extends Utilizador implements Serializable {
     //Atributos
     private Integer idCliente;
     private Integer ultimoID = 0;
-
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
-
     private ArrayList<MusicaPaga> musicasCompradas;
     protected Compra compra;
-
 
     // Construtor classe
     public Cliente(String username,String password) {
@@ -28,14 +25,9 @@ public class Cliente extends Utilizador implements Serializable {
         this.idCliente = ultimoID++;
     }
 
-    public Cliente(){}
-
     public PlayList criarPlaylist(String nomeDaLista, boolean visibilidade) {
         PlayList nova = new PlayList(nomeDaLista, visibilidade, this.username);
         return nova;
-    }
-    public void adicionarMusicaComprada( MusicaPaga m){
-        musicasCompradas.add(m);
     }
 
     public ArrayList<MusicaPaga> getMusicasCompradas() {
@@ -75,7 +67,6 @@ public class Cliente extends Utilizador implements Serializable {
         return objeto;
     }
 
-
     //Cria uma playlist com todas as musicas do mesmo genero
     public ArrayList listaMusicaGenero(ArrayList<Musica> listaMusicasGratuitas) {
         ArrayList<Musica> musicasGenero = listaMusicasGratuitas;
@@ -89,7 +80,6 @@ public class Cliente extends Utilizador implements Serializable {
     public void removerMusicaPlayList() {
         removerMusicaPlayList();
     }
-
 
     // Criar uma playList indicando o género e tamanho
     public PlayList criarPlayListGenero(String titulo, int tamanho, ArrayList listaMusicaGenero) {
@@ -110,15 +100,6 @@ public class Cliente extends Utilizador implements Serializable {
         playlists.add(play);
     }
 
-
-
-    //Remover playList através do objeto
-    public void removerPlaylist(PlayList playlist) {
-        playlists.remove(playlist);
-    }
-
-
-    //
     public void abrirCompra(){
         this.compra=new Compra();
         historicoCompras.add(compra);
@@ -131,25 +112,6 @@ public class Cliente extends Utilizador implements Serializable {
             }
         }
         return false;}
-
-    //Método para finalizar a compra
-    public void finalizarcompra(){
-        if(compra.getCarrinho().isEmpty()){
-            System.out.println("Carrinho Vazio. Não é possível finalizar a compra.");
-            return;
-        }
-        //Deduzir o preço do saldo do Cliente
-        double saldoAtual;
-        //saldoAtual =  getSaldo() - compra.totalCarrinho();
-        //setSaldo(saldoAtual);
-
-        //Adicionar compra ao historico
-        historicoCompras.add(compra);
-
-        //Esvaziar carrinho
-        compra.limparCarrinho();
-
-    }
 
     // alterar saldo do cliente informando a quantidade
     public void alterarSaldo(double quantia) {
@@ -164,7 +126,6 @@ public class Cliente extends Utilizador implements Serializable {
     public Integer getIdCliente() {
         return idCliente;
     }
-
 
     public ArrayList<PlayList> getPlaylists() {
         return playlists;

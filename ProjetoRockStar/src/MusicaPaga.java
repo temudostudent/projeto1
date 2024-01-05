@@ -36,11 +36,9 @@ public class MusicaPaga extends Musica implements Serializable {
         adicionarRegisto(preco);
     }
 
-
     private void adicionarRegisto(double novoPreco) {
         this.historicoPreco.put(LocalDateTime.now(), novoPreco);
     }
-
 
     public Map<LocalDateTime, Double> getHistoricoPreco() {
         return historicoPreco;
@@ -78,5 +76,4 @@ public class MusicaPaga extends Musica implements Serializable {
         MusicaPaga objeto = (MusicaPaga) m;
         return true;
     }
-
 }

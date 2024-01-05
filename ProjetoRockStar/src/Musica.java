@@ -36,17 +36,10 @@ public class Musica implements Serializable {
         this.duracao = String.format("%02d:%02d", min, s);
     }
 
-    public Musica() {
-    }
-
+    public Musica() {}
 
     public static synchronized int getNextId() {
         return ++ultimoId;
-    }
-
-    //adicionar Rating à respetiva
-    public void addRating(String cl ,int valor){
-        rating.put(cl,valor);
     }
 
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
@@ -62,10 +55,8 @@ public class Musica implements Serializable {
                 soma+=valor;
                 cont++;
             }
-
             this.ratingMedia=(double)soma/cont;
         }
-
         return String.format("%.2f", ratingMedia);
     }
 
@@ -91,13 +82,10 @@ public class Musica implements Serializable {
         return genero;
     }
     public String getDuracao(){return duracao;}
-
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    public boolean getEstado(){
-        return estado;}
-
+    public boolean getEstado(){return estado;}
     public String tipoEstado(){
         if(getEstado() == true){
             return "ATIVA";
@@ -105,7 +93,6 @@ public class Musica implements Serializable {
             return "INATIVA";
         }
     }
-
     public String getNomeArtista() {
         return nomeArtista;
     }
@@ -130,7 +117,6 @@ public class Musica implements Serializable {
         Musica objeto = (Musica) m;
         return true;
     }
-
 
     public Integer getIdMusica() {
         return idMusica;

@@ -26,9 +26,6 @@ public class Artista extends Utilizador implements Serializable {
         this.idArtista = ultimoID++;
     }
 
-    public Artista() {
-    }
-
     //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
     public void criarAlbum(String nomeDoAlbum, String genero) {
         Album novoA = new Album(nomeDoAlbum, this.username, genero);

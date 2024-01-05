@@ -10,7 +10,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
     protected static int ultimoId = 0;
     private  boolean visibilidade;
 
-
     public PlayList(String nome, boolean visibilidade, String username) {
         super(nome);
         this.visibilidade = visibilidade;
@@ -38,13 +37,11 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         return musica;
     }
 
-
     //Adiciona música
     @Override
     public void adicionarMusica(Musica m) {
         this.musicas.add(m);
     }
-
 
     public boolean musicasJaExistem (ArrayList<Musica> lista){
         for (Musica m: lista) {
@@ -57,7 +54,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     return false;}
 
-
     public boolean estaMusicaJaExiste (Musica m){
         for (Musica mPl : getMusicas()){
             if (m.getIdMusica().equals(mPl.getIdMusica())){
@@ -65,7 +61,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     }
     return false;}
-
 
     public String getCriador() {
         return criador;
