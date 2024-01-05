@@ -278,7 +278,7 @@ public class JanelaInicial {
                 String username=cxUsernameR.getText();
                 String password=cxPassR.getText();
                 if (rbotaoUser.isSelected()){
-                    Cliente c = gestaoApp.rockstar.registarCliente(username,password);
+                    gestaoApp.rockstar.registarCliente(username,password);
 
                 }else {
                     String pin= cxPinR.getText();

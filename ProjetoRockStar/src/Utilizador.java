@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public abstract class Utilizador implements Serializable {
+
     protected String username;
     protected String password;
     protected double saldo;
@@ -11,7 +12,9 @@ public abstract class Utilizador implements Serializable {
     }
 
     public abstract int getTipo();
-    public abstract void alterarSaldo(double quantia);
+    public void alterarSaldo(double quantia) {
+        saldo += quantia;
+    }
     public String getUsername() {
         return username;
     }

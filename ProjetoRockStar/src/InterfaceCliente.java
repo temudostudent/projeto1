@@ -220,7 +220,7 @@ public class InterfaceCliente implements Serializable {
                     if (cliente.estaMusicaJaExiste(m)) {
                         janelaDasPlaylists(true, false);
                     } else {
-                        if (cliente.verPlayListCliente().isEmpty()) {
+                        if (cliente.getPlaylists().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
                         } else if (m instanceof MusicaPaga && ((MusicaPaga) m).getPreco() != 0) {
                             JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
@@ -978,7 +978,7 @@ public class InterfaceCliente implements Serializable {
         JTable tabPlaylists = new JTable();
 
         DefaultTableModel listarPlaylists = new DefaultTableModel();
-        ArrayList<PlayList> listaP = cliente.verPlayListCliente();
+        ArrayList<PlayList> listaP = cliente.getPlaylists();
 
         listarPlaylists.addColumn("Título da Playlist");
         listarPlaylists.addColumn("Número de músicas");
@@ -1255,7 +1255,7 @@ public class InterfaceCliente implements Serializable {
 
     public void atualizarListaPlayList() {
         // Ver as playLists do Cliente
-        ArrayList<PlayList> playList = cliente.verPlayListCliente();
+        ArrayList<PlayList> playList = cliente.getPlaylists();
 
         DefaultTableModel modeloTabela = new DefaultTableModel();
 

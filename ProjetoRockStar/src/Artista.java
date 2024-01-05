@@ -143,9 +143,6 @@ public class Artista extends Utilizador implements Serializable {
         }else JOptionPane.showMessageDialog(null, "Musica não foi adicionada", "",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    public void alterarSaldo(double quantia) {
-        saldo += quantia;
-    }
 
     //Número total de músicas
     public int totalMusicas(){
