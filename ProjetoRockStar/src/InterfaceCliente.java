@@ -22,7 +22,7 @@ public class InterfaceCliente implements Serializable {
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, minhasPlayLists,
-            botaoLogout, todasPlayLists;
+            botaoLogout, todasPlayLists, botaoVerMusicas;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
@@ -32,11 +32,11 @@ public class InterfaceCliente implements Serializable {
     private JScrollPane scroljListarMusicas, listaPlaylist;
 
 
-    public void run(){
-        try{
+    public void run() {
+        try {
             InterfaceCliente janela = new InterfaceCliente(cliente, app);
             janelaCliente.setVisible(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -47,14 +47,14 @@ public class InterfaceCliente implements Serializable {
         initialize();
     }
 
-    protected void initialize(){
+    protected void initialize() {
 
         //Criar janela
         janelaCliente = new JFrame();
 
         //Criar Painel Pesquisar --------------------------------------------------------------
         painelPesquisarCliente = new JPanel();
-        painelPesquisarCliente.setBackground(new Color(255,178,102));
+        painelPesquisarCliente.setBackground(new Color(255, 178, 102));
         painelPesquisarCliente.setBounds(340, 200, 780, 500);
         painelPesquisarCliente.setLayout(null);
 
@@ -63,23 +63,23 @@ public class InterfaceCliente implements Serializable {
         //JTable
         tabelaResultadoPesquisa = new JTable();
         scroljListarMusicas = new JScrollPane(tabelaResultadoPesquisa);
-        scroljListarMusicas.setBounds(40,180,610,200);
+        scroljListarMusicas.setBounds(40, 180, 610, 200);
 
         //JLabel
         ordenarMusicasCliente = new JLabel("ORDENAR POR:");
-        ordenarMusicasCliente.setBounds(450,10,150,40);
+        ordenarMusicasCliente.setBounds(450, 10, 150, 40);
         atributoPesquisarLegenda = new JLabel("PESQUISAR POR:");
-        atributoPesquisarLegenda.setBounds(250,10,150,40);
+        atributoPesquisarLegenda.setBounds(250, 10, 150, 40);
         atributoPesquisarLegenda.setVisible(false);
 
         //JTextField
         caixaTextoPesquisa = new JTextField("pesquisa");
-        caixaTextoPesquisa.setBounds(50,120,180,40);
+        caixaTextoPesquisa.setBounds(50, 120, 180, 40);
         caixaTextoPesquisa.setVisible(false);
 
         //JButton
         okPesquisa = new JButton("PESQUISAR");
-        okPesquisa.setBounds(250,120,120,40);
+        okPesquisa.setBounds(250, 120, 120, 40);
         okPesquisa.setVisible(false);
         okPesquisa.addActionListener(new ActionListener() {
             @Override
@@ -96,29 +96,29 @@ public class InterfaceCliente implements Serializable {
                 titulosDasColunasTabela(listarMusicas);
 
 
-                if ("TÍTULO".equals(selecao)){
-                        listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
+                if ("TÍTULO".equals(selecao)) {
+                    listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
 
-                        if(listaM.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Nenhuma música encontrada com o título: " + pesquisa);
-                        }else {
+                    if (listaM.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Nenhuma música encontrada com o título: " + pesquisa);
+                    } else {
 
-                            // Adicionar os elementos do ArrayList à tabela
-                            adicionarElementosTabela(listaM, listarMusicas);
-                        }
+                        // Adicionar os elementos do ArrayList à tabela
+                        adicionarElementosTabela(listaM, listarMusicas);
+                    }
                 } else if ("ARTISTA".equals(selecao)) {
 
                     listaM = app.rockstar.listaMusicasDeArtista(pesquisa);
 
-                    if(listaM.isEmpty()) {
+                    if (listaM.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Nenhuma música encontrada do Artista: " + pesquisa);
-                    }else {
+                    } else {
 
                         // Adicionar os elementos do ArrayList à tabela
                         adicionarElementosTabela(listaM, listarMusicas);
                     }
 
-                }else {
+                } else {
 
 
                 }
@@ -129,10 +129,10 @@ public class InterfaceCliente implements Serializable {
         //RATING----------------------------------------------------------
         JFrame rating = new JFrame("Rating");
         JLabel resultadoInst = new JLabel("Resultado: ");
-        JButton okR=new JButton("Avaliar");
+        JButton okR = new JButton("Avaliar");
 
         adicionarRating = new JButton("ADICIONAR RATING");
-        adicionarRating.setBounds(540,450,200,40);
+        adicionarRating.setBounds(540, 450, 200, 40);
         adicionarRating.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -170,7 +170,7 @@ public class InterfaceCliente implements Serializable {
         sldResult.setPaintTicks(true);
         sldResult.setPaintLabels(true);
         rating.add(sldResult);
-        rating.add(okR,BorderLayout.SOUTH);
+        rating.add(okR, BorderLayout.SOUTH);
 
         final int[] resultado = new int[1];
 
@@ -193,7 +193,7 @@ public class InterfaceCliente implements Serializable {
 
                     if (object.usuarioTemRating(cliente.getUsername())) {
                         object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
-                    }else {
+                    } else {
                         object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
                     }
 
@@ -206,7 +206,7 @@ public class InterfaceCliente implements Serializable {
         //FINAL DO RATING----------------------------------------
 
         adicionarPlayList = new JButton("ADICIONAR A PLAYLIST");
-        adicionarPlayList.setBounds(310,450,200,40);
+        adicionarPlayList.setBounds(310, 450, 200, 40);
         adicionarPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -215,26 +215,26 @@ public class InterfaceCliente implements Serializable {
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                 Musica m = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (cliente.estaMusicaJaExiste(m)){
-                    janelaDasPlaylists(true,false);
-                }else{
-                    if(cliente.verPlayListCliente().isEmpty()){
+                if (cliente.estaMusicaJaExiste(m)) {
+                    janelaDasPlaylists(true, false);
+                } else {
+                    if (cliente.verPlayListCliente().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Não tem playlists criadas.Por favor crie uma nova");
-                    } else if (m instanceof MusicaPaga && ((MusicaPaga)m).getPreco()!=0) {
+                    } else if (m instanceof MusicaPaga && ((MusicaPaga) m).getPreco() != 0) {
                         JOptionPane.showMessageDialog(null, "Esta música tem um custo, adicione ao seu carrinho de compras para a adquirir");
                     } else {
-                        janelaDasPlaylists(true,false);
+                        janelaDasPlaylists(true, false);
                     }
                 }
             }
         });
         adicionarCarrinho = new JButton("ADICIONAR AO CARRINHO");
-        adicionarCarrinho.setBounds(80,450 ,200,40);
+        adicionarCarrinho.setBounds(80, 450, 200, 40);
         adicionarCarrinho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (cliente.compra==null){
+                if (cliente.compra == null) {
                     cliente.abrirCompra();
                 }
 
@@ -242,18 +242,18 @@ public class InterfaceCliente implements Serializable {
                 String valorTituloMusica = (String) tabelaResultadoPesquisa.getValueAt(indexMusicaSelect, 0);
                 Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco()>0){
-                    if (!cliente.estaMusicaJaExiste(object)){
+                if (object instanceof MusicaPaga && ((MusicaPaga) object).getPreco() > 0) {
+                    if (!cliente.estaMusicaJaExiste(object)) {
                         cliente.compra.adicionarMusica((MusicaPaga) object);
-                    }else JOptionPane.showMessageDialog( null, "A música que selecionou já foi comprada");
-                }else JOptionPane.showMessageDialog( null, "A música que selecionou é gratuita");
+                    } else JOptionPane.showMessageDialog(null, "A música que selecionou já foi comprada");
+                } else JOptionPane.showMessageDialog(null, "A música que selecionou é gratuita");
 
                 tabelaCarrinho();
 
             }
         });
         ordenarPesquisa = new JButton("ORDENAR");
-        ordenarPesquisa.setBounds(650,100,100,30);
+        ordenarPesquisa.setBounds(650, 100, 100, 30);
         ordenarPesquisa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -281,7 +281,7 @@ public class InterfaceCliente implements Serializable {
                         app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
 
-                    adicionarElementosTabela(listaM,listarItems);
+                    adicionarElementosTabela(listaM, listarItems);
 
                 } else if (botaoMinhasMusicas.isSelected()) {
 
@@ -306,7 +306,7 @@ public class InterfaceCliente implements Serializable {
 
                     String selecaoAtributo = (String) atributoPesquisa.getSelectedItem();
 
-                    if ("TÍTULO".equals(selecaoAtributo)){
+                    if ("TÍTULO".equals(selecaoAtributo)) {
                         listaM = app.rockstar.listaMusicasDeTitulo(pesquisa);
                     } else if ("ARTISTA".equals(selecaoAtributo)) {
                         listaM = app.rockstar.listaMusicasDeArtista(pesquisa);
@@ -322,11 +322,10 @@ public class InterfaceCliente implements Serializable {
                         app.rockstar.ordenarMusicasDecrescentePorGenero(listaM);
                     }
 
-                    adicionarElementosTabela(listaM,listarItems);
+                    adicionarElementosTabela(listaM, listarItems);
                 }
             }
         });
-
 
 
         //JComboBox
@@ -360,7 +359,7 @@ public class InterfaceCliente implements Serializable {
 
                 titulosDasColunasTabela(listarMusicas);
 
-                adicionarElementosTabela(listaM,listarMusicas);
+                adicionarElementosTabela(listaM, listarMusicas);
                 tabelaResultadoPesquisa.setModel(listarMusicas);
                 scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                 tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -368,7 +367,7 @@ public class InterfaceCliente implements Serializable {
         });
 
         botaoMinhasMusicas = new JRadioButton("Minhas músicas");
-        botaoMinhasMusicas.setBounds(50,45,150,40);
+        botaoMinhasMusicas.setBounds(50, 45, 150, 40);
         botaoMinhasMusicas.setBackground(null);
 
         botaoMinhasMusicas.addActionListener(new ActionListener() {
@@ -384,7 +383,7 @@ public class InterfaceCliente implements Serializable {
                 ArrayList<MusicaPaga> listaMPagas = new ArrayList<>();
                 listaMPagas = cliente.getMusicasCompradas();
 
-                if(listaMPagas != null && !listaMPagas.isEmpty()) {
+                if (listaMPagas != null && !listaMPagas.isEmpty()) {
 
                     titulosDasColunasTabela(listarMusicas);
 
@@ -395,7 +394,7 @@ public class InterfaceCliente implements Serializable {
                     tabelaResultadoPesquisa.setModel(listarMusicas);
                     scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
                     tabelaResultadoPesquisa.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Ainda não tem nenhuma música comprada");
                 }
 
@@ -404,7 +403,7 @@ public class InterfaceCliente implements Serializable {
         });
 
         botaoParaPesquisarMusicas = new JRadioButton("Pesquisar música");
-        botaoParaPesquisarMusicas.setBounds(50,70,150,40);
+        botaoParaPesquisarMusicas.setBounds(50, 70, 150, 40);
         botaoParaPesquisarMusicas.setBackground(null);
         botaoParaPesquisarMusicas.addActionListener(new ActionListener() {
             @Override
@@ -421,7 +420,7 @@ public class InterfaceCliente implements Serializable {
         botaoAscendenteCliente.setBackground(null);
         botaoAscendenteCliente.setSelected(true);
         botaoDescendenteCliente = new JRadioButton("Descendente");
-        botaoDescendenteCliente.setBounds(650,45,130,20);
+        botaoDescendenteCliente.setBounds(650, 45, 130, 20);
         botaoDescendenteCliente.setBackground(null);
 
         //ButtonGroup
@@ -456,21 +455,25 @@ public class InterfaceCliente implements Serializable {
 
         //Criar painel PlayList------------------------------------------------------------------------
         painelPlayList = new JPanel();
-        painelPlayList.setBackground(new Color(255,178,102));
+        painelPlayList.setBackground(new Color(255, 178, 102));
         painelPlayList.setBounds(340, 200, 780, 500);
         painelPlayList.setLayout(null);
 
         //Criar Componentes painel PlayList
 
         nomePlaylist = new JLabel();
-        nomePlaylist.setBounds(50,60,400,30);
+        nomePlaylist.setBounds(50, 60, 400, 30);
         listaMusicasPlayList = new JTable();
         listaPlaylist = new JScrollPane(listaMusicasPlayList);
-        listaPlaylist.setBounds(50,80,400,250);
+        listaPlaylist.setBounds(50, 80, 400, 250);
         minhasPlayLists = new JButton("MINHAS PLAYLISTS");
-        minhasPlayLists.setBounds(50,0,220,40);
+        minhasPlayLists.setBounds(50, 0, 220, 40);
         todasPlayLists = new JButton("TODAS PLAYLISTS");
-        todasPlayLists.setBounds(280,0,220,40);
+        todasPlayLists.setBounds(280, 0, 220, 40);
+        botaoVerMusicas = new JButton("VER MÚSICAS PLAYLIST");
+        botaoVerMusicas.setBounds(500, 70, 220, 40);
+        painelPlayList.add(botaoVerMusicas);
+
 
         todasPlayLists.addActionListener(new ActionListener() {
             @Override
@@ -479,20 +482,17 @@ public class InterfaceCliente implements Serializable {
 
                 DefaultTableModel modeloTabela = new DefaultTableModel();
 
-                modeloTabela.addColumn("Nome");
+                modeloTabela.addColumn("Nome PlayList");
                 modeloTabela.addColumn("Visibilidade");
-
-                for (int i=0;i<app.rockstar.getPlaylists().size();i++){
-                    System.out.println(app.rockstar.getPlaylists().get(i));
-                }
+                modeloTabela.addColumn("Criador");
 
 
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
 
                 for (PlayList play : playList) {
-                    if(play.isVisibilidade())
-                    modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
+                    if (play.isVisibilidade())
+                        modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador()});
                 }
 
                 removerPlayList.setVisible(false);
@@ -500,24 +500,42 @@ public class InterfaceCliente implements Serializable {
                 criarNovaPlayList.setVisible(false);
                 verMusicasPlayListSelecionada.setVisible(false);
                 criarPlaylistPreenchida.setVisible(false);
+                botaoVerMusicas.setVisible(true);
+
+
+                botaoVerMusicas.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
+
+                        if (linhaSelecionada != -1) {
+
+                            String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
+                            PlayList playlistSelecionada = app.rockstar.pesquisaPlaylistTitulo(nome);
+
+                            janelaMusicaPlayLisGlobal(playlistSelecionada);
+                        }
+                    }
+                });
             }
         });
         minhasPlayLists.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 atualizarListaPlayList();
                 removerPlayList.setVisible(true);
                 alterarVisibilidade.setVisible(true);
                 criarNovaPlayList.setVisible(true);
                 verMusicasPlayListSelecionada.setVisible(true);
                 criarPlaylistPreenchida.setVisible(true);
+                botaoVerMusicas.setVisible(false);
 
             }
         });
 
 
         removerPlayList = new JButton("REMOVER PLAYLIST");
-        removerPlayList.setBounds(500, 100, 220,40);
+        removerPlayList.setBounds(500, 100, 220, 40);
         removerPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -525,7 +543,7 @@ public class InterfaceCliente implements Serializable {
 
                 int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
 
-                if(linhaSelecionada != -1) {
+                if (linhaSelecionada != -1) {
 
                     String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
                     PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
@@ -539,7 +557,7 @@ public class InterfaceCliente implements Serializable {
 
                         atualizarListaPlayList();
 
-                        JOptionPane.showMessageDialog(null, "PlayList  " + playlistSelecionada.getNome() +  "   removida com sucesso.");
+                        JOptionPane.showMessageDialog(null, "PlayList  " + playlistSelecionada.getNome() + "   removida com sucesso.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
                     }
@@ -548,13 +566,13 @@ public class InterfaceCliente implements Serializable {
             }
         });
         alterarVisibilidade = new JButton("ALTERAR VISIBILIDADE");
-        alterarVisibilidade.setBounds(500,150,220,40);
+        alterarVisibilidade.setBounds(500, 150, 220, 40);
         alterarVisibilidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
 
-                if(linhaSelecionada != -1) {
+                if (linhaSelecionada != -1) {
 
                     String nome = (String) listaMusicasPlayList.getValueAt(linhaSelecionada, 0);
                     PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
@@ -581,7 +599,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         criarNovaPlayList = new JButton("CRIAR NOVA PLAYLIST");
-        criarNovaPlayList.setBounds(500, 200, 220,40);
+        criarNovaPlayList.setBounds(500, 200, 220, 40);
         criarNovaPlayList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -589,7 +607,7 @@ public class InterfaceCliente implements Serializable {
                 JFrame frame = new JFrame();
                 String nomeNovaPlaylist = JOptionPane.showInputDialog(frame, "Indique o nome da nova playlist:");
 
-                if(nomeNovaPlaylist != null) {
+                if (nomeNovaPlaylist != null) {
 
                     if (!nomeNovaPlaylist.isEmpty()) {
 
@@ -615,7 +633,7 @@ public class InterfaceCliente implements Serializable {
             }
         });
         verMusicasPlayListSelecionada = new JButton("VER MÚSICAS PLAYLIST");
-        verMusicasPlayListSelecionada.setBounds(500, 250, 220,40);
+        verMusicasPlayListSelecionada.setBounds(500, 250, 220, 40);
 
         verMusicasPlayListSelecionada.addActionListener(new ActionListener() {
             @Override
@@ -635,7 +653,7 @@ public class InterfaceCliente implements Serializable {
 
 
         criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
-        criarPlaylistPreenchida.setBounds(500,300,220,40);
+        criarPlaylistPreenchida.setBounds(500, 300, 220, 40);
 
         criarPlaylistPreenchida.addActionListener(new ActionListener() {
             @Override
@@ -645,17 +663,21 @@ public class InterfaceCliente implements Serializable {
         });
 
 
-
         //Adicionar componentes ao painel
         painelPlayList.add(listaMusicasPlayList);
-        painelPlayList.add(removerPlayList);painelPlayList.add(alterarVisibilidade);
-        painelPlayList.add(criarNovaPlayList);painelPlayList.add(verMusicasPlayListSelecionada);
-        painelPlayList.add(minhasPlayLists); painelPlayList.add(criarPlaylistPreenchida);
-        painelPlayList.add(listaPlaylist); painelPlayList.add(nomePlaylist); painelPlayList.add(todasPlayLists);
+        painelPlayList.add(removerPlayList);
+        painelPlayList.add(alterarVisibilidade);
+        painelPlayList.add(criarNovaPlayList);
+        painelPlayList.add(verMusicasPlayListSelecionada);
+        painelPlayList.add(minhasPlayLists);
+        painelPlayList.add(criarPlaylistPreenchida);
+        painelPlayList.add(listaPlaylist);
+        painelPlayList.add(nomePlaylist);
+        painelPlayList.add(todasPlayLists);
 
         //Criar painel Carrinho  ------------------------------------------------------------------------
         painelCarrinho = new JPanel();
-        painelCarrinho.setBackground(new Color(255,178,102));
+        painelCarrinho.setBackground(new Color(255, 178, 102));
         painelCarrinho.setBounds(340, 200, 780, 500);
         painelCarrinho.setLayout(null);
 
@@ -663,18 +685,18 @@ public class InterfaceCliente implements Serializable {
         //Criar componentes do Painel Carrinho
 
         //JLabel
-        listacompras = new JLabel ("CARRINHO DE COMPRAS");
-        listacompras.setBounds(50,0,280,40);
+        listacompras = new JLabel("CARRINHO DE COMPRAS");
+        listacompras.setBounds(50, 0, 280, 40);
         saldoCliente = new JLabel("SALDO");
-        saldoCliente.setBounds(550,200, 250, 40);
+        saldoCliente.setBounds(550, 200, 250, 40);
 
         //JTabel
         listaMusicasCarrinho = new JTable();
-        listaMusicasCarrinho.setBounds(50, 50,250,300);
+        listaMusicasCarrinho.setBounds(50, 50, 250, 300);
 
         //JButton
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA DO CARRINHO");
-        removerMusicaCarrinho.setBounds(400, 50, 250,40);
+        removerMusicaCarrinho.setBounds(400, 50, 250, 40);
         removerMusicaCarrinho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -685,16 +707,16 @@ public class InterfaceCliente implements Serializable {
                     String valorTituloMusica = (String) listaMusicasCarrinho.getModel().getValueAt(indexMusicaSelect, 0);
                     MusicaPaga m = (MusicaPaga) app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
 
-                    if (m!=null){
-                        cliente.compra.removerMusica(indexMusicaSelect-1);
+                    if (m != null) {
+                        cliente.compra.removerMusica(indexMusicaSelect - 1);
                         tabelaCarrinho();
                     }
-                }else  JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
+                } else JOptionPane.showMessageDialog(null, "Nenhuma música selecionada");
             }
         });
 
         carregarSaldo = new JButton("CARREGAR SALDO");
-        carregarSaldo.setBounds(400,100,250,40);
+        carregarSaldo.setBounds(400, 100, 250, 40);
         carregarSaldo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -702,39 +724,38 @@ public class InterfaceCliente implements Serializable {
             }
         });
         finalizarPagamento = new JButton("FINALIZAR PAGAMENTO");
-        finalizarPagamento.setBounds(400,150,250,40);
+        finalizarPagamento.setBounds(400, 150, 250, 40);
         finalizarPagamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (cliente.compra == null){
+                if (cliente.compra == null) {
                     JOptionPane.showMessageDialog(null, "Carrinho de compras vazio");
-                }else {
-                    double valorAPagar= cliente.compra.totalCarrinhoCliente();
-                    if (cliente.getSaldo()<valorAPagar){
+                } else {
+                    double valorAPagar = cliente.compra.totalCarrinhoCliente();
+                    if (cliente.getSaldo() < valorAPagar) {
                         JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
                     } else if (cliente.compra.getCarrinho().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Carrinho vazio");
-                    } else{
+                    } else {
                         //abre janela das playlists
-                        janelaDasPlaylists(true,true);
+                        janelaDasPlaylists(true, true);
                     }
                 }
             }
         });
         valorTotalPagar = new JLabel("VALOR TOTAL");
-        valorTotalPagar.setBounds(400, 200, 250,40);
+        valorTotalPagar.setBounds(400, 200, 250, 40);
 
         //JTextField
         mostrarValorPagar = new JTextField("0.00 €");
-        mostrarValorPagar.setBounds(400,250,100,40);
+        mostrarValorPagar.setBounds(400, 250, 100, 40);
         mostrarValorPagar.setEditable(false);
-        if (cliente.compra!=null){
-            mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+        if (cliente.compra != null) {
+            mostrarValorPagar.setText(String.format("%.2f", cliente.compra.totalCarrinhoCliente()) + " €");
         }
-        mostrarSaldoCliente = new JTextField(String.format("%.2f",cliente.getSaldo()) + " €");
-        mostrarSaldoCliente.setBounds(550,250,100,40);
+        mostrarSaldoCliente = new JTextField(String.format("%.2f", cliente.getSaldo()) + " €");
+        mostrarSaldoCliente.setBounds(550, 250, 100, 40);
         mostrarSaldoCliente.setEditable(false);
-
 
 
         //Adicionar Componentes ao Carrinho
@@ -752,15 +773,15 @@ public class InterfaceCliente implements Serializable {
 
         //Criar painel fixo Titulo  ----------------------------------------------
         painelTituloCliente = new JPanel();
-        painelTituloCliente.setBackground(new Color(255,178,102));
-        painelTituloCliente.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+        painelTituloCliente.setBackground(new Color(255, 178, 102));
+        painelTituloCliente.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
         tituloCliente = new JLabel("ROCKSTAR.INC");
         tituloCliente.setFont(new Font("Magneto", Font.BOLD, 80));
         painelTituloCliente.add(tituloCliente);
 
         //Criar Painel Fixo Menu  ----------------------------------------------------
         painelMenu = new JPanel();
-        painelMenu.setBackground(new Color(255,178,102));
+        painelMenu.setBackground(new Color(255, 178, 102));
         painelMenu.setLayout(null);
 
         //Criar componentes do painel Menu
@@ -776,7 +797,7 @@ public class InterfaceCliente implements Serializable {
         username = new JLabel("Bem Vindo " + cliente.getUsername());
         username.setBounds(70, 70, 250, 20);
         botaoLogout = new JButton("LOGOUT");
-        botaoLogout.setBounds(70,460,250,30);
+        botaoLogout.setBounds(70, 460, 250, 30);
 
         botaoLogout.addActionListener(new ActionListener() {
             @Override
@@ -799,7 +820,8 @@ public class InterfaceCliente implements Serializable {
         painelMenu.add(botaoPesquisar);
         painelMenu.add(botaoPlayList);
         painelMenu.add(botaoCarrinho);
-        painelMenu.add(username); painelMenu.add(botaoLogout);
+        painelMenu.add(username);
+        painelMenu.add(botaoLogout);
 
         //Adicionar painéis à janela
         janelaCliente.add(painelTituloCliente, BorderLayout.NORTH);
@@ -816,12 +838,13 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 trocarPainel(painelPlayList);
-                atualizarListaPlayList();
+
+                botaoVerMusicas.setVisible(false);
             }
         });
 
-        botaoPesquisar.addActionListener(e->trocarPainel(painelPesquisarCliente));
-        botaoCarrinho.addActionListener(e->trocarPainel(painelCarrinho));
+        botaoPesquisar.addActionListener(e -> trocarPainel(painelPesquisarCliente));
+        botaoCarrinho.addActionListener(e -> trocarPainel(painelCarrinho));
         botaoCarrinho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -866,18 +889,19 @@ public class InterfaceCliente implements Serializable {
         novoPainel.setVisible(true);
     }
 
-    private void adicionarElementosTabela(ArrayList<Musica> lista,DefaultTableModel modelo){
+    private void adicionarElementosTabela(ArrayList<Musica> lista, DefaultTableModel modelo) {
         for (Musica musica : lista) {
             if (musica instanceof MusicaPaga) {
-                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
                         musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € ", musica.getRatingMedia()});
-            }else {
-                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(),musica.getDataCriacao(), musica.getDuracao(),
+            } else {
+                modelo.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
                         musica.getGenero(), musica.tipoEstado(), "GRATIS", musica.getRatingMedia()});
             }
         }
     }
-    private void titulosDasColunasTabela(DefaultTableModel modelo){
+
+    private void titulosDasColunasTabela(DefaultTableModel modelo) {
         // Adicionar uma coluna à tabela e respetivos titulos
         modelo.addColumn("TÍTULO");
         modelo.addColumn("ARTISTA");
@@ -890,16 +914,16 @@ public class InterfaceCliente implements Serializable {
 
     }
 
-    private void tabelaCarrinho(){
+    private void tabelaCarrinho() {
         DefaultTableModel listarCarrinho = new DefaultTableModel();
 
-        if (cliente.compra!=null){
+        if (cliente.compra != null) {
             ArrayList<MusicaPaga> meuCarrinho = cliente.compra.getCarrinho();
 
             listarCarrinho.addColumn("TÍTULO");
             listarCarrinho.addColumn("PREÇO");
 
-            listarCarrinho.addRow(new Object[]{"TÍTULO","PREÇO"});
+            listarCarrinho.addRow(new Object[]{"TÍTULO", "PREÇO"});
 
             for (MusicaPaga m : meuCarrinho) {
                 listarCarrinho.addRow(new Object[]{m.getTitulo(), m.getPreco() + " €"});
@@ -908,12 +932,12 @@ public class InterfaceCliente implements Serializable {
             listaMusicasCarrinho.setModel(listarCarrinho);
         }
 
-        if (cliente.compra!=null){
-            mostrarValorPagar.setText(String.format("%.2f",cliente.compra.totalCarrinhoCliente()) + " €");
+        if (cliente.compra != null) {
+            mostrarValorPagar.setText(String.format("%.2f", cliente.compra.totalCarrinhoCliente()) + " €");
         }
     }
 
-    private void janelaDasPlaylists(boolean visivel,boolean variasMusicas) {
+    private void janelaDasPlaylists(boolean visivel, boolean variasMusicas) {
 
         janelaPlaylists = new JFrame();
         JTable tabPlaylists = new JTable();
@@ -955,14 +979,14 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                PlayList p=null;
-                String tituloPlaylist=new String();
+                PlayList p = null;
+                String tituloPlaylist = new String();
 
                 int indexPlaylistSelect = tabPlaylists.getSelectedRow();
-                if (indexPlaylistSelect != -1){
+                if (indexPlaylistSelect != -1) {
                     tituloPlaylist = (String) tabPlaylists.getValueAt(indexPlaylistSelect, 0);
                     p = cliente.pesquisaPlaylistTitulo(tituloPlaylist);
-                }else JOptionPane.showMessageDialog(null, "Erro ao obter playlist. ");
+                } else JOptionPane.showMessageDialog(null, "Erro ao obter playlist. ");
 
                 //Adicionar 1 música à playlist
                 if (!variasMusicas) {
@@ -986,21 +1010,21 @@ public class InterfaceCliente implements Serializable {
                     } else {
                         JOptionPane.showMessageDialog(null, "Selecione uma música e uma playlist");
                     }
-                //Adicionar várias músicas à playlist
-                }else{
+                    //Adicionar várias músicas à playlist
+                } else {
                     ArrayList<Musica> carrinho = new ArrayList<>();
                     carrinho.addAll(cliente.compra.getCarrinho());
-                    if (p!= null && !p.musicasJaExistem(carrinho)){
+                    if (p != null && !p.musicasJaExistem(carrinho)) {
                         //Adiciona todas as músicas à playlist selecionada
                         p.getMusicas().addAll(cliente.compra.getCarrinho());
                         //Adiciona todas as músicas do carrinho à lista de músicas compradas
                         cliente.getMusicasCompradas().addAll(cliente.compra.getCarrinho());
                         JOptionPane.showMessageDialog(null, "Músicas adicionadas à playlist " + p.getNome());
-                        double valorAPagar= cliente.compra.totalCarrinhoCliente();
+                        double valorAPagar = cliente.compra.totalCarrinhoCliente();
                         //altera o saldo
                         cliente.alterarSaldo(-valorAPagar);
                         //atualiza a caixa que mostra o saldo
-                        mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                        mostrarSaldoCliente.setText(String.format("%.2f", cliente.getSaldo()) + " €");
                         //adiciona saldo aos artistas
                         app.rockstar.pagarArtistas(cliente.compra.getCarrinho());
                         //abre nova compra
@@ -1022,31 +1046,33 @@ public class InterfaceCliente implements Serializable {
             }
         });
     }
-    public void janelaCarregarSaldo(boolean visivel){
+
+    public void janelaCarregarSaldo(boolean visivel) {
         janelaCarregarSaldo = new JFrame("Carregamento Saldo");
         valorACarregar = new JTextField("€ a carregar");
         JButton okCarregamento = new JButton("Carregar Saldo");
         okCarregamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor= Double.parseDouble(valorACarregar.getText());
-                if (valor>0 && valor<1000){
+                double valor = Double.parseDouble(valorACarregar.getText());
+                if (valor > 0 && valor < 1000) {
                     cliente.alterarSaldo(valor);
-                    mostrarSaldoCliente.setText(String.format("%.2f",cliente.getSaldo()) + " €");
+                    mostrarSaldoCliente.setText(String.format("%.2f", cliente.getSaldo()) + " €");
                     janelaCarregarSaldo.setVisible(false);
-                }else JOptionPane.showMessageDialog(null, "Valor inválido");
+                } else JOptionPane.showMessageDialog(null, "Valor inválido");
 
             }
         });
 
-        janelaCarregarSaldo.add(valorACarregar,BorderLayout.CENTER);
-        janelaCarregarSaldo.add(okCarregamento,BorderLayout.SOUTH);
+        janelaCarregarSaldo.add(valorACarregar, BorderLayout.CENTER);
+        janelaCarregarSaldo.add(okCarregamento, BorderLayout.SOUTH);
 
         janelaCarregarSaldo.pack();
         janelaCarregarSaldo.setLocationRelativeTo(null);
         janelaCarregarSaldo.setResizable(false);
         janelaCarregarSaldo.setVisible(visivel);
     }
+
     //Cria uma janela auxiliar para o utilizador inserir os dados da nova playlist previamente preenchida
     private void janelaDadosNovaPlaylist() {
 
@@ -1076,15 +1102,15 @@ public class InterfaceCliente implements Serializable {
         janelaPlaylist.add(botaoCancelar);
 
 
-            botaoOk.addActionListener(new ActionListener() {
+        botaoOk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String titulo = nomePlaylist.getText();
                 String genero = generoPlaylist.getText();
-                String  tamanho = numeroMusicas.getText();
-                if(titulo.isEmpty() || genero.isEmpty() || tamanho.isEmpty()){
+                String tamanho = numeroMusicas.getText();
+                if (titulo.isEmpty() || genero.isEmpty() || tamanho.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor preencha todos os campos");
-                }else{
+                } else {
                     try {
                         int tamanho1 = Integer.parseInt(tamanho);
                         ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(app.rockstar.musicasGratuitasGenero(genero));
@@ -1102,7 +1128,7 @@ public class InterfaceCliente implements Serializable {
                                 System.out.println(musicasGenero.size());
                             } else {
 
-                                PlayList nova=cliente.criarPlayListGenero(titulo, tamanho1, musicasGenero);
+                                PlayList nova = cliente.criarPlayListGenero(titulo, tamanho1, musicasGenero);
 
                                 cliente.adicionarPlayList(nova);
                                 app.rockstar.adicionarPlayList(nova);
@@ -1112,9 +1138,9 @@ public class InterfaceCliente implements Serializable {
                                 atualizarListaPlayList();
                             }
                         }
-                        }catch(NumberFormatException ex){
-                            JOptionPane.showMessageDialog(null, "Numeros de musicas deve ser um valor inteiro");
-                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Numeros de musicas deve ser um valor inteiro");
+                    }
 
                 }
             }
@@ -1128,11 +1154,12 @@ public class InterfaceCliente implements Serializable {
         });
     }
 
-    public void janelaMusicaPlayLis(PlayList p){
+    public void janelaMusicaPlayLis(PlayList p) {
         JFrame janelaMusicas = new JFrame();
         JButton botaoOk = new JButton("OK");
         JButton botaoRemover = new JButton("REMOVER MUSICA");
-        janelaMusicas.add(botaoRemover); janelaMusicas.add(botaoOk);
+        janelaMusicas.add(botaoRemover);
+        janelaMusicas.add(botaoOk);
         janelaMusicas.setLocationRelativeTo(null);
         JPanel painelBotoes = new JPanel();
         painelBotoes.add(botaoRemover);
@@ -1140,7 +1167,7 @@ public class InterfaceCliente implements Serializable {
         janelaMusicas.add(painelBotoes, BorderLayout.SOUTH);
 
 
-        janelaMusicas.setSize(400,300);
+        janelaMusicas.setSize(400, 300);
         janelaMusicas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ArrayList<Musica> musicas = p.getMusicas();
@@ -1153,7 +1180,7 @@ public class InterfaceCliente implements Serializable {
         janelaMusicas.add(srollTabelaMusicas);
 
 
-        if(!musicas.isEmpty()) {
+        if (!musicas.isEmpty()) {
             //Adiciona as músicas a tabela
             for (Musica m : musicas) {
                 modeloTabela.addRow(new Object[]{m.getTitulo()});
@@ -1162,35 +1189,36 @@ public class InterfaceCliente implements Serializable {
 
 
             janelaMusicas.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "PlayList vazia.");
         }
 
-       botaoOk.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               janelaMusicas.setVisible(false);
-           }
-       });
+        botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaMusicas.setVisible(false);
+            }
+        });
 
-       botaoRemover.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               int linhaSelecionada = tabelaMusicas.getSelectedRow();
-               if(linhaSelecionada != -1){
-                   String nomeMusica = (String) tabelaMusicas.getValueAt(linhaSelecionada, 0);
-                   p.removeMusica(linhaSelecionada);
-                   JOptionPane.showMessageDialog(null, "Música Removida com Sucesso");
-                   janelaMusicas.setVisible(false);
+        botaoRemover.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = tabelaMusicas.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    String nomeMusica = (String) tabelaMusicas.getValueAt(linhaSelecionada, 0);
+                    p.removeMusica(linhaSelecionada);
+                    JOptionPane.showMessageDialog(null, "Música Removida com Sucesso");
+                    janelaMusicas.setVisible(false);
 
-               }
-           }
+                }
+            }
 
-       });
+        });
 
 
     }
-    public void atualizarListaPlayList(){
+
+    public void atualizarListaPlayList() {
         // Ver as playLists do Cliente
         ArrayList<PlayList> playList = cliente.verPlayListCliente();
 
@@ -1210,7 +1238,46 @@ public class InterfaceCliente implements Serializable {
 
     }
 
+    public void janelaMusicaPlayLisGlobal(PlayList p) {
+        JFrame janelaMusicas = new JFrame();
+        JButton botaoOk = new JButton("OK");
+        janelaMusicas.add(botaoOk);
+        janelaMusicas.setLocationRelativeTo(null);
+        janelaMusicas.add(botaoOk, BorderLayout.SOUTH);
 
+        janelaMusicas.setSize(400, 300);
+        janelaMusicas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        ArrayList<Musica> musicas = p.getMusicas();
+
+        //Cria a tabela modelo
+        DefaultTableModel modeloTabela = new DefaultTableModel();
+        modeloTabela.addColumn("Músicas");
+        JTable tabelaMusicas = new JTable(modeloTabela);
+        JScrollPane srollTabelaMusicas = new JScrollPane(tabelaMusicas);
+        janelaMusicas.add(srollTabelaMusicas);
+
+
+        if (!musicas.isEmpty()) {
+            //Adiciona as músicas a tabela
+            for (Musica m : musicas) {
+                modeloTabela.addRow(new Object[]{m.getTitulo()});
+            }
+            //Cria a tabela
+
+
+            janelaMusicas.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "PlayList vazia.");
+        }
+
+        botaoOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                janelaMusicas.setVisible(false);
+            }
+        });
+    }
 }
 
 
