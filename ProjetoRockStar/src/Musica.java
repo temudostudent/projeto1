@@ -17,7 +17,7 @@ public class Musica implements Serializable {
     protected boolean estado;
     protected Map<String, Integer> rating;
 
-    //Construtor que recebe titulo,ano,duracao,genero,estado
+    //Construtores
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
         this.titulo = titulo;
         this.nomeArtista = nomeArtista;
@@ -38,7 +38,7 @@ public class Musica implements Serializable {
 
     public Musica() {}
 
-    public static synchronized int getNextId() {
+    protected static synchronized int getNextId() {
         return ++ultimoId;
     }
 
@@ -64,19 +64,15 @@ public class Musica implements Serializable {
     public String getTitulo() {
         return titulo;
     }
-
     public void adicionarRatingMusica(String username, Integer valor){
         rating.put(username , valor);
         //Sempre que um rating é adicionado a média é novamente calculada
         getRatingMedia();
     }
-
     public boolean usuarioTemRating (String username){
         return rating.containsKey(username);
     }
-
     public void setTitulo(String titulo) { this.titulo = titulo; }
-
     //get genero
     public String getGenero() {
         return genero;
