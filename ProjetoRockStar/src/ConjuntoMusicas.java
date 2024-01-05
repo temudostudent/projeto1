@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public abstract class ConjuntoMusicas implements Serializable {
+public class ConjuntoMusicas implements Serializable {
 
     protected String nome;
     protected ArrayList<Musica> musicas;
@@ -18,22 +18,19 @@ public abstract class ConjuntoMusicas implements Serializable {
     public void removeMusica(int index){
         musicas.remove(index);
     }
-
-    public abstract void adicionarMusica(Musica m);
-
+    public void adicionarMusica(Musica m) {
+        this.musicas.add(m);
+    }
     public ArrayList<Musica> getMusicas() {
         return musicas;
     }
-
     public String getNome() {
         return nome;
     }
-
     public String getDataCriacao() {
         DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dataCriacao.format(dataFormatada);
     }
-
     @Override
     public boolean equals(Object p){
         if (this == p) {
@@ -45,5 +42,4 @@ public abstract class ConjuntoMusicas implements Serializable {
         ConjuntoMusicas objeto = (ConjuntoMusicas) p;
         return true;
     }
-
 }
