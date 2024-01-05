@@ -514,6 +514,7 @@ public class InterfaceCliente implements Serializable {
                 modeloTabela.addColumn("Nome PlayList");
                 modeloTabela.addColumn("Visibilidade");
                 modeloTabela.addColumn("Criador");
+                modeloTabela.addColumn("Nº músicas");
 
 
                 listaMusicasPlayList.setModel(modeloTabela);
@@ -521,7 +522,7 @@ public class InterfaceCliente implements Serializable {
 
                 for (PlayList play : playList) {
                     if (play.isVisibilidade())
-                        modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador()});
+                        modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador(), play.getNumMusicas()});
                 }
 
                 removerPlayList.setVisible(false);
