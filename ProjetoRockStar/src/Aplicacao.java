@@ -61,14 +61,11 @@ public class Aplicacao implements Serializable {
                 if (c.getPassword().equals(password)) {
                     //Se a password estiver correta devolve o cliente
                     cliente = c;
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }else {
-            JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
-                    JOptionPane.INFORMATION_MESSAGE);
         }
         return cliente;
     }
@@ -87,9 +84,7 @@ public class Aplicacao implements Serializable {
                             JOptionPane.INFORMATION_MESSAGE);
 
                 }
-        }else{
-                JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
-                        JOptionPane.INFORMATION_MESSAGE);
+
         }
         return artista;
     }
@@ -147,13 +142,16 @@ public class Aplicacao implements Serializable {
         }
     return existe;}
 
-    public boolean procurarUserCliente(String username){
-        for (Cliente c : clientes){
+    public boolean procurarUserCliente(String username) {
+        for (Cliente c : clientes) {
             if (c.getUsername().equals(username)) {
                 return true;
             }
         }
-    return false;}
+        return false;
+    }
+
+
 
     //Gerador automático PIN
     public String gerarPin(){

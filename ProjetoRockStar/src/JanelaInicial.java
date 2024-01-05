@@ -212,14 +212,18 @@ public class JanelaInicial {
                 //Verifica o tipo de utilizador: 1 - cliente; 2 - artista
                 int tipoUtilizador = gestaoApp.rockstar.tipoUtilizador(username);
 
+
+
                 switch (tipoUtilizador){
+                    case 0 :
+                        JOptionPane.showMessageDialog(null, "Utilizador não existe");
+                        break;
                     case 1:
                     Cliente cliente = gestaoApp.rockstar.loginCliente(username, password);
                     if(cliente != null){
                         InterfaceCliente ic = new InterfaceCliente(cliente, gestaoApp);
                         ic.run();
                         f.setVisible(false);
-
                     }
                     break;
 
