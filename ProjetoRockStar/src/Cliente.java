@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-// criação classe Cliente
 public class Cliente extends Utilizador implements Serializable {
 
     //Atributos
-    private Integer idCliente;
-    private Integer ultimoID = 0;
     private ArrayList<PlayList> playlists;
     private ArrayList<Compra> historicoCompras;
     private ArrayList<MusicaPaga> musicasCompradas;
@@ -22,7 +19,6 @@ public class Cliente extends Utilizador implements Serializable {
         this.historicoCompras = new ArrayList<>();
         super.saldo = 0;
         this.musicasCompradas=new ArrayList<>();
-        this.idCliente = ultimoID++;
     }
 
     public PlayList criarPlaylist(String nomeDaLista, boolean visibilidade) {
@@ -72,13 +68,8 @@ public class Cliente extends Utilizador implements Serializable {
         ArrayList<Musica> musicasGenero = listaMusicasGratuitas;
         for (Musica musica : musicasCompradas) {
             musicasGenero.add(musica);
-
         }
         return musicasGenero;
-    }
-
-    public void removerMusicaPlayList() {
-        removerMusicaPlayList();
     }
 
     // Criar uma playList indicando o género e tamanho
@@ -91,7 +82,6 @@ public class Cliente extends Utilizador implements Serializable {
         //Adicona musicas à nova playList até ao tamanho desejado
         for (int i = 0; i < tamanho; i++) {
             nova.adicionarMusica((Musica) listaMusicaGenero.get(i));
-
         }
         return nova;
     }
@@ -123,13 +113,8 @@ public class Cliente extends Utilizador implements Serializable {
         return 1;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
     public ArrayList<PlayList> getPlaylists() {
         return playlists;
     }
-
 }
 

@@ -18,9 +18,7 @@ public class Compra implements Serializable{
             JOptionPane.showMessageDialog(null, "Música '" + m.getTitulo() + "' adicionada ao carrinho");
         }else JOptionPane.showMessageDialog(null, "Música já existe no carrinho");
     }
-
     public void removerMusica(int index){carrinho.remove(index);}
-
     private boolean musicaEstaNoCarrinho(MusicaPaga m){
         for (MusicaPaga mCarrinho : carrinho){
             if (mCarrinho.getIdMusica().equals(m.getIdMusica())) return true;
