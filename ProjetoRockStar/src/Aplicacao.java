@@ -52,32 +52,38 @@ public class Aplicacao implements Serializable {
         Cliente cliente = null;
         if (verificaUserCliente(username)) {
             for (Cliente c : clientes) {
-                if (c.getPassword().equals(password)) {
-                    //Se a password estiver correta devolve o cliente
+                if (c.getPassword().equals(password) && c.getUsername().equals(username)) {
                     cliente = c;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    break;
                 }
+            }if (cliente != null && cliente.getPassword().equals(password)) {
+                // Se a password estiver correta devolve o cliente
+                return cliente;
+            } else {
+                JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        return cliente;
+        return null;
     }
 
     public Artista loginArtista(String username, String password) {
         Artista artista = null;
         if (verificaUserArtista(username)) {
             for (Artista a : artistas) {
-                if (a.getPassword().equals(password)) {
+                if (a.getPassword().equals(password) && a.getUsername().equals(username)) {
                     artista = a;
+                    break;
                 }
+            }if (artista != null && artista.getPassword().equals(password)) {
+                // Se a password estiver correta devolve o cliente
+                return artista;
+            } else {
+                JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
-                if (artista == null){
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        return artista;
+        }
+        return null;
     }
 
     public boolean verificarPINArtista(String username,String pin){
