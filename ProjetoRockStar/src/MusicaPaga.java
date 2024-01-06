@@ -31,7 +31,7 @@ public class MusicaPaga extends Musica implements Serializable {
         this.preco = preco;
         this.historicoPreco = new HashMap<>();
         this.rating = rating;
-        this.idMusica=getIdMusica();
+        this.idMusica=id;
         adicionarRegisto(preco);
     }
 
