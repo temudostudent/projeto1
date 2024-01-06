@@ -75,7 +75,6 @@ public class Aplicacao implements Serializable {
                 if (artista == null){
                     JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
                             JOptionPane.INFORMATION_MESSAGE);
-
                 }
             }
         return artista;
@@ -233,15 +232,6 @@ public class Aplicacao implements Serializable {
         }
         return objeto;
     }
-    public int encontrarPosicao(Musica m){
-        int posicao = 0;
-        for(Musica musica : musicas){
-            if(musica.equals(m)){
-                posicao = musicas.indexOf(musica);
-            }
-        }
-        return posicao;
-    }
 
     public void pagarArtistas(ArrayList<MusicaPaga> carrinho){
         for (MusicaPaga musica : carrinho){
@@ -375,6 +365,35 @@ public class Aplicacao implements Serializable {
             }
         }
     }
+    public void atualizarTituloMusica (int id,String novoTitulo){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                musicas.get(i).setTitulo(novoTitulo);
+            }
+        }
+    }
+    public void inativarMusica (int id){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                musicas.remove(i);
+            }
+        }
+    }
+    public void atualizarPrecoMusica (int id,double novoPreco){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                ((MusicaPaga)musicas.get(i)).setPreco(novoPreco);
+            }
+        }
+    }
+    public int encontrarPosicao (int id){
+        int pos=-1;
+        for (int i=0;i<musicas.size();i++){
+            if (musicas.get(i).getIdMusica()==id){
+                pos=i;
+            }
+        }
+    return pos;}
     public void alterarVisibilidade (int id, boolean visibilidade){
         for(PlayList play : playlists){
             if(play.getIdPlaylist() == id){

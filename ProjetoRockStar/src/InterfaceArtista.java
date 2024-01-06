@@ -48,7 +48,7 @@ public class InterfaceArtista implements Serializable {
                 InterfaceArtista janela = new InterfaceArtista(artista, app);
                 janelaArtista.setVisible(true);
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
 
@@ -264,12 +264,10 @@ public class InterfaceArtista implements Serializable {
 
             //Criar componentes do Painel Musicas
             criarMusica = new JButton("CRIAR MÚSICA"); criarMusica.setBounds(50,20,180, 40);
-            editarDados = new JButton("EDITAR DADOS MUSICA"); editarDados.setBounds(250, 20, 180,40);
+            editarDados = new JButton("EDITAR DADOS"); editarDados.setBounds(250, 20, 180,40);
             menuAlbum = new JButton("ÁLBUM"); menuAlbum.setBounds(450,20,180,40);
 
-
             //Adicionar componentes ao painel Musicas
-
             painelMusicas.add(criarMusica);
             painelMusicas.add(editarDados);
             painelMusicas.add(menuAlbum);
@@ -522,7 +520,7 @@ public class InterfaceArtista implements Serializable {
                             if (alterarTituloMusica.isSelected()) {
                                 if (!caixaAlteracao.equals(null)) {
                                     object.setTitulo(caixaAlteracao.getText());
-                                    app.rockstar.getMusicas().get(app.rockstar.encontrarPosicao(object)).setTitulo(caixaAlteracao.getText());
+                                    app.rockstar.atualizarTituloMusica(object.getIdMusica(),caixaAlteracao.getText());
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
                                 }else {
@@ -530,14 +528,14 @@ public class InterfaceArtista implements Serializable {
                                 }
 
                             }else if (alterarEstado.isSelected()) {
-                                if (estadoAtivo1.isSelected() && object.getEstado()==false) {
+                                if (estadoAtivo1.isSelected() && !object.getEstado()) {
                                     object.setEstado(true);
                                     app.rockstar.adicionarMusica(object);
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
-                                } else if(estadoInativo1.isSelected() && object.getEstado()==true){
+                                } else if(estadoInativo1.isSelected() && object.getEstado()){
                                     object.setEstado(false);
-                                    app.rockstar.removerMusica(object);
+                                    app.rockstar.inativarMusica(object.getIdMusica());
                                     JOptionPane.showMessageDialog(null, "Estado Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
                                 }
@@ -545,7 +543,7 @@ public class InterfaceArtista implements Serializable {
                             else if(alterarPreco1.isSelected()){
                                 if(object instanceof MusicaPaga){
                                     ((MusicaPaga) object).setPreco(Double.parseDouble(caixaAlteracao.getText()));
-                                    ((MusicaPaga)app.rockstar.getMusicas().get(app.rockstar.encontrarPosicao(object))).setPreco(Double.parseDouble(caixaAlteracao.getText()));
+                                    app.rockstar.atualizarPrecoMusica(object.getIdMusica(),Double.parseDouble(caixaAlteracao.getText()));
                                     JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
                                     atualizarTabelaMusicas();
 
@@ -553,14 +551,13 @@ public class InterfaceArtista implements Serializable {
                                     MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(), object.getOriginalDataCriacao(),
                                             object.getNomeArtista(), object.getDuracao(), object.getGenero(),
                                             object.getEstado(), Double.parseDouble(caixaAlteracao.getText()), object.getIdMusica()
-                                            , object.getRating());
-                                    artista.getMusicas().set(artista.encontrarPosicao(object),musicaPaga);
-                                    app.rockstar.getMusicas().set(app.rockstar.encontrarPosicao(object),musicaPaga);
+                                            ,object.getRating());
+                                    artista.getMusicas().set(linhaSelecionada,musicaPaga);
+                                    app.rockstar.getMusicas().set(app.rockstar.encontrarPosicao(object.getIdMusica()),musicaPaga);
                                     JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
                                     atualizarTabelaMusicas();
                                 }
                             }
-                            
                             System.out.println(object);
 
                         } else {
@@ -855,7 +852,7 @@ public class InterfaceArtista implements Serializable {
             botaoEstatisticas.setBounds(70,340, 250,100);
             botaoEstatisticas.setFont(new Font("Arial", Font.BOLD, 20));
             username1 =new JLabel("Bem vindo " + artista.getUsername());
-            username1.setFont(new Font("Arial", Font.BOLD, 14));
+            username1.setFont(new Font("Arial", Font.BOLD, 16));
             username1.setBounds(70,75,400,20);
             botaoLogout = new JButton("LOGOUT");
             botaoLogout.setBounds(70,460,250,30);

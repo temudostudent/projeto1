@@ -15,7 +15,7 @@ public class Musica implements Serializable {
     protected String genero;
     protected double ratingMedia;
     protected boolean estado;
-    protected Map<String, Integer> rating;
+    protected Map<String, Integer> rating=new HashMap<>();
 
     //Construtores
     public Musica(String titulo, String nomeArtista, double duracao, String genero, boolean estado) {
@@ -113,6 +113,11 @@ public class Musica implements Serializable {
     public Map<String, Integer> getRating() {
         return rating;
     }
+
+    public void setRating(Map<String, Integer> rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Musica{" +

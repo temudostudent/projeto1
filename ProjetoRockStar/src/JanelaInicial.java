@@ -212,8 +212,6 @@ public class JanelaInicial {
                 //Verifica o tipo de utilizador: 1 - cliente; 2 - artista
                 int tipoUtilizador = gestaoApp.rockstar.tipoUtilizador(username);
 
-
-
                 switch (tipoUtilizador){
                     case 0 :
                         JOptionPane.showMessageDialog(null, "Utilizador não existe");
@@ -349,6 +347,7 @@ public class JanelaInicial {
                         ia.run();
                         f.setVisible(false);
                         fPin.setVisible(false);
+                        artista.copiarRatings(gestaoApp.rockstar.getMusicas());
                     }
                 }
 
