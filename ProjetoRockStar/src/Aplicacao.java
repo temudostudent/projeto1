@@ -20,10 +20,9 @@ public class Aplicacao implements Serializable {
         this.compras = new ArrayList<Compra>();
     }
 
-
     //Registar - Verifica primeiro se username já existe, se não existir cria o objeto
     public void registarArtista(String username, String password, String pin) {
-        if (procurarUserArtista(username) == false && procurarUserCliente(username) == false) {
+        if (!verificaUserArtista(username) && !verificaUserCliente(username)) {
             Artista novoA = new Artista(username, password, pin);
             artistas.add(novoA);
             JOptionPane.showMessageDialog(null, "Registo de Artista com sucesso!", "",
@@ -31,16 +30,13 @@ public class Aplicacao implements Serializable {
         } else JOptionPane.showMessageDialog(null, "O user '" + username + "' já existe",
                 "Aviso!", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    public Cliente registarCliente(String username, String password) {
-        if (procurarUserCliente(username) == false && procurarUserArtista(username) == false) {
+    public void registarCliente(String username, String password) {
+        if (!verificaUserCliente(username) && !verificaUserArtista(username)) {
             if (validarPassword(password)) {
                 Cliente novoC = new Cliente(username, password);
                 clientes.add(novoC);
-
                 JOptionPane.showMessageDialog(null, "Registo de Cliente com sucesso!", "",
                         JOptionPane.INFORMATION_MESSAGE);
-                return novoC;
             } else {
                 JOptionPane.showMessageDialog(null, "A senha não atende aos critérios de segurança.",
                         "Aviso!", JOptionPane.INFORMATION_MESSAGE);
@@ -49,13 +45,12 @@ public class Aplicacao implements Serializable {
             JOptionPane.showMessageDialog(null, "O usuário '" + username + "' já existe",
                     "Aviso!", JOptionPane.INFORMATION_MESSAGE);
         }
-        return null;
     }
 
     //Login - Verificar se todas as condições coincidem
     public Cliente loginCliente(String username, String password) {
         Cliente cliente = null;
-        if (procurarUserCliente(username)) {
+        if (verificaUserCliente(username)) {
             for (Cliente c : clientes) {
                 if (c.getPassword().equals(password)) {
                     //Se a password estiver correta devolve o cliente
@@ -69,10 +64,9 @@ public class Aplicacao implements Serializable {
         return cliente;
     }
 
-
     public Artista loginArtista(String username, String password) {
         Artista artista = null;
-        if (procurarUserArtista(username)) {
+        if (verificaUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getPassword().equals(password)) {
                     artista = a;
@@ -83,31 +77,25 @@ public class Aplicacao implements Serializable {
                             JOptionPane.INFORMATION_MESSAGE);
 
                 }
-
-        }
+            }
         return artista;
     }
 
     public boolean verificarPINArtista(String username,String pin){
-
-        if (procurarUserArtista(username)) {
+        if (verificaUserArtista(username)) {
             for (Artista a : artistas) {
                 if (a.getUsername().equals(username) && a.getPin().equals(pin)) {
                     JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!", "",
                             JOptionPane.INFORMATION_MESSAGE);
                     return true;
-
                 }
             }
-
                 JOptionPane.showMessageDialog(null, "Pin incorreto! Tente novamente", "",
                         JOptionPane.INFORMATION_MESSAGE);
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Utilizador não encontrado!", "",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-
         return false;
     }
 
@@ -130,10 +118,8 @@ public class Aplicacao implements Serializable {
         return temLetra && temNumero;
     }
 
-
     //Verifica se o username já existe
-    private boolean procurarUserArtista(String username){
-        boolean existe=false;
+    private boolean verificaUserArtista(String username){
         for (Artista a : artistas){
             if (a.getUsername().equals(username)) {
                 return true;
@@ -141,7 +127,7 @@ public class Aplicacao implements Serializable {
         }
     return false;}
 
-    public boolean procurarUserCliente(String username){
+    private boolean verificaUserCliente(String username){
         for (Cliente c : clientes){
             if (c.getUsername().equals(username)) {
                 return true;
@@ -152,16 +138,12 @@ public class Aplicacao implements Serializable {
     //Gerador automático PIN
     public String gerarPin(){
         String pin;
-
         Random random = new Random();
         int num= 1000 + random.nextInt(9000);
-
         pin= String.valueOf(num);
-
     return pin;}
 
     //Método que retorna o tipo de utilizador
-
     public int tipoUtilizador(String username) {
         int tipo=0;
         for (Cliente c : clientes) {
@@ -177,22 +159,12 @@ public class Aplicacao implements Serializable {
         return tipo;
     }
 
-    //Encontrar objeto música
-    public Musica estaMusica(Musica m){
-        for (Musica musica : musicas){
-            if (musica.equals(m)){
-                return musica;
-            }
-        }
-    return null;}
     //Méotodo criar lista genero gratuitas
     public ArrayList<Musica> musicasGratuitasGenero(String genero){
         ArrayList<Musica> novaLista = new ArrayList<>();
-
         for(Musica m : musicas){
             if(m.getGenero().equalsIgnoreCase(genero) && !(m instanceof MusicaPaga)){
                     novaLista.add(m);
-
             }
         }
         return novaLista;
@@ -205,42 +177,34 @@ public class Aplicacao implements Serializable {
         //Ordenar lista usando o comparador
         lista.sort(comparador);
     }
-
     public void ordenarMusicasDecrescentePorTitulo(ArrayList lista){
         Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
         lista.sort(comparador);
     }
-
     public void ordenarMusicasCrescentePorGenero(ArrayList lista){
         Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero);
         lista.sort(comparador);
     }
-
     public void ordenarMusicasDecrescentePorGenero(ArrayList lista){
         Comparator<Musica> comparador = Comparator.comparing(Musica::getGenero).reversed();
         lista.sort(comparador);
     }
-
     public void ordenarAlbunsCrescentePorTitulo(ArrayList lista){
         Comparator<Album> comparador = Comparator.comparing(Album::getNome);
         lista.sort(comparador);
     }
-
-    public void ordendarAlbunsDecrescentePorTitulo(ArrayList lista){
+    public void ordenarAlbunsDecrescentePorTitulo(ArrayList lista){
         Comparator<Album> comparador = Comparator.comparing(Album::getNome).reversed();
         lista.sort(comparador);
     }
-
     public void ordenarAlbunsCrescentePorGenero(ArrayList lista){
         Comparator<Album> comparador = Comparator.comparing(Album::getGenero);
         lista.sort(comparador);
     }
-
     public void ordenarAlbunsDecrescentePorGenero(ArrayList lista){
         Comparator<Album> comparador = Comparator.comparing(Album::getGenero).reversed();
         lista.sort(comparador);
     }
-
     public ArrayList<Musica> listaMusicasDeTitulo(String titulo){
         ArrayList<Musica> novaLista = new ArrayList<>();
         for(Musica m : musicas){
@@ -269,7 +233,6 @@ public class Aplicacao implements Serializable {
         }
         return objeto;
     }
-
     public int encontrarPosicao(Musica m){
         int posicao = 0;
         for(Musica musica : musicas){
@@ -315,7 +278,7 @@ public class Aplicacao implements Serializable {
     private int indexCliente(Cliente c){
         int index=0;
         for (int i=0;i<clientes.size();i++){
-            if (clientes.get(i).getIdCliente().equals(c.getIdCliente())){
+            if (clientes.get(i).getUsername().equals(c.getUsername())){
                 index=i;
                 break;
             }
@@ -351,7 +314,7 @@ public class Aplicacao implements Serializable {
             int cont=0;
             for (Cliente c : clientes) {
                 for (PlayList pl : c.getPlaylists()){
-                    if (musicaExisteNaPlaylist(m, pl)) {
+                    if (pl.estaMusicaJaExiste(m)) {
                         cont++;
                     }
                 }
@@ -364,71 +327,35 @@ public class Aplicacao implements Serializable {
         }
     return nomeMusica + " - " + contMax + " vezes";}
 
-    //Saber se música está na playlist
-    private boolean musicaExisteNaPlaylist(Musica m, PlayList pl){
-        if (!pl.getMusicas().isEmpty()){
-            for (Musica mtemp : pl.getMusicas()) {
-                if (mtemp.getIdMusica().equals(m.getIdMusica())) {
-                    return true;
-                }
-            }
-        }
-    return false;}
-
-    public PlayList pesquisaPlaylistTitulo(String titulo) {
-        PlayList objeto = null;
-        for (PlayList p : playlists) {
-            if (p.getNome().equals(titulo)) {
-                objeto = p;
-            }
-        }
-        return objeto;
-    }
-
-
-
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
-
     public ArrayList<Artista> getArtistas() {
         return artistas;
     }
-
     public ArrayList<Musica> getMusicas() {
         return musicas;
     }
-
     public ArrayList<PlayList> getPlaylists() {
         return playlists;
     }
-
     public ArrayList<Compra> getCompras() {
         return compras;
     }
-
     public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
     }
-
     public void setArtistas(ArrayList<Artista> artistas) {
         this.artistas = artistas;
     }
-
     public void setMusicas(ArrayList<Musica> musicas) {
         this.musicas = musicas;
     }
-
     public void setPlaylists(ArrayList<PlayList> playlists) {
         this.playlists = playlists;
     }
-
     public void setCompras(ArrayList<Compra> compras) {
         this.compras = compras;
-    }
-
-    public void adicionarCliente(Cliente c){
-        clientes.add(c);
     }
     public void adicionarMusica(Musica m){
         musicas.add(m);
@@ -440,7 +367,7 @@ public class Aplicacao implements Serializable {
     public void adicionarArtista(Artista a){
         artistas.add(a);
     }
-
+    public void adicionarCliente(Cliente c){clientes.add(c);}
     public void removerPlayListID (int id){
         for (int i=0;i<getPlaylists().size();i++){
             if (getPlaylists().get(i).getIdPlaylist()==id){
@@ -455,9 +382,4 @@ public class Aplicacao implements Serializable {
             }
         }
     }
-
-
-    public void removerPlayList(PlayList p){ playlists.remove(p);}
-    public void adicionarCompra(Compra com) {compras.add(com);}
-
 }

@@ -61,8 +61,6 @@ public class Musica implements Serializable {
         }
         return String.format("%.2f", ratingMedia);
     }
-
-    //get título
     public String getTitulo() {
         return titulo;
     }
@@ -81,7 +79,6 @@ public class Musica implements Serializable {
         return rating.containsKey(username);
     }
     public void setTitulo(String titulo) { this.titulo = titulo; }
-    //get genero
     public String getGenero() {
         return genero;
     }
@@ -100,16 +97,13 @@ public class Musica implements Serializable {
     public String getNomeArtista() {
         return nomeArtista;
     }
-
     public LocalDateTime getOriginalDataCriacao(){
         return dataCriacao;
     }
-
     public String getDataCriacao() {
         DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dataCriacao.format(dataFormatada);
     }
-
     @Override
     public boolean equals(Object m){
         if (this == m) {
@@ -121,15 +115,12 @@ public class Musica implements Serializable {
         Musica objeto = (Musica) m;
         return true;
     }
-
     public Integer getIdMusica() {
         return idMusica;
     }
-
     public Map<String, Integer> getRating() {
         return rating;
     }
-
     @Override
     public String toString() {
         return "Musica{" +

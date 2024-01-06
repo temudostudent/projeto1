@@ -137,7 +137,7 @@ public class InterfaceArtista implements Serializable {
                             if ("TÍTULO".equals(selecao) && botaoAscendente.isSelected()) {
                                 app.rockstar.ordenarAlbunsCrescentePorTitulo(listaA);
                             } else if ("TÍTULO".equals(selecao) && botaoDescendente.isSelected()) {
-                                app.rockstar.ordendarAlbunsDecrescentePorTitulo(listaA);
+                                app.rockstar.ordenarAlbunsDecrescentePorTitulo(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoAscendente.isSelected()) {
                                 app.rockstar.ordenarAlbunsCrescentePorGenero(listaA);
                             } else if ("GÉNERO".equals(selecao) && botaoDescendente.isSelected()){

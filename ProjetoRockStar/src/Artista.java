@@ -29,6 +29,11 @@ public class Artista extends Utilizador implements Serializable {
         albuns.add(novoA);
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     private boolean tituloJaExiste(String titulo){
         for(Musica m : musicas){
             if(m.getTitulo().equalsIgnoreCase(titulo)){
@@ -39,6 +44,16 @@ public class Artista extends Utilizador implements Serializable {
     }
 
     //Criar música e adiciona automaticamente à biblioteca de músicas do artista
+
+    /**
+     *
+     * @param titulo
+     * @param duracao
+     * @param genero
+     * @param estado
+     * @param preco
+     * @return
+     */
     public Musica novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {
         Musica novaM = null;
         String tituloMaiuscula = titulo.substring(0, 1).toUpperCase() + titulo.substring(1);
@@ -127,9 +142,6 @@ public class Artista extends Utilizador implements Serializable {
                     JOptionPane.INFORMATION_MESSAGE);
         }else JOptionPane.showMessageDialog(null, "Musica não foi adicionada", "",
                 JOptionPane.INFORMATION_MESSAGE);
-    }
-    public void alterarSaldo(double quantia) {
-        saldo += quantia;
     }
 
     //Número total de músicas

@@ -30,6 +30,7 @@ public class GestaoApp implements Serializable {
         //File Clientes
         if (!this.fileClientes.exists()) {
             Cliente cliente = new Cliente("vania", "1234a");
+            rockstar.adicionarCliente(cliente);
             //criação do ficheiro:
             try {
                 this.fileClientes.createNewFile();

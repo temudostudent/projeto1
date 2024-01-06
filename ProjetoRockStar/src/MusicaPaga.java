@@ -18,7 +18,6 @@ public class MusicaPaga extends Musica implements Serializable {
         this.rating = new HashMap<>();
         this.idMusica=getNextId();
         adicionarRegisto(preco);
-
     }
 
     //Construtor quando Música já existe gratuita e quer passar a ser paga
@@ -39,32 +38,18 @@ public class MusicaPaga extends Musica implements Serializable {
     private void adicionarRegisto(double novoPreco) {
         this.historicoPreco.put(LocalDateTime.now(), novoPreco);
     }
-
     public Map<LocalDateTime, Double> getHistoricoPreco() {
         return historicoPreco;
     }
-
     public double getPreco() {
         return preco;
     }
-
     public void setPreco(double preco) {
         if (preco < 0) {
             this.preco = 0;
         } else this.preco = preco;
-
         adicionarRegisto(preco);
     }
-
-    @Override
-    public String tipoEstado() {
-        if (getEstado() == true) {
-            return "ATIVA";
-        } else {
-            return "INATIVA";
-        }
-    }
-
     @Override
     public boolean equals(Object m){
         if (this == m) {
