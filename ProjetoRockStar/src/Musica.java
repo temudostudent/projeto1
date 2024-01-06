@@ -42,6 +42,8 @@ public class Musica implements Serializable {
         return ++ultimoId;
     }
 
+
+
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
     public String getRatingMedia() {
         if (rating.isEmpty()){
@@ -64,6 +66,12 @@ public class Musica implements Serializable {
     public String getTitulo() {
         return titulo;
     }
+
+    /**
+     *
+     * @param username
+     * @param valor
+     */
     public void adicionarRatingMusica(String username, Integer valor){
         rating.put(username , valor);
         //Sempre que um rating é adicionado a média é novamente calculada

@@ -53,7 +53,6 @@ public class Aplicacao implements Serializable {
     }
 
     //Login - Verificar se todas as condições coincidem
-
     public Cliente loginCliente(String username, String password) {
         Cliente cliente = null;
         if (procurarUserCliente(username)) {
