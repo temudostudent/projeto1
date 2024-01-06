@@ -190,7 +190,8 @@ public class Artista extends Utilizador implements Serializable {
             }
         return nova;
     }
-    public void copiarRatings(ArrayList<Musica>lista){
+    //Copia todos os ratings da lista da aplicação, atualiza assim a informação
+    public void atualizarRatings(ArrayList<Musica>lista){
         for (Musica m:musicas){
             for (Musica mLista:lista){
                 if (m.getIdMusica()==mLista.getIdMusica()){

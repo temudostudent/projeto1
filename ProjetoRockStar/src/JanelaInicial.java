@@ -347,7 +347,7 @@ public class JanelaInicial {
                         ia.run();
                         f.setVisible(false);
                         fPin.setVisible(false);
-                        artista.copiarRatings(gestaoApp.rockstar.getMusicas());
+                        artista.atualizarRatings(gestaoApp.rockstar.getMusicas());
                     }
                 }
 
