@@ -350,7 +350,6 @@ public class JanelaInicial {
                         artista.atualizarRatings(gestaoApp.rockstar.getMusicas());
                     }
                 }
-
             }
         });
 

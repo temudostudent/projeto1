@@ -38,7 +38,7 @@ public class Musica implements Serializable {
 
     public Musica() {}
 
-    protected static synchronized int getNextId() {
+    protected synchronized int getNextId() {
         return ++ultimoId;
     }
 
