@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -719,6 +720,7 @@ public class InterfaceCliente implements Serializable {
         scrollCarrinho = new JScrollPane(listaMusicasCarrinho);
         scrollCarrinho.setBounds(50, 50, 250, 300);
 
+
         //JButton
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA DO CARRINHO");
         removerMusicaCarrinho.setBounds(400, 50, 250, 40);
@@ -756,14 +758,19 @@ public class InterfaceCliente implements Serializable {
                 if (cliente.compra == null) {
                     JOptionPane.showMessageDialog(null, "Carrinho de compras vazio");
                 } else {
-                    double valorAPagar = cliente.compra.totalCarrinhoCliente();
-                    if (cliente.getSaldo() < valorAPagar) {
-                        JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
-                    } else if (cliente.compra.getCarrinho().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Carrinho vazio");
-                    } else {
-                        //abre janela das playlists
-                        janelaDasPlaylists(true, true);
+                    if(cliente.getPlaylists().isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Por favor crie primeiro uma playlist!");
+
+                    }else {
+                        double valorAPagar = cliente.compra.totalCarrinhoCliente();
+                        if (cliente.getSaldo() < valorAPagar) {
+                            JOptionPane.showMessageDialog(null, "Dinheiro insuficiente para a compra");
+                        } else if (cliente.compra.getCarrinho().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Carrinho vazio");
+                        } else {
+                            //abre janela das playlists
+                            janelaDasPlaylists(true, true);
+                        }
                     }
                 }
             }
@@ -783,15 +790,18 @@ public class InterfaceCliente implements Serializable {
 
                     DefaultTableModel modeloTabela = new DefaultTableModel();
 
-                    modeloTabela.addColumn("Nº compra");
                     modeloTabela.addColumn("Nº musicas compradas");
                     modeloTabela.addColumn("Valor da compra");
 
                     listaMusicasCarrinho.setModel(modeloTabela);
                     scrollCarrinho.setViewportView(listaMusicasCarrinho);
 
+
                     for (Compra compra : listaCompras) {
-                        modeloTabela.addRow(new Object[]{compra.getId_compra(), compra.getCarrinho().size(), compra.totalCarrinhoCliente()});
+                        double totalCarrinho = compra.totalCarrinhoCliente();
+                        DecimalFormat valorDecimal = new DecimalFormat("#0.00");
+                        String valorFormatado = valorDecimal.format(totalCarrinho);
+                        modeloTabela.addRow(new Object[]{ compra.getCarrinho().size(), totalCarrinho});
                     }
                 }
             }
@@ -822,6 +832,7 @@ public class InterfaceCliente implements Serializable {
         painelCarrinho.add(saldoCliente);
         painelCarrinho.add(historicoCompras);
         painelCarrinho.add(scrollCarrinho);
+
 
 
         //Criar painel fixo Titulo  ----------------------------------------------
@@ -974,21 +985,24 @@ public class InterfaceCliente implements Serializable {
         if (cliente.compra != null) {
             ArrayList<MusicaPaga> meuCarrinho = cliente.compra.getCarrinho();
 
-            listarCarrinho.addColumn("TÍTULO");
+            listarCarrinho.addColumn("Título");
             listarCarrinho.addColumn("PREÇO");
 
-            listarCarrinho.addRow(new Object[]{"TÍTULO", "PREÇO"});
+            listaMusicasCarrinho.setModel(listarCarrinho);
+            scrollCarrinho.setViewportView(listaMusicasCarrinho);
+
 
             for (MusicaPaga m : meuCarrinho) {
                 listarCarrinho.addRow(new Object[]{m.getTitulo(), m.getPreco() + " €"});
             }
 
-            listaMusicasCarrinho.setModel(listarCarrinho);
+
         }
 
         if (cliente.compra != null) {
             mostrarValorPagar.setText(String.format("%.2f", cliente.compra.totalCarrinhoCliente()) + " €");
         }
+
     }
 
     private void janelaDasPlaylists(boolean visivel, boolean variasMusicas) {
@@ -1002,11 +1016,14 @@ public class InterfaceCliente implements Serializable {
         listarPlaylists.addColumn("Título da Playlist");
         listarPlaylists.addColumn("Número de músicas");
 
-        for (PlayList p : listaP) {
-            listarPlaylists.addRow(new Object[]{p.getNome(), p.getNumMusicas()});
-        }
 
-        tabPlaylists.setModel(listarPlaylists);
+            tabPlaylists.setModel(listarPlaylists);
+
+            for (PlayList p : listaP) {
+                listarPlaylists.addRow(new Object[]{p.getNome(), p.getNumMusicas()});
+            }
+
+
 
         JButton okButtonPl = new JButton("ADICIONAR");
         JButton cancelar = new JButton("CANCELAR");
@@ -1233,6 +1250,7 @@ public class InterfaceCliente implements Serializable {
         //Cria a tabela modelo
         DefaultTableModel modeloTabela = new DefaultTableModel();
         modeloTabela.addColumn("Músicas");
+        modeloTabela.addColumn("Artista");
         JTable tabelaMusicas = new JTable(modeloTabela);
         JScrollPane srollTabelaMusicas = new JScrollPane(tabelaMusicas);
         janelaMusicas.add(srollTabelaMusicas);
@@ -1241,7 +1259,7 @@ public class InterfaceCliente implements Serializable {
         if (!musicas.isEmpty()) {
             //Adiciona as músicas a tabela
             for (Musica m : musicas) {
-                modeloTabela.addRow(new Object[]{m.getTitulo()});
+                modeloTabela.addRow(new Object[]{m.getTitulo(), m.getNomeArtista()});
             }
             //Cria a tabela
 
@@ -1280,12 +1298,13 @@ public class InterfaceCliente implements Serializable {
 
         modeloTabela.addColumn("Nome");
         modeloTabela.addColumn("Visibilidade");
+        modeloTabela.addColumn("Nº Músicas");
 
         listaMusicasPlayList.setModel(modeloTabela);
         listaPlaylist.setViewportView(listaMusicasPlayList);
 
         for (PlayList play : playList) {
-            modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
+            modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getMusicas().size()});
 
         }
     }
@@ -1305,6 +1324,7 @@ public class InterfaceCliente implements Serializable {
         //Cria a tabela modelo
         DefaultTableModel modeloTabela = new DefaultTableModel();
         modeloTabela.addColumn("Músicas");
+        modeloTabela.addColumn("Artista");
         JTable tabelaMusicas = new JTable(modeloTabela);
         JScrollPane srollTabelaMusicas = new JScrollPane(tabelaMusicas);
         janelaMusicas.add(srollTabelaMusicas);
@@ -1313,7 +1333,7 @@ public class InterfaceCliente implements Serializable {
         if (!musicas.isEmpty()) {
             //Adiciona as músicas a tabela
             for (Musica m : musicas) {
-                modeloTabela.addRow(new Object[]{m.getTitulo()});
+                modeloTabela.addRow(new Object[]{m.getTitulo(), m.getNomeArtista()});
             }
             //Cria a tabela
 

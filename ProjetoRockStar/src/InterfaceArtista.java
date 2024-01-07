@@ -472,8 +472,6 @@ public class InterfaceArtista implements Serializable {
 
                             // Converter o Map para um DefaultTableModel
                             DefaultTableModel listaPrecos = new DefaultTableModel();
-                            listaPrecos.addColumn("Data e Hora");
-                            listaPrecos.addColumn("Preço");
                             listaPrecos.addRow(new Object[]{"Data", "Preço"});
 
 
@@ -734,8 +732,12 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
+                    if(indexMusicaSelect != -1 && indexAlbum != -1) {
 
-                    artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
+                        artista.addMusicaAAlbumPelosIndexes(indexAlbum, indexMusicaSelect);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Selecione uma linha válida!");
+                    }
                 }
             });
 
