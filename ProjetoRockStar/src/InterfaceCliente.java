@@ -541,9 +541,8 @@ public class InterfaceCliente implements Serializable {
                 if (linhaSelecionada != -1) {
 
                     PlayList playlistSelecionada = app.rockstar.getPlaylists().get(linhaSelecionada);
-
                     janelaMusicaPlayLisGlobal(playlistSelecionada);
-                }
+                }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
             }
         });
         minhasPlayLists.addActionListener(new ActionListener() {
@@ -587,7 +586,7 @@ public class InterfaceCliente implements Serializable {
                     } else {
                         JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
                     }
-                }
+                }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
 
             }
         });
@@ -621,7 +620,7 @@ public class InterfaceCliente implements Serializable {
                         JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para alterar.");
 
                     }
-                }
+                }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
             }
         });
         criarNovaPlayList = new JButton("CRIAR NOVA PLAYLIST");

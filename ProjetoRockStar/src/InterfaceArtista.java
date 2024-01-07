@@ -465,7 +465,8 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
 
                     int linhaSelecionada = tabelaListaMusicas.getSelectedRow();
-                    if (linhaSelecionada >= 0) {
+
+                    if (linhaSelecionada != -1) {
                         String tituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
                         Musica object = artista.pesquisaObjetoPorTitulo(tituloMusica);
                         if (object instanceof MusicaPaga) {
@@ -475,7 +476,6 @@ public class InterfaceArtista implements Serializable {
                             listaPrecos.addColumn("Data e Hora");
                             listaPrecos.addColumn("Preço");
                             listaPrecos.addRow(new Object[]{"Data", "Preço"});
-
 
                             //Criar um Map para armazenar os valores
                             Map<LocalDateTime, Double> historicoPreco;
@@ -490,6 +490,8 @@ public class InterfaceArtista implements Serializable {
                             //Adicionar o modelo de tabela à tabela já existente
                             tabelaListaMusicas.setModel(listaPrecos);
                         }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Selecione uma música");
                     }
                 }
             });
@@ -735,7 +737,10 @@ public class InterfaceArtista implements Serializable {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
 
-                    artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
+                    if (indexAlbum != -1 || indexMusicaSelect != -1){
+                        artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
+                    }else JOptionPane.showMessageDialog(null, "Selecione uma música e um álbum");
+
                 }
             });
 
