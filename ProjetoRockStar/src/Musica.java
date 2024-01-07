@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -41,14 +42,7 @@ public class Musica implements Serializable {
         this.estado = estado;
         this.rating = new HashMap<>();
         this.idMusica = getNextId();
-
-        double duracaoEmSegundos = duracao * 60;
-        Duration d = Duration.ofSeconds((long) duracaoEmSegundos);
-
-        long min = d.toMinutes();
-        long s = d.toSeconds() - (min * 60);
-
-        this.duracao = String.format("%02d:%02d", min, s);
+        this.duracao = duracaoFormatada(duracao);
     }
 
     public Musica() {}
@@ -94,6 +88,28 @@ public class Musica implements Serializable {
         rating.put(username , valor);
         //Sempre que um rating é adicionado a média é novamente calculada
         getRatingMedia();
+    }
+
+    /**
+     * Retorna em texto a duração da música em minutos e segundos.
+     * @param tempo tempo em minutos
+     * @return tempo em minutos e segundos
+     */
+    protected String duracaoFormatada(double tempo){
+        String formatada=new String();
+
+        if (tempo<0 || tempo>180){
+            JOptionPane.showMessageDialog(null, "Tempo de duração inválida");
+        }else{
+            double duracaoEmSegundos = tempo * 60;
+            Duration d = Duration.ofSeconds((long) duracaoEmSegundos);
+
+            long min = d.toMinutes();
+            long s = d.toSeconds() - (min * 60);
+
+            formatada=String.format("%02d:%02d", min, s);
+        }
+    return formatada;
     }
 
     /**
