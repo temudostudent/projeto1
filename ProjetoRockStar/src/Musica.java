@@ -25,11 +25,11 @@ public class Musica implements Serializable {
 
     /**
      * Construtor de uma música que seja grátis no momento da sua criação.
-     * @param titulo
-     * @param nomeArtista
-     * @param duracao
-     * @param genero
-     * @param estado
+     * @param titulo título da música.
+     * @param nomeArtista nome do artista.
+     * @param duracao duração da música em minutos.
+     * @param genero género da música.
+     * @param estado se é visível ou não.
      */
 
     //Construtores
@@ -55,7 +55,7 @@ public class Musica implements Serializable {
 
     /**
      * Gera número de identificação único para cada nova música.
-     * @return novo id
+     * @return novo id.
      */
     protected synchronized int getNextId() {
         return ++ultimoId;
@@ -64,7 +64,7 @@ public class Musica implements Serializable {
     /**
      * Recolhe todos os valores int no rating e retorna a média com duas casas decimais no formato String.
      * Caso não exista qualquer avaliação retorna "NA".
-     * @return media da avaliação
+     * @return media da avaliação.
      */
     //Rating final é a divisão da soma de todos os valores, dividindo pela quantidade de valores
     public String getRatingMedia() {
@@ -96,17 +96,34 @@ public class Musica implements Serializable {
         getRatingMedia();
     }
 
+    /**
+     * Retorna o título.
+     * @return título.
+     */
     public String getTitulo() {
         return titulo;
     }
+
+    /**
+     * Define o título.
+     * @param titulo
+     */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
+    /**
+     * Retorna o género da música.
+     * @return género da música.
+     */
     public String getGenero() {
         return genero;
     }
 
+    /**
+     * Retorna a duração da música em minutos e segundos.
+     * @return duração da música.
+     */
     public String getDuracao() {
         return duracao;
     }
@@ -114,9 +131,19 @@ public class Musica implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    /**
+     * Verifica se estado é visível ou não visível.
+     * @return estado.
+     */
     public boolean getEstado() {
         return estado;
     }
+
+    /**
+     * Retorna o estado da música.
+     * @return estado
+     */
     public String tipoEstado(){
         if(getEstado()){
             return "ATIVA";
@@ -125,17 +152,25 @@ public class Musica implements Serializable {
         }
     }
 
+    /**
+     * Retorna nome do artista.
+     * @return nome do artista.
+     */
     public String getNomeArtista() {
         return nomeArtista;
     }
 
+    /**
+     * Retorna a data de criação.
+     * @return data da criação.
+     */
     public LocalDateTime getOriginalDataCriacao(){
         return dataCriacao;
     }
 
     /**
-     * Formata data para aparecer com o padrão "yyyy-MM-dd".
-     * @return data formatada
+     * Retorna a data com o formato "yyyy-MM-dd".
+     * @return data da criação.
      */
     public String getDataCriacao() {
         DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
