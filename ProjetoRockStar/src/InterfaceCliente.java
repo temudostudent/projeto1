@@ -40,7 +40,7 @@ public class InterfaceCliente implements Serializable {
             InterfaceCliente janela = new InterfaceCliente(cliente, app);
             janelaCliente.setVisible(true);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -159,7 +159,6 @@ public class InterfaceCliente implements Serializable {
         rating.setLocationRelativeTo(null);
         rating.setVisible(false);
 
-
         resultadoInst.setBounds(150, 100, 200, 25);
         rating.add(resultadoInst);
 
@@ -191,11 +190,8 @@ public class InterfaceCliente implements Serializable {
                     Musica object = app.rockstar.pesquisaObjetoTitulo(valorTituloMusica);
                     int numeroSelecionado = resultado[0];
 
-                    if (object.usuarioTemRating(cliente.getUsername())) {
-                        object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
-                    } else {
-                        object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
-                    }
+                    object.adicionarRatingMusica(cliente.getUsername(), numeroSelecionado);
+
 
                     JOptionPane.showMessageDialog(null, "Rating Alterado com Sucesso.");
 
@@ -507,7 +503,6 @@ public class InterfaceCliente implements Serializable {
         botaoVerMusicas.setBounds(500, 120, 220, 40);
         painelPlayList.add(botaoVerMusicas);
 
-
         todasPlayLists.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -519,7 +514,6 @@ public class InterfaceCliente implements Serializable {
                 modeloTabela.addColumn("Visibilidade");
                 modeloTabela.addColumn("Criador");
                 modeloTabela.addColumn("Nº músicas");
-
 
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
@@ -536,21 +530,20 @@ public class InterfaceCliente implements Serializable {
                 criarPlaylistPreenchida.setVisible(false);
                 botaoVerMusicas.setVisible(true);
 
+            }
+        });
 
-                botaoVerMusicas.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
+        botaoVerMusicas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
 
-                        if (linhaSelecionada != -1) {
+                if (linhaSelecionada != -1) {
 
+                    PlayList playlistSelecionada = app.rockstar.getPlaylists().get(linhaSelecionada);
 
-                            PlayList playlistSelecionada = app.rockstar.getPlaylists().get(linhaSelecionada);
-
-                            janelaMusicaPlayLisGlobal(playlistSelecionada);
-                        }
-                    }
-                });
+                    janelaMusicaPlayLisGlobal(playlistSelecionada);
+                }
             }
         });
         minhasPlayLists.addActionListener(new ActionListener() {
@@ -574,7 +567,6 @@ public class InterfaceCliente implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtém o índice da playlist selecionada
-
                 int linhaSelecionada = listaMusicasPlayList.getSelectedRow();
 
                 if (linhaSelecionada != -1) {
@@ -682,9 +674,7 @@ public class InterfaceCliente implements Serializable {
                     janelaMusicaPlayLis(playlistSelecionada);
                 }
             }
-
         });
-
 
         criarPlaylistPreenchida = new JButton("CRIAR PLAYLIST PREENCHIDA");
         criarPlaylistPreenchida.setBounds(500, 320, 220, 40);
@@ -829,7 +819,7 @@ public class InterfaceCliente implements Serializable {
         botaoCarrinho.setBounds(70, 340, 250, 100);
         botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 20));
         username = new JLabel("Bem Vindo " + cliente.getUsername());
-        username.setFont(new Font("Arial", Font.BOLD, 14));
+        username.setFont(new Font("Arial", Font.BOLD, 16));
         username.setBounds(70, 70, 400, 20);
         botaoLogout = new JButton("LOGOUT");
         botaoLogout.setBounds(70, 460, 250, 30);
@@ -1179,7 +1169,6 @@ public class InterfaceCliente implements Serializable {
 
                 }
             }
-
         });
         botaoCancelar.addActionListener(new ActionListener() {
             @Override
@@ -1244,13 +1233,9 @@ public class InterfaceCliente implements Serializable {
                     p.removeMusica(linhaSelecionada);
                     JOptionPane.showMessageDialog(null, "Música Removida com Sucesso");
                     janelaMusicas.setVisible(false);
-
                 }
             }
-
         });
-
-
     }
 
     public void atualizarListaPlayList() {
@@ -1269,8 +1254,6 @@ public class InterfaceCliente implements Serializable {
             modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade()});
 
         }
-
-
     }
 
     public void janelaMusicaPlayLisGlobal(PlayList p) {
@@ -1300,7 +1283,6 @@ public class InterfaceCliente implements Serializable {
             }
             //Cria a tabela
 
-
             janelaMusicas.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "PlayList vazia.");
@@ -1314,5 +1296,3 @@ public class InterfaceCliente implements Serializable {
         });
     }
 }
-
-

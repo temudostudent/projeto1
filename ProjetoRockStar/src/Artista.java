@@ -112,17 +112,6 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-    //Posicao na ArrayList a partir do nome da musica
-    public int encontrarPosicao(Musica m){
-        int posicao = 0;
-        for(Musica musica : musicas){
-            if(musica.equals(m)){
-                posicao = musicas.indexOf(musica);
-            }
-        }
-        return posicao;
-    }
-
     //Pesquisar um álbum e listar todas as músicas
     public ArrayList<Musica> pesquisaMusicaAlbum(String tituloAlbum){
         ArrayList<Musica> novaLista = new ArrayList<>();
@@ -200,6 +189,16 @@ public class Artista extends Utilizador implements Serializable {
                 nova[i][1] = String.valueOf(totalAlbunsGenero(listaGeneros1.get(i)));
             }
         return nova;
+    }
+    //Copia todos os ratings da lista da aplicação, atualiza assim a informação
+    public void atualizarRatings(ArrayList<Musica>lista){
+        for (Musica m:musicas){
+            for (Musica mLista:lista){
+                if (m.getIdMusica()==mLista.getIdMusica()){
+                    m.setRating(mLista.getRating());
+                }
+            }
+        }
     }
 
     public String getPin() {

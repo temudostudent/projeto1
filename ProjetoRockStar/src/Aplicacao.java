@@ -52,33 +52,38 @@ public class Aplicacao implements Serializable {
         Cliente cliente = null;
         if (verificaUserCliente(username)) {
             for (Cliente c : clientes) {
-                if (c.getPassword().equals(password)) {
-                    //Se a password estiver correta devolve o cliente
+                if (c.getPassword().equals(password) && c.getUsername().equals(username)) {
                     cliente = c;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    break;
                 }
+            }if (cliente != null && cliente.getPassword().equals(password)) {
+                // Se a password estiver correta devolve o cliente
+                return cliente;
+            } else {
+                JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        return cliente;
+        return null;
     }
 
     public Artista loginArtista(String username, String password) {
         Artista artista = null;
         if (verificaUserArtista(username)) {
             for (Artista a : artistas) {
-                if (a.getPassword().equals(password)) {
+                if (a.getPassword().equals(password) && a.getUsername().equals(username)) {
                     artista = a;
+                    break;
                 }
+            }if (artista != null && artista.getPassword().equals(password)) {
+                // Se a password estiver correta devolve o cliente
+                return artista;
+            } else {
+                JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
-                if (artista == null){
-                    JOptionPane.showMessageDialog(null, "Password Incorreta. Tente novamente!", "",
-                            JOptionPane.INFORMATION_MESSAGE);
-
-                }
-            }
-        return artista;
+        }
+        return null;
     }
 
     public boolean verificarPINArtista(String username,String pin){
@@ -233,15 +238,6 @@ public class Aplicacao implements Serializable {
         }
         return objeto;
     }
-    public int encontrarPosicao(Musica m){
-        int posicao = 0;
-        for(Musica musica : musicas){
-            if(musica.equals(m)){
-                posicao = musicas.indexOf(musica);
-            }
-        }
-        return posicao;
-    }
 
     public void pagarArtistas(ArrayList<MusicaPaga> carrinho){
         for (MusicaPaga musica : carrinho){
@@ -360,7 +356,6 @@ public class Aplicacao implements Serializable {
     public void adicionarMusica(Musica m){
         musicas.add(m);
     }
-    public void removerMusica(Musica m){musicas.remove(m);}
     public void adicionarPlayList(PlayList p){
         playlists.add(p);
     }
@@ -375,6 +370,35 @@ public class Aplicacao implements Serializable {
             }
         }
     }
+    public void atualizarTituloMusica (int id,String novoTitulo){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                musicas.get(i).setTitulo(novoTitulo);
+            }
+        }
+    }
+    public void inativarMusica (int id){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                musicas.remove(i);
+            }
+        }
+    }
+    public void atualizarPrecoMusica (int id,double novoPreco){
+        for (int i=0;i<getMusicas().size();i++){
+            if (getMusicas().get(i).getIdMusica()==id){
+                ((MusicaPaga)musicas.get(i)).setPreco(novoPreco);
+            }
+        }
+    }
+    public int encontrarPosicao (int id){
+        int pos=-1;
+        for (int i=0;i<musicas.size();i++){
+            if (musicas.get(i).getIdMusica()==id){
+                pos=i;
+            }
+        }
+    return pos;}
     public void alterarVisibilidade (int id, boolean visibilidade){
         for(PlayList play : playlists){
             if(play.getIdPlaylist() == id){
