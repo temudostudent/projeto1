@@ -465,13 +465,16 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
 
                     int linhaSelecionada = tabelaListaMusicas.getSelectedRow();
-                    if (linhaSelecionada >= 0) {
+
+                    if (linhaSelecionada != -1) {
                         String tituloMusica = (String) tabelaListaMusicas.getValueAt(linhaSelecionada, 0);
                         Musica object = artista.pesquisaObjetoPorTitulo(tituloMusica);
                         if (object instanceof MusicaPaga) {
 
                             // Converter o Map para um DefaultTableModel
                             DefaultTableModel listaPrecos = new DefaultTableModel();
+                            listaPrecos.addColumn("Data e Hora");
+                            listaPrecos.addColumn("Preço");
                             listaPrecos.addRow(new Object[]{"Data", "Preço"});
 
 
@@ -488,6 +491,8 @@ public class InterfaceArtista implements Serializable {
                             //Adicionar o modelo de tabela à tabela já existente
                             tabelaListaMusicas.setModel(listaPrecos);
                         }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Selecione uma música");
                     }
                 }
             });
@@ -733,6 +738,10 @@ public class InterfaceArtista implements Serializable {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
                     if(indexMusicaSelect != -1 && indexAlbum != -1) {
+
+                    if (indexAlbum != -1 || indexMusicaSelect != -1){
+                        artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
+                    }else JOptionPane.showMessageDialog(null, "Selecione uma música e um álbum");
 
                         artista.addMusicaAAlbumPelosIndexes(indexAlbum, indexMusicaSelect);
                     }else{
