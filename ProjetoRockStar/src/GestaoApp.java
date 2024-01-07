@@ -2,7 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GestaoApp implements Serializable {
-
+    /**
+     * @author César Temudo
+     * @author Vânia Mendes
+     * @version 1.0
+     */
     Aplicacao rockstar;
     private File fileClientes;
     private File fileArtistas;
@@ -13,6 +17,10 @@ public class GestaoApp implements Serializable {
     private ObjectOutputStream oS;
 
     // Construtor:
+
+    /**
+     * Construtor que inicializa a aplicação e os ficheiros de objetos associados.
+     */
     public GestaoApp() {
         // INICIALIZA A APP:
         this.rockstar = new Aplicacao();
@@ -25,7 +33,10 @@ public class GestaoApp implements Serializable {
         this.fileCompras = new File("fileCompras.dat");
     }
 
-    //METODO RUN()  INCLUI AUTOMATICAMENTE LEITURA E CRIACAO DOS FICHEIROS
+    /**
+     * Método que inclui leitura e criação de ficheiro de objetos.
+     */
+    //METODO RUN()  INCLUI AUTOMATICAMENTE LEITURA E CRIAÇÃO DOS FICHEIROS
     protected void run() {
         //File Clientes
         if (!this.fileClientes.exists()) {
@@ -80,6 +91,7 @@ public class GestaoApp implements Serializable {
                 e.printStackTrace();
             }
         }
+
         //File Músicas
         if (!this.fileMusicas.exists()) {
             try {
@@ -155,6 +167,14 @@ public class GestaoApp implements Serializable {
 
     //GUARDAR OS FICHEIROS
     //CHAMADO em caso de logOut / fecho janela
+    /**
+     * Método que guarda a informação nos ficheiros de objetos.
+     * @param clientes
+     * @param artistas
+     * @param musicas
+     * @param playLists
+     * @param compras
+     */
     protected void atualizaficheiro(ArrayList<Cliente> clientes, ArrayList<Artista> artistas, ArrayList<Musica> musicas,
                                     ArrayList<PlayList> playLists, ArrayList<Compra> compras) {
         try {
@@ -163,24 +183,28 @@ public class GestaoApp implements Serializable {
             oS.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         }try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileArtistas));
             oS.writeObject(artistas);
             oS.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         } try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileMusicas));
             oS.writeObject(musicas);
             oS.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         } try {
             oS = new ObjectOutputStream(new FileOutputStream(this.filePlayLists));
             oS.writeObject(playLists);
             oS.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         } try {
             oS = new ObjectOutputStream(new FileOutputStream(this.fileCompras));
             oS.writeObject(compras);
