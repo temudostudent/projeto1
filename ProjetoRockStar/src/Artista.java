@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * @author cesartemudo
+ * @autor Vânia Mendes
  * @version 1.0
  */
 
@@ -11,28 +12,42 @@ public class Artista extends Utilizador implements Serializable {
 
     //Atributos
     private String pin;
-    private ArrayList<Album> albuns = new ArrayList<>();
-    private ArrayList<Musica> musicas = new ArrayList<>();
+    private ArrayList<Album> albuns ;
+    private ArrayList<Musica> musicas;
 
-    //Construtor que recebe username, password, pin
+    /**
+     * Construtor da classe que recebe um username passwor e pin, cria um conjunto
+     * de música e de álbuns e atribui o saldo nulo.
+     *
+     * @param username
+     * @param password
+     * @param pin
+     */
     public Artista(String username, String password, String pin) {
         super(username, password);
         this.pin = pin;
-        this.musicas = musicas;
-        this.albuns = albuns;
+        this.musicas = new ArrayList<>();
+        this.albuns = new ArrayList<>();
         super.saldo = 0;
     }
 
-    //Cria um novo objeto Album e adiciona à lista do Artista, recebe o nome do Album e o género
+
+    /**
+     * Cria um novo objeto álbum e adiciona à lista do Artista
+     * @param nomeDoAlbum
+     * @param genero
+     */
     public void criarAlbum(String nomeDoAlbum, String genero) {
+        //Cria novo album
         Album novoA = new Album(nomeDoAlbum, this.username, genero);
+        //Adicona à lista de albuns do artista
         albuns.add(novoA);
     }
 
     /**
-     *
-     * @param titulo
-     * @return
+     * Verifica se o título da música já existe na lista de músicas do artista.
+     * @param titulo da música a ser verificado.
+     * @return true se o título já existe, false caso não exista.
      */
     private boolean tituloJaExiste(String titulo){
         for(Musica m : musicas){
@@ -43,23 +58,24 @@ public class Artista extends Utilizador implements Serializable {
         return false;
     }
 
-    //Criar música e adiciona automaticamente à biblioteca de músicas do artista
 
     /**
-     *
-     * @param titulo
-     * @param duracao
-     * @param genero
-     * @param estado
-     * @param preco
-     * @return
+     *Cria uma nova música e adiciona à lista de músicas do artista.
+     * @param titulo da musica a ser criada.
+     * @param duracao da musica em minutos.
+     * @param genero da musica.
+     * @param estado da musica. Indica se é publica ou privada.
+     * @param preco. Se for menor ou igual a zero a musica é considerada gratuita.
+     * @return a instância da música criada, ou null se o título já existir.
      */
     public Musica novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {
         Musica novaM = null;
         String tituloMaiuscula = titulo.substring(0, 1).toUpperCase() + titulo.substring(1);
 
+        //Verifica se o titulo já existe na lista de músicas do artista.
         if (!tituloJaExiste(tituloMaiuscula)) {
 
+            //Cria uma nova instancia da Musica ou MusicaPaga, dependendo do preço
             if (preco <= 0) {
                 novaM = new Musica(tituloMaiuscula, this.username, duracao, genero, estado);
                 JOptionPane.showMessageDialog(null, "Musica grátis criada!", "",
@@ -70,17 +86,26 @@ public class Artista extends Utilizador implements Serializable {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
+            //Caso o titulo da música já exista
             JOptionPane.showMessageDialog(null, "Titulo musica já existe. Escolha novo título" , "",
                     JOptionPane.INFORMATION_MESSAGE);
         }
         return novaM;
     }
 
+    /**
+     * Adiciona uma música à lista de músicas do artista.
+     * @param m: nova musica a ser adicionada.
+     */
     public void addMusica(Musica m){
         musicas.add(m);
     }
 
-    //Pesquisar música pelo titulo
+    /**
+     * Pesquisa músicas na lista do artista com base no título fornecido
+     * @param titulo da musica a ser pesquisado
+     * @return uma lista com todas as instancias de músicas encontrados com o mesmo título.
+     */
     public ArrayList<Musica> pesquisarMusica(String titulo){
         ArrayList<Musica> novaLista = new ArrayList<>();
         for(Musica m : musicas){
@@ -91,6 +116,11 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
+    /**
+     * Pesquisa a instancia de uma musica pelo titulo
+     * @param titulo da musica a ser pesquisada.
+     * @return a instancia da musica encontrada, ou null caso não encontre.
+     */
     public Musica pesquisaObjetoPorTitulo(String titulo){
         Musica objeto = null;
         for(Musica m : musicas){
@@ -101,7 +131,11 @@ public class Artista extends Utilizador implements Serializable {
         return objeto;
     }
 
-    //Pesquisar Musica por Género
+    /**
+     * Pesquisa a instancia musica pelo género.
+     * @param genero da musica a ser pesquisada.
+     * @return lista contendo todas as instanciqa de músicas encontradas com o mesmo género.
+     */
     public ArrayList<Musica> pesquisarMusicaPorGenero(String genero) {
         ArrayList<Musica> novaLista = new ArrayList<>();
         for (Musica m : musicas) {
@@ -112,7 +146,11 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-    //Pesquisar um álbum e listar todas as músicas
+    /**
+     * Pesquisa todas as musicas associadas a um album através do titulo.
+     * @param tituloAlbum a ser fornecido.
+     * @return lista contendo todaas as musicas encontradas nos albuns com o tituolo indicado.
+     */
     public ArrayList<Musica> pesquisaMusicaAlbum(String tituloAlbum){
         ArrayList<Musica> novaLista = new ArrayList<>();
         for(Album album : albuns){
@@ -121,11 +159,17 @@ public class Artista extends Utilizador implements Serializable {
         return novaLista;
     }
 
-    //Adiciona música a Album
-    //Pesquisa na lista se o álbum existe, se existir vai procurar a música na biblioteca do artista e adiciona a esse álbum
+    /**
+     * Adiciona uma música a um album com base nos indices fornecidos.
+     * @param indexAlbum: indice do album na lista de albuns do artista.
+     * @param indexMusica: indice da musica na lista de musicas do artista.
+     */
     public void addMusicaAAlbumPelosIndexes(int indexAlbum, int indexMusica) {
+        //Encontra a instancia atraves do indice fornecido.
         Musica m = musicas.get(indexMusica);
+        //Verifica se o album ja contem a musica
         if (!albuns.get(indexAlbum).musicas.contains(m)){
+            //Caso o album ainda nao tenho a musica esta á adicionado ao album.
             albuns.get(indexAlbum).adicionarMusica(m);
             JOptionPane.showMessageDialog(null, "Musica adicionada com sucesso", "",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -133,12 +177,18 @@ public class Artista extends Utilizador implements Serializable {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    //Número total de músicas
+    /**
+     * Devolve o numero total de músicas na lista de artista.
+     * @return numero total de músicas.
+     */
     public int totalMusicas(){
         return musicas.size();
     }
 
-    //Valor total das músicas que tem na coleção neste momento
+    /**
+     * Calcula o valor total da coleção de musicas com preço do artista.
+     * @return valor total da coleção do artista.
+     */
     public double valorTotalColecao(){
         double soma=0;
         for (int i=0;i<musicas.size();i++){
@@ -149,7 +199,11 @@ public class Artista extends Utilizador implements Serializable {
     return soma;
     }
 
-    //Número total de álbuns do género X
+    /**
+     * Contabiliza o numero total de albuns de um determinado género.
+     * @param genero fornecido dos albuns a serem contabilizados.
+     * @return numero total de albuns do género.
+     */
     public int totalAlbunsGenero(String genero){
         int cont=0;
         for (Album a : albuns){
@@ -160,12 +214,16 @@ public class Artista extends Utilizador implements Serializable {
     return cont;
     }
 
-    //Método para criar uma lista com todos os generos do artista
+    /**
+     * Cria uma lista de géneros presentes nos albuns do artista.
+     * @return lista contendo os generos dos albuns(sem repeticões,ignorando
+     * maiúsculas e minúsculas.
+     */
     private ArrayList listaGeneros(){
         ArrayList<String> listaGeneros = new ArrayList<>();
         for (Album album : albuns) {
             String genero = album.getGenero();
-            // Verifica se o género ainda não está na lista e caso não estaja, adiciona
+            // Verifica se o género ainda não está na lista e caso não esteja, adiciona
             if (!listaGeneros.stream().anyMatch(g -> g.equalsIgnoreCase(genero))) {
                 listaGeneros.add(genero);
             }
@@ -173,11 +231,19 @@ public class Artista extends Utilizador implements Serializable {
         return listaGeneros;
     }
 
-    //Método para devolver o numero de géneros de álbuns que o artista possui
+    /**
+     * Retorna o número total de géneros presentes nos albuns do artista.
+     * @return numero total géneros.
+     */
     private int numeroGeneros(){
         ArrayList novaLista = listaGeneros();
         return novaLista.size();
     }
+
+    /**
+     * Cria uma matriz contendo o total de albuns por género.
+     * @return matriz contendo o genero de album e o  numero total de albuns desse género.
+     */
 
     public String [][] matrizTotalAlbuns(){
         int linhas = numeroGeneros();
@@ -190,7 +256,11 @@ public class Artista extends Utilizador implements Serializable {
             }
         return nova;
     }
-    //Copia todos os ratings da lista da aplicação, atualiza assim a informação
+
+    /**
+     * Atualiza os ratings das músicas com base numa lista fornecida
+     * @param lista de musicas contendo os novos ratings.
+     */
     public void atualizarRatings(ArrayList<Musica>lista){
         for (Musica m:musicas){
             for (Musica mLista:lista){
