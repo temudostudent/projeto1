@@ -5,28 +5,42 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayList extends ConjuntoMusicas implements Serializable {
+    /**
+     * @author César Temudo
+     * @author Vânia Mendes
+     * @version 1.0
+     */
     private int idPlaylist;
     private String criador;
     private static int ultimoId = 0;
     private boolean visibilidade;
 
+    /**
+     * Construtor de um conjunto de músicas que pode, ou não, ser visível para outros utilizadores.
+     * @param nome
+     * @param visibilidade
+     * @param username
+     */
     public PlayList(String nome, boolean visibilidade, String username) {
         super(nome);
         this.visibilidade = visibilidade;
         this.idPlaylist = getNextId();
         this.criador = username;
     }
-    public String getVisibilidade() {
-        if (visibilidade) {
-            return "   PÚBLICA";
-        } else {
-            return "   PRIVADA";
-        }
-    }
+
+    /**
+     *
+     * @return ultimoID incrementado
+     */
     private static synchronized int getNextId() {
         return ++ultimoId;
     }
 
+    /**
+     * Verifica se pelo menos uma música da lista referenciada como parâmetro já existe nesta playlist, retornando true nesse caso.
+     * @param lista
+     * @return boolean
+     */
     public boolean musicasJaExistem (ArrayList<Musica> lista){
         for (Musica m: lista) {
             for (Musica mPl : getMusicas()){
@@ -37,6 +51,12 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
             }
         }
     return false;}
+
+    /**
+     * Retorna true caso a música exista nesta playlist.
+     * @param m
+     * @return boolean
+     */
     public boolean estaMusicaJaExiste (Musica m){
         for (Musica mPl : getMusicas()){
             if (m.getIdMusica().equals(mPl.getIdMusica())){
@@ -44,21 +64,40 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     }
     return false;}
+
     public String getCriador() {
         return criador;
     }
+
     public int getIdPlaylist() {
         return idPlaylist;
     }
-    public int getNumMusicas(){return this.musicas.size();}
+
+    /**
+     *
+     * @return número de músicas da playlist
+     */
+    public int getNumMusicas(){
+        return this.musicas.size();
+    }
+
     //Mostra a visibilidade
     public boolean isVisibilidade() {
         return this.visibilidade;
     }
-    //Set visibilidade
+
+    public String getVisibilidade() {
+        if (visibilidade) {
+            return "   PÚBLICA";
+        } else {
+            return "   PRIVADA";
+        }
+    }
+
     public void setVisibilidade(boolean visibilidade) {
         this.visibilidade = visibilidade;
     }
+
     @Override
     public String toString() {
         return "PlayList{" +

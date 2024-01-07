@@ -3,10 +3,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Album extends ConjuntoMusicas implements Serializable {
-
+    /**
+     * @author César Temudo
+     * @author Vânia Mendes
+     * @version 1.0
+     */
     private String genero;
     private String nomeArtista;
 
+    /**
+     * Construtor de um álbum de um género especificado pelo artista.
+     * @param nomeAlbum
+     * @param nomeArtista
+     * @param genero
+     */
     public Album(String nomeAlbum, String nomeArtista, String genero) {
         super(nomeAlbum);
         this.dataCriacao= LocalDateTime.now();

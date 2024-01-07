@@ -6,10 +6,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MusicaPaga extends Musica implements Serializable {
-
+    /**
+     * @author César Temudo
+     * @author Vânia Mendes
+     * @version 1.0
+     */
     private double preco;
     private Map<LocalDateTime, Double> historicoPreco = new HashMap<>();
 
+    /**
+     * Construtor de uma música que tenha preço desde a sua criação.
+     * @param titulo
+     * @param nomeArtista
+     * @param duracao
+     * @param genero
+     * @param estado
+     * @param preco
+     */
     public MusicaPaga(String titulo, String nomeArtista, double duracao, String genero, boolean estado, double preco) {
         super(titulo, nomeArtista, duracao, genero, estado);
         this.dataCriacao = LocalDateTime.now();
@@ -20,6 +33,19 @@ public class MusicaPaga extends Musica implements Serializable {
         adicionarRegisto(preco);
     }
 
+    /**
+     * Construtor de uma música que foi gratuita na sua criação e que passou a ter um preço.
+     * Os atributos atualizados transitam da música já existente.
+     * @param titulo
+     * @param dataCriacao
+     * @param nomeArtista
+     * @param duracao
+     * @param genero
+     * @param estado
+     * @param preco
+     * @param id
+     * @param rating
+     */
     //Construtor quando Música já existe gratuita e quer passar a ser paga
     public MusicaPaga(String titulo, LocalDateTime dataCriacao, String nomeArtista, String duracao, String genero, boolean estado, double preco, int id, Map rating) {
         this.titulo=titulo;
@@ -35,21 +61,29 @@ public class MusicaPaga extends Musica implements Serializable {
         adicionarRegisto(preco);
     }
 
+    /**
+     * Adiciona ao histórico de preços o seu novo preço e o momento (em LocalDateTime) em que foi adicionado.
+     * @param novoPreco
+     */
     private void adicionarRegisto(double novoPreco) {
         this.historicoPreco.put(LocalDateTime.now(), novoPreco);
     }
+
     public Map<LocalDateTime, Double> getHistoricoPreco() {
         return historicoPreco;
     }
+
     public double getPreco() {
         return preco;
     }
+
     public void setPreco(double preco) {
         if (preco < 0) {
             this.preco = 0;
         } else this.preco = preco;
         adicionarRegisto(preco);
     }
+
     @Override
     public boolean equals(Object m){
         if (this == m) {
