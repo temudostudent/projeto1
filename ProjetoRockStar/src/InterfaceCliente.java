@@ -1138,7 +1138,6 @@ public class InterfaceCliente implements Serializable {
         //Cria nova janela e configura
         JFrame janelaPlaylist = new JFrame();
         janelaPlaylist.setSize(300, 200);
-        janelaPlaylist.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janelaPlaylist.setLocationRelativeTo(null);
         janelaPlaylist.setVisible(true);
 
