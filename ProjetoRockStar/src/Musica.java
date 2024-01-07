@@ -98,7 +98,7 @@ public class Musica implements Serializable {
     protected String duracaoFormatada(double tempo){
         String formatada=new String();
 
-        if (tempo<0 || tempo>180){
+        if (tempo<=0 || tempo>180){
             JOptionPane.showMessageDialog(null, "Tempo de duração inválida");
         }else{
             double duracaoEmSegundos = tempo * 60;
