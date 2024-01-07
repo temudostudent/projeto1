@@ -25,14 +25,14 @@ public class InterfaceCliente implements Serializable {
     private JButton botaoPesquisar, botaoPlayList, botaoCarrinho, adicionarCarrinho, adicionarPlayList, adicionarRating,
             criarPlaylistPreenchida, removerPlayList, alterarVisibilidade, criarNovaPlayList, verMusicasPlayListSelecionada,
             ordenarPesquisa, okPesquisa, removerMusicaCarrinho, carregarSaldo, finalizarPagamento, minhasPlayLists,
-            botaoLogout, todasPlayLists, botaoVerMusicas, historicoPrecos;
+            botaoLogout, todasPlayLists, botaoVerMusicas, historicoPrecos, historicoCompras;
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
     private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
-    private JScrollPane scroljListarMusicas, listaPlaylist;
+    private JScrollPane scroljListarMusicas, listaPlaylist, scrollCarrinho;
 
 
     public void run() {
@@ -716,7 +716,8 @@ public class InterfaceCliente implements Serializable {
 
         //JTabel
         listaMusicasCarrinho = new JTable();
-        listaMusicasCarrinho.setBounds(50, 50, 250, 300);
+        scrollCarrinho = new JScrollPane(listaMusicasCarrinho);
+        scrollCarrinho.setBounds(50, 50, 250, 300);
 
         //JButton
         removerMusicaCarrinho = new JButton("REMOVER MÚSICA DO CARRINHO");
@@ -769,6 +770,32 @@ public class InterfaceCliente implements Serializable {
         });
         valorTotalPagar = new JLabel("VALOR TOTAL");
         valorTotalPagar.setBounds(400, 200, 250, 40);
+        historicoCompras = new JButton("HISTÓRICO COMPRAS");
+        historicoCompras.setBounds(400,300,250,40);
+
+        historicoCompras.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Compra> listaCompras = cliente.getHistoricoCompras();
+                if(listaCompras.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Não efetuou nenhuma compra até à data!");
+                }else {
+
+                    DefaultTableModel modeloTabela = new DefaultTableModel();
+
+                    modeloTabela.addColumn("Nº compra");
+                    modeloTabela.addColumn("Nº musicas compradas");
+                    modeloTabela.addColumn("Valor da compra");
+
+                    listaMusicasCarrinho.setModel(modeloTabela);
+                    scrollCarrinho.setViewportView(listaMusicasCarrinho);
+
+                    for (Compra compra : listaCompras) {
+                        modeloTabela.addRow(new Object[]{compra.getId_compra(), compra.getCarrinho().size(), compra.totalCarrinhoCliente()});
+                    }
+                }
+            }
+        });
 
         //JTextField
         mostrarValorPagar = new JTextField("0.00 €");
@@ -793,13 +820,15 @@ public class InterfaceCliente implements Serializable {
         painelCarrinho.add(mostrarValorPagar);
         painelCarrinho.add(mostrarSaldoCliente);
         painelCarrinho.add(saldoCliente);
+        painelCarrinho.add(historicoCompras);
+        painelCarrinho.add(scrollCarrinho);
 
 
         //Criar painel fixo Titulo  ----------------------------------------------
         painelTituloCliente = new JPanel();
         painelTituloCliente.setBackground(new Color(255, 178, 102));
         painelTituloCliente.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
-        tituloCliente = new JLabel("ROCKSTAR.INC");
+        tituloCliente = new JLabel("ROCKSTAR INC.");
         tituloCliente.setFont(new Font("Magneto", Font.BOLD, 80));
         painelTituloCliente.add(tituloCliente);
 
@@ -1079,13 +1108,18 @@ public class InterfaceCliente implements Serializable {
         okCarregamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor = Double.parseDouble(valorACarregar.getText());
-                if (valor > 0 && valor < 1000) {
-                    cliente.alterarSaldo(valor);
-                    mostrarSaldoCliente.setText(String.format("%.2f", cliente.getSaldo()) + " €");
-                    janelaCarregarSaldo.setVisible(false);
-                } else JOptionPane.showMessageDialog(null, "Valor inválido");
+                try {
+                    //Converte o valor de String para Double
+                    double valor = Double.parseDouble(valorACarregar.getText());
+                    if (valor > 0 && valor < 1000) {
+                        cliente.alterarSaldo(valor);
+                        mostrarSaldoCliente.setText(String.format("%.2f", cliente.getSaldo()) + " €");
+                        janelaCarregarSaldo.setVisible(false);
+                    } else JOptionPane.showMessageDialog(null, "Valor inválido");
 
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Insira um número válido");
+                }
             }
         });
 

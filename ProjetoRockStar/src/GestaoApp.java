@@ -22,7 +22,7 @@ public class GestaoApp implements Serializable {
      * Construtor que inicializa a aplicação e os ficheiros de objetos associados.
      */
     public GestaoApp() {
-        // INICIALIZA A APP:
+        // Inicializa a Aplicação
         this.rockstar = new Aplicacao();
         iS = null;
         // CRIA FICHEIROS:
@@ -36,7 +36,7 @@ public class GestaoApp implements Serializable {
     /**
      * Método que inclui leitura e criação de ficheiro de objetos.
      */
-    //METODO RUN()  INCLUI AUTOMATICAMENTE LEITURA E CRIAÇÃO DOS FICHEIROS
+
     protected void run() {
         //File Clientes
         if (!this.fileClientes.exists()) {
@@ -52,7 +52,7 @@ public class GestaoApp implements Serializable {
                 e.printStackTrace();
             }
         }
-        //FICHEIRO EXISTE ---> ler o ficheiro existente
+        //Se o ficheiro existir vai ler o ficheiro
         else {
             try {
                 this.iS = new ObjectInputStream(new FileInputStream(this.fileClientes));
@@ -165,8 +165,8 @@ public class GestaoApp implements Serializable {
         }
     }
 
-    //GUARDAR OS FICHEIROS
-    //CHAMADO em caso de logOut / fecho janela
+
+    //Método que é chamado em caso de logOut / fecho janela
     /**
      * Método que guarda a informação nos ficheiros de objetos.
      * @param clientes

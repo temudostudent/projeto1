@@ -161,4 +161,8 @@ public class Cliente extends Utilizador implements Serializable {
     public ArrayList<PlayList> getPlaylists() {
         return playlists;
     }
+
+    public ArrayList<Compra> getHistoricoCompras() {
+        return historicoCompras;
+    }
 }

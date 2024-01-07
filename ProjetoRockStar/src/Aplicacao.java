@@ -18,7 +18,7 @@ public class Aplicacao implements Serializable {
     private ArrayList<Compra> compras;
 
     /**
-     * construtor da classe Aplicação que inicia as listas de clientes, artista, músicas, playlists e compras.
+     * Construtor da classe Aplicação que inicia as listas de clientes, artista, músicas, playlists e compras.
      */
     public Aplicacao() {
         this.clientes = new ArrayList<Cliente>();
