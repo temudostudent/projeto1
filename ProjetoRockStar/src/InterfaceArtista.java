@@ -832,7 +832,7 @@ public class InterfaceArtista implements Serializable {
             painelTitulo = new JPanel();
             painelTitulo.setBackground(new Color(255,178,102));
             painelTitulo.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
-            titulo = new JLabel("ROCKSTAR.INC");
+            titulo = new JLabel("ROCKSTAR INC.");
             titulo.setFont(new Font("Magneto", Font.BOLD, 80));
             painelTitulo.add(titulo);
 

@@ -30,7 +30,7 @@ public class JanelaInicial {
         gestaoApp.run();
 
         //Criar Frame
-        f = new JFrame("Rockstar.Inc");
+        f = new JFrame("Rockstarc Inc.");
         JFrame fPin = new JFrame("PIN");
 
         //Criar Paineis
@@ -54,8 +54,8 @@ public class JanelaInicial {
         painelPIN.setLayout(new BorderLayout());
 
         //Texto
-        rockstarTxt = new JLabel("RockStar Inc");
-        rockstarTxt.setFont(new Font("Magneto",Font.BOLD,120));
+        rockstarTxt = new JLabel("ROCKSTAR INC.");
+        rockstarTxt.setFont(new Font("Magneto",Font.BOLD,80));
 
         usernameLegendaL = new JLabel("Username");
         usernameLegendaL.setFont(new Font("Calibri",Font.BOLD,15));
