@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 
 /**
- * @author cesartemudo
+ * @author César Temudo
  * @autor Vânia Mendes
  * @version 1.0
  */
