@@ -34,7 +34,7 @@ public class ConjuntoMusicas implements Serializable {
 
     /**
      * Adiciona a música ao final da lista.
-     * @param m
+     * @param m Musica
      */
     public void adicionarMusica(Musica m) {
         this.musicas.add(m);

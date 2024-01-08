@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Compra implements Serializable{
+
     /**
      * @author César Temudo
      * @author Vânia Mendes
@@ -13,7 +14,7 @@ public class Compra implements Serializable{
     private ArrayList< MusicaPaga > carrinho;
 
     /**
-     * Abre um novo carrinho
+     * Construtor de Compra.
      */
     public Compra(){
         this.carrinho = new ArrayList<>();
@@ -21,7 +22,7 @@ public class Compra implements Serializable{
     }
 
     /**
-     *
+     * Incrementa o último número de identificação.
      * @return ultimoID incrementado
      */
     protected synchronized int getNextId() {
@@ -29,8 +30,8 @@ public class Compra implements Serializable{
     }
 
     /**
-     *Adiciona a música apenas se já não estiver no carrinho de compras.
-     * @param m
+     * Adiciona a música apenas se já não estiver no carrinho de compras.
+     * @param m MusicaPaga
      */
     public void adicionarMusica(MusicaPaga m){
         if (!musicaEstaNoCarrinho(m)) {
@@ -49,7 +50,7 @@ public class Compra implements Serializable{
 
     /**
      * Retorna true caso a música exista no carrinho.
-     * @param m
+     * @param m MusicaPaga
      * @return boolean
      */
     private boolean musicaEstaNoCarrinho(MusicaPaga m){

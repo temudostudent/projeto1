@@ -30,7 +30,7 @@ public class Aplicacao implements Serializable {
 
     /**
      * Regista um novo artista na aplicação.
-     * @param username do usuário único do artista.
+     * @param username: do usuário único do artista.
      * @param password: senha associada ao username do artista.
      * @param pin: PIN do artista.
      */

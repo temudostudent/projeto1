@@ -17,9 +17,9 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
 
     /**
      * Construtor de um conjunto de músicas que pode, ou não, ser visível para outros utilizadores.
-     * @param nome
+     * @param nome nome da playlist
      * @param visibilidade
-     * @param username
+     * @param username nome do criador
      */
     public PlayList(String nome, boolean visibilidade, String username) {
         super(nome);
@@ -29,7 +29,7 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
     }
 
     /**
-     *
+     * Gera número de identificação único para cada nova música.
      * @return ultimoID incrementado
      */
     private static synchronized int getNextId() {
@@ -54,7 +54,7 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
 
     /**
      * Retorna true caso a música exista nesta playlist.
-     * @param m
+     * @param m Música
      * @return boolean
      */
     public boolean estaMusicaJaExiste (Musica m){
@@ -86,6 +86,10 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         return this.visibilidade;
     }
 
+    /**
+     *
+     * @return visibilidade "pública" ou "privada"
+     */
     public String getVisibilidade() {
         if (visibilidade) {
             return "   PÚBLICA";

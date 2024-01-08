@@ -24,6 +24,7 @@ public class Album extends ConjuntoMusicas implements Serializable {
         this.genero = genero;
         this.musicas=new ArrayList<>();
     }
+
     public String getGenero() {
         return genero;
     }

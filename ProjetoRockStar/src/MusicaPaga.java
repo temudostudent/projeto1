@@ -77,6 +77,10 @@ public class MusicaPaga extends Musica implements Serializable {
         return preco;
     }
 
+    /**
+     * Define um novo preço e adiciona ao histórico de preços.
+     * @param preco
+     */
     public void setPreco(double preco) {
         if (preco < 0) {
             this.preco = 0;

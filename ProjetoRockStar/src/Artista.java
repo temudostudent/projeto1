@@ -65,7 +65,7 @@ public class Artista extends Utilizador implements Serializable {
      * @param duracao da musica em minutos.
      * @param genero da musica.
      * @param estado da musica. Indica se é publica ou privada.
-     * @param preco. Se for menor ou igual a zero a musica é considerada gratuita.
+     * @param preco Se for menor ou igual a zero a musica é considerada gratuita.
      * @return a instância da música criada, ou null se o título já existir.
      */
     public Musica novaMusica(String titulo, double duracao, String genero, boolean estado, double preco) {

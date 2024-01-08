@@ -99,7 +99,6 @@ public class Musica implements Serializable {
         String formatada=new String();
 
         if (tempo<=0 || tempo>180){
-            JOptionPane.showMessageDialog(null, "Tempo de duração inválida");
         }else{
             double duracaoEmSegundos = tempo * 60;
             Duration d = Duration.ofSeconds((long) duracaoEmSegundos);
@@ -122,7 +121,7 @@ public class Musica implements Serializable {
 
     /**
      * Define o título.
-     * @param titulo
+     * @param titulo da música.
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
