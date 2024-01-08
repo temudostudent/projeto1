@@ -30,6 +30,7 @@ public class InterfaceCliente implements Serializable {
     private JComboBox atributoPesquisa, ordenarMusicaPor;
     private JRadioButton botaoAscendenteCliente, botaoDescendenteCliente, botaoTodasAsMusicas,
             botaoParaPesquisarMusicas, botaoMinhasMusicas;
+    private ArrayList<PlayList> listaTemp;
     private ButtonGroup botaoOrdem, grupoPesquisa;
     private JTextField caixaTextoPesquisa, mostrarValorPagar, mostrarSaldoCliente, valorACarregar;
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
@@ -416,11 +417,17 @@ public class InterfaceCliente implements Serializable {
 
                 if (listaMPagas != null && !listaMPagas.isEmpty()) {
 
-                    titulosDasColunasTabela(listarMusicas);
+                    listarMusicas.addColumn("TÍTULO");
+                    listarMusicas.addColumn("ARTISTA");
+                    listarMusicas.addColumn("DATA");
+                    listarMusicas.addColumn("DURAÇÃO");
+                    listarMusicas.addColumn("GÉNERO");
+                    listarMusicas.addColumn("ESTADO");
+                    listarMusicas.addColumn("PREÇO");
 
                     for (MusicaPaga musica : listaMPagas) {
                         listarMusicas.addRow(new Object[]{musica.getTitulo(), musica.getNomeArtista(), musica.getDataCriacao(), musica.getDuracao(),
-                                musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € ", musica.getRatingMedia()});
+                                musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco() + " € "});
                     }
                     tabelaResultadoPesquisa.setModel(listarMusicas);
                     scroljListarMusicas.setViewportView(tabelaResultadoPesquisa);
@@ -519,9 +526,15 @@ public class InterfaceCliente implements Serializable {
                 listaMusicasPlayList.setModel(modeloTabela);
                 listaPlaylist.setViewportView(listaMusicasPlayList);
 
-                for (PlayList play : playList) {
-                    if (play.isVisibilidade())
-                        modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador(), play.getNumMusicas()});
+                listaTemp=new ArrayList<>();
+                for (PlayList p:playList){
+                    if (p.isVisibilidade()){
+                        listaTemp.add(p);
+                    }
+                }
+
+                for (PlayList play : listaTemp) {
+                    modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador(), play.getNumMusicas()});
                 }
 
                 removerPlayList.setVisible(false);
@@ -541,7 +554,7 @@ public class InterfaceCliente implements Serializable {
 
                 if (linhaSelecionada != -1) {
 
-                    PlayList playlistSelecionada = app.rockstar.getPlaylists().get(linhaSelecionada);
+                    PlayList playlistSelecionada = listaTemp.get(linhaSelecionada);
                     janelaMusicaPlayLisGlobal(playlistSelecionada);
                 }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
             }
@@ -1189,7 +1202,7 @@ public class InterfaceCliente implements Serializable {
                 } else {
                     try {
                         int tamanho1 = Integer.parseInt(tamanho);
-                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(app.rockstar.musicasGratuitasGenero(genero));
+                        ArrayList<Musica> musicasGenero = cliente.listaMusicaGenero(app.rockstar.musicasGratuitasGenero(genero),genero);
 
                         if (musicasGenero.isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Não há músicas disponíveis do género " + genero,

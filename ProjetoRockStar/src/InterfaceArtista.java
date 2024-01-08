@@ -981,7 +981,7 @@ public class InterfaceArtista implements Serializable {
                     for (Musica musica : lista) {
                         if(musica instanceof MusicaPaga) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                                    musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                         }else{
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                     musica.getGenero(), musica.tipoEstado(), "0" , musica.getRatingMedia()});
