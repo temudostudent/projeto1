@@ -332,7 +332,6 @@ public class InterfaceArtista implements Serializable {
                             }else {
                                 Musica m = artista.novaMusica(titulo, duracao1, genero, estadoMusica, preco1);
 
-
                                 if (m != null) {
                                     artista.addMusica(m);
                                     if (m.getEstado()) {
@@ -528,8 +527,9 @@ public class InterfaceArtista implements Serializable {
 
                             if (alterarTituloMusica.isSelected()) {
                                 if (!caixaAlteracao.equals(null)) {
-                                    object.setTitulo(caixaAlteracao.getText());
-                                    app.rockstar.atualizarTituloMusica(object.getIdMusica(),caixaAlteracao.getText());
+                                    String novoTitulo=caixaAlteracao.getText().substring(0, 1).toUpperCase() + caixaAlteracao.getText().substring(1);
+                                    object.setTitulo(novoTitulo);
+                                    app.rockstar.atualizarTituloMusica(object.getIdMusica(),novoTitulo);
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
                                 }else {
@@ -683,9 +683,6 @@ public class InterfaceArtista implements Serializable {
                         if (linhaSelecionada != -1) {
                             // Obtendo os dados da linha selecionada
                             Object titulo = listaMusicasAlbum.getValueAt(linhaSelecionada, 0);
-
-                            // Exibindo os dados (você pode fazer o que quiser com eles)
-                            System.out.println("Título: " + titulo);
                         }
                     }
                 }

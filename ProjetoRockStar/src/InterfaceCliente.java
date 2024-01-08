@@ -1201,7 +1201,6 @@ public class InterfaceCliente implements Serializable {
                                 //Envia mensagem ao tutilizador
                                 JOptionPane.showMessageDialog(null, "Apenas existem " + musicasGenero.size() + " musicas do género " +
                                         genero, "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                                System.out.println(musicasGenero.size());
                             } else {
 
                                 PlayList nova = cliente.criarPlayListGenero(titulo, tamanho1, musicasGenero);
