@@ -477,6 +477,7 @@ public class InterfaceArtista implements Serializable {
                             listaPrecos.addColumn("Preço");
                             listaPrecos.addRow(new Object[]{"Data", "Preço"});
 
+
                             //Criar um Map para armazenar os valores
                             Map<LocalDateTime, Double> historicoPreco;
                             historicoPreco = ((MusicaPaga) object).getHistoricoPreco();
@@ -736,11 +737,16 @@ public class InterfaceArtista implements Serializable {
                 public void actionPerformed(ActionEvent e) {
                     int indexAlbum = listaAlbuns.getSelectedRow();
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
+                    if(indexMusicaSelect != -1 && indexAlbum != -1) {
 
                     if (indexAlbum != -1 || indexMusicaSelect != -1){
                         artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
                     }else JOptionPane.showMessageDialog(null, "Selecione uma música e um álbum");
 
+                        artista.addMusicaAAlbumPelosIndexes(indexAlbum, indexMusicaSelect);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Selecione uma linha válida!");
+                    }
                 }
             });
 

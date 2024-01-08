@@ -173,7 +173,7 @@ public class Artista extends Utilizador implements Serializable {
             albuns.get(indexAlbum).adicionarMusica(m);
             JOptionPane.showMessageDialog(null, "Musica adicionada com sucesso", "",
                     JOptionPane.INFORMATION_MESSAGE);
-        }else JOptionPane.showMessageDialog(null, "Musica não foi adicionada", "",
+        }else JOptionPane.showMessageDialog(null, "O Álbum já contém esta música", "",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
