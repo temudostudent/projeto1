@@ -520,7 +520,6 @@ public class InterfaceCliente implements Serializable {
                 listaPlaylist.setViewportView(listaMusicasPlayList);
 
                 for (PlayList play : playList) {
-                    if (play.isVisibilidade())
                         modeloTabela.addRow(new Object[]{play.getNome(), play.getVisibilidade(), play.getCriador(), play.getNumMusicas()});
                 }
 
