@@ -555,7 +555,7 @@ public class InterfaceCliente implements Serializable {
 
                     PlayList playlistSelecionada = listaTemp.get(linhaSelecionada);
                     janelaMusicaPlayLisGlobal(playlistSelecionada);
-                }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada para remover.");
+                }else JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada.");
             }
         });
         minhasPlayLists.addActionListener(new ActionListener() {
@@ -684,6 +684,8 @@ public class InterfaceCliente implements Serializable {
                     PlayList playlistSelecionada = cliente.pesquisaPlaylistTitulo(nome);
 
                     janelaMusicaPlayLis(playlistSelecionada);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Nenhuma playlist selecionada!");
                 }
             }
         });
@@ -811,10 +813,8 @@ public class InterfaceCliente implements Serializable {
 
 
                     for (Compra compra : listaCompras) {
-                        double totalCarrinho = compra.totalCarrinhoCliente();
-                        DecimalFormat valorDecimal = new DecimalFormat("#0.00");
-                        String valorFormatado = valorDecimal.format(totalCarrinho);
-                        modeloTabela.addRow(new Object[]{ compra.getId_compra(),compra.getCarrinho().size(), totalCarrinho});
+                       String totalCarrinho1 = String.format("%.2f", compra.totalCarrinhoCliente()) + " €";
+                        modeloTabela.addRow(new Object[]{ compra.getId_compra(),compra.getCarrinho().size(), totalCarrinho1});
                     }
                 }
             }
