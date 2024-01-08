@@ -82,8 +82,8 @@ public class InterfaceArtista implements Serializable {
             ordenarMusicas.setBounds(350,10,150,40);
 
             //JButton
-            JButton okPesquisa = new JButton("OK");
-            okPesquisa.setBounds(710,450,60,40);
+            JButton okPesquisa = new JButton("ORDENAR");
+            okPesquisa.setBounds(610,450,110,40);
             okPesquisa.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
