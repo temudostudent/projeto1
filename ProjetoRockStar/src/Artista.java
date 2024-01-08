@@ -168,7 +168,7 @@ public class Artista extends Utilizador implements Serializable {
         //Encontra a instancia atraves do indice fornecido.
         Musica m = musicas.get(indexMusica);
         //Verifica se o album ja contem a musica
-        if (!albuns.get(indexAlbum).musicas.contains(m)){
+        if (!albuns.get(indexAlbum).estaMusicaJaExiste(m)){
             //Caso o album ainda nao tenho a musica esta á adicionado ao album.
             albuns.get(indexAlbum).adicionarMusica(m);
             JOptionPane.showMessageDialog(null, "Musica adicionada com sucesso", "",

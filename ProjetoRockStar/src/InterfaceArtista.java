@@ -758,14 +758,8 @@ public class InterfaceArtista implements Serializable {
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
                     if(indexMusicaSelect != -1 && indexAlbum != -1) {
 
-                    if (indexAlbum != -1 || indexMusicaSelect != -1){
                         artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
                     }else JOptionPane.showMessageDialog(null, "Selecione uma música e um álbum");
-
-                        artista.addMusicaAAlbumPelosIndexes(indexAlbum, indexMusicaSelect);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Selecione uma linha válida!");
-                    }
                 }
             });
 
