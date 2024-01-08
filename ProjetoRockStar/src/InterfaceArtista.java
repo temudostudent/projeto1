@@ -43,6 +43,12 @@ public class InterfaceArtista implements Serializable {
                 tabelaEstatisticas;
 
 
+        public InterfaceArtista(Artista a, GestaoApp app) {
+            this.artista = a;
+            this.app = app;
+            initialize();
+        }
+
         public void run(){
             try{
                 InterfaceArtista janela = new InterfaceArtista(artista, app);
@@ -50,12 +56,6 @@ public class InterfaceArtista implements Serializable {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }
-
-        public InterfaceArtista(Artista a, GestaoApp app) {
-            this.artista = a;
-            this.app = app;
-            initialize();
         }
 
         protected void initialize(){

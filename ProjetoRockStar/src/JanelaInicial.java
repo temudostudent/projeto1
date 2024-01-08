@@ -11,14 +11,6 @@ public class JanelaInicial {
     JLabel rockstarTxt, usernameLegendaL, passLegendaL, usernameLegendaR, passLegendaR, pinL, pinR, segurancaPassword;
     JButton botaoRegistar1,botaoRegistar2,botaoLogin1,botaoLogin2;
     JFrame f;
-    public void run(){
-        try{
-            JanelaInicial inicio = new JanelaInicial();
-            inicio.f.setVisible(true);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     public JanelaInicial() throws IOException, ClassNotFoundException {
         initialize();
