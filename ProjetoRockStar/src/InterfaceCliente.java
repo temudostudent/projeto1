@@ -789,6 +789,8 @@ public class InterfaceCliente implements Serializable {
 
                     DefaultTableModel modeloTabela = new DefaultTableModel();
 
+                    modeloTabela.addColumn("Nº compra");
+
                     modeloTabela.addColumn("Nº musicas compradas");
                     modeloTabela.addColumn("Valor da compra");
 
@@ -800,7 +802,7 @@ public class InterfaceCliente implements Serializable {
                         double totalCarrinho = compra.totalCarrinhoCliente();
                         DecimalFormat valorDecimal = new DecimalFormat("#0.00");
                         String valorFormatado = valorDecimal.format(totalCarrinho);
-                        modeloTabela.addRow(new Object[]{ compra.getCarrinho().size(), totalCarrinho});
+                        modeloTabela.addRow(new Object[]{ compra.getId_compra(),compra.getCarrinho().size(), totalCarrinho});
                     }
                 }
             }

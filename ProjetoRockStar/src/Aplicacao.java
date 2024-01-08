@@ -271,6 +271,11 @@ public class Aplicacao implements Serializable {
         //Ordenar lista usando o comparador
         lista.sort(comparador);
     }
+
+    /**
+     * Ordena a lista de músicas em ordem decrescente com base no título
+     * @param lista A lista de músicas a ser ordenada
+     */
     public void ordenarMusicasDecrescentePorTitulo(ArrayList lista){
         Comparator<Musica> comparador = Comparator.comparing(Musica::getTitulo).reversed();
         lista.sort(comparador);
