@@ -325,19 +325,25 @@ public class InterfaceArtista implements Serializable {
                         if(!titulo.isEmpty() && !duracao.isEmpty() && !genero.isEmpty() && !preco.isEmpty()){
                             double duracao1 = Double.parseDouble(duracao);
                             double preco1 = Double.parseDouble(preco);
-                            Musica m = artista.novaMusica(titulo,duracao1,genero,estadoMusica,preco1);
+
+                            if(duracao1 <= 0 || duracao1 >180){
+                                JOptionPane.showMessageDialog(null, "Tempo de duração inválido");
+
+                            }else {
+                                Musica m = artista.novaMusica(titulo, duracao1, genero, estadoMusica, preco1);
 
 
-                            if(m != null ) {
-                                artista.addMusica(m);
-                                if (m.getEstado()) {
-                                    app.rockstar.adicionarMusica(m);
+                                if (m != null) {
+                                    artista.addMusica(m);
+                                    if (m.getEstado()) {
+                                        app.rockstar.adicionarMusica(m);
+                                    }
                                 }
+                                caixaTituloMusica.setText("");
+                                caixaDuracao.setText("");
+                                caixaGenero.setText("");
+                                caixaCusto.setText("");
                             }
-                            caixaTituloMusica.setText("");
-                            caixaDuracao.setText("");
-                            caixaGenero.setText("");
-                            caixaCusto.setText("");
 
                         }else{
                             JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos!");
@@ -543,25 +549,38 @@ public class InterfaceArtista implements Serializable {
                                     atualizarTabelaMusicas1();
                                 }
                             }
-                            else if(alterarPreco1.isSelected()){
-                                if(object instanceof MusicaPaga){
-                                    ((MusicaPaga) object).setPreco(Double.parseDouble(caixaAlteracao.getText()));
-                                    app.rockstar.atualizarPrecoMusica(object.getIdMusica(),Double.parseDouble(caixaAlteracao.getText()));
-                                    JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
-                                    atualizarTabelaMusicas();
+                            else if(alterarPreco1.isSelected()) {
+                                try {
+                                    double novoPreco = Double.parseDouble(caixaAlteracao.getText());
 
-                                }else{
-                                    MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(), object.getOriginalDataCriacao(),
-                                            object.getNomeArtista(), object.getDuracao(), object.getGenero(),
-                                            object.getEstado(), Double.parseDouble(caixaAlteracao.getText()), object.getIdMusica()
-                                            ,object.getRating());
-                                    artista.getMusicas().set(linhaSelecionada,musicaPaga);
-                                    app.rockstar.getMusicas().set(app.rockstar.encontrarPosicao(object.getIdMusica()),musicaPaga);
-                                    JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
-                                    atualizarTabelaMusicas();
+                                    if (novoPreco < 0 || novoPreco > 100) {
+                                        JOptionPane.showMessageDialog(null, "Novo preço inválido!");
+
+                                    } else {
+                                        if (object instanceof MusicaPaga) {
+
+
+                                            ((MusicaPaga) object).setPreco(Double.parseDouble(caixaAlteracao.getText()));
+                                            app.rockstar.atualizarPrecoMusica(object.getIdMusica(), Double.parseDouble(caixaAlteracao.getText()));
+                                            JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
+                                            atualizarTabelaMusicas();
+
+                                        } else {
+                                            MusicaPaga musicaPaga = new MusicaPaga(object.getTitulo(), object.getOriginalDataCriacao(),
+                                                    object.getNomeArtista(), object.getDuracao(), object.getGenero(),
+                                                    object.getEstado(), Double.parseDouble(caixaAlteracao.getText()), object.getIdMusica()
+                                                    , object.getRating());
+                                            artista.getMusicas().set(linhaSelecionada, musicaPaga);
+                                            app.rockstar.getMusicas().set(app.rockstar.encontrarPosicao(object.getIdMusica()), musicaPaga);
+                                            JOptionPane.showMessageDialog(null, "Preço alterado com Sucesso.");
+                                            atualizarTabelaMusicas();
+                                        }
+                                    }
+
+                                } catch (NumberFormatException ex) {
+                                    JOptionPane.showMessageDialog(null, "Formato de preço inválido");
                                 }
                             }
-                            System.out.println(object);
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Preencha o campo!");
