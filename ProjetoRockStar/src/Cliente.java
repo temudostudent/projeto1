@@ -92,10 +92,12 @@ public class Cliente extends Utilizador implements Serializable {
      * @param listaMusicasGratuitas a serem incluidas na lista de musicas do mesmo género.
      * @return lista contendo musicas gratuitas e compradas pleo cliente do mesmo género.
      */
-    public ArrayList listaMusicaGenero(ArrayList<Musica> listaMusicasGratuitas) {
+    public ArrayList listaMusicaGenero(ArrayList<Musica> listaMusicasGratuitas, String genero) {
         ArrayList<Musica> musicasGenero = listaMusicasGratuitas;
         for (Musica musica : musicasCompradas) {
-            musicasGenero.add(musica);
+            if (musica.getGenero().equalsIgnoreCase(genero)){
+                musicasGenero.add(musica);
+            }
         }
         return musicasGenero;
     }

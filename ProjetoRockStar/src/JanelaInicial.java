@@ -66,7 +66,7 @@ public class JanelaInicial {
         passLegendaR.setBounds(695,105,100,30);
         segurancaPassword = new JLabel();
         segurancaPassword.setText("<html>Entre 4 e 6 caracteres<br>Pelo menos um número e uma letra");
-        segurancaPassword.setBounds(820,40,200,120);
+        segurancaPassword.setBounds(820,25,200,120);
 
         pinL = new JLabel("PIN");
         pinL.setFont(new Font("Calibri",Font.BOLD,15));

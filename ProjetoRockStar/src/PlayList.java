@@ -52,18 +52,6 @@ public class PlayList extends ConjuntoMusicas implements Serializable {
         }
     return false;}
 
-    /**
-     * Retorna true caso a música exista nesta playlist.
-     * @param m Música
-     * @return boolean
-     */
-    public boolean estaMusicaJaExiste (Musica m){
-        for (Musica mPl : getMusicas()){
-            if (m.getIdMusica().equals(mPl.getIdMusica())){
-                return true;
-        }
-    }
-    return false;}
 
     public String getCriador() {
         return criador;

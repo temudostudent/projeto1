@@ -82,8 +82,8 @@ public class InterfaceArtista implements Serializable {
             ordenarMusicas.setBounds(350,10,150,40);
 
             //JButton
-            JButton okPesquisa = new JButton("OK");
-            okPesquisa.setBounds(710,450,60,40);
+            JButton okPesquisa = new JButton("ORDENAR");
+            okPesquisa.setBounds(610,450,110,40);
             okPesquisa.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -332,7 +332,6 @@ public class InterfaceArtista implements Serializable {
                             }else {
                                 Musica m = artista.novaMusica(titulo, duracao1, genero, estadoMusica, preco1);
 
-
                                 if (m != null) {
                                     artista.addMusica(m);
                                     if (m.getEstado()) {
@@ -528,8 +527,9 @@ public class InterfaceArtista implements Serializable {
 
                             if (alterarTituloMusica.isSelected()) {
                                 if (!caixaAlteracao.equals(null)) {
-                                    object.setTitulo(caixaAlteracao.getText());
-                                    app.rockstar.atualizarTituloMusica(object.getIdMusica(),caixaAlteracao.getText());
+                                    String novoTitulo=caixaAlteracao.getText().substring(0, 1).toUpperCase() + caixaAlteracao.getText().substring(1);
+                                    object.setTitulo(novoTitulo);
+                                    app.rockstar.atualizarTituloMusica(object.getIdMusica(),novoTitulo);
                                     JOptionPane.showMessageDialog(null, "Título Alterado com Sucesso.");
                                     atualizarTabelaMusicas1();
                                 }else {
@@ -683,9 +683,6 @@ public class InterfaceArtista implements Serializable {
                         if (linhaSelecionada != -1) {
                             // Obtendo os dados da linha selecionada
                             Object titulo = listaMusicasAlbum.getValueAt(linhaSelecionada, 0);
-
-                            // Exibindo os dados (você pode fazer o que quiser com eles)
-                            System.out.println("Título: " + titulo);
                         }
                     }
                 }
@@ -758,14 +755,8 @@ public class InterfaceArtista implements Serializable {
                     int indexMusicaSelect = listaMusicasAlbum.getSelectedRow();
                     if(indexMusicaSelect != -1 && indexAlbum != -1) {
 
-                    if (indexAlbum != -1 || indexMusicaSelect != -1){
                         artista.addMusicaAAlbumPelosIndexes(indexAlbum,indexMusicaSelect);
                     }else JOptionPane.showMessageDialog(null, "Selecione uma música e um álbum");
-
-                        artista.addMusicaAAlbumPelosIndexes(indexAlbum, indexMusicaSelect);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Selecione uma linha válida!");
-                    }
                 }
             });
 
@@ -990,7 +981,7 @@ public class InterfaceArtista implements Serializable {
                     for (Musica musica : lista) {
                         if(musica instanceof MusicaPaga) {
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
-                                    musica.getGenero(), musica.getEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
+                                    musica.getGenero(), musica.tipoEstado(), ((MusicaPaga) musica).getPreco(), musica.getRatingMedia()});
                         }else{
                             listaMusicas.addRow(new Object[]{musica.getTitulo(), musica.getDataCriacao(), musica.getDuracao(),
                                     musica.getGenero(), musica.tipoEstado(), "0" , musica.getRatingMedia()});
