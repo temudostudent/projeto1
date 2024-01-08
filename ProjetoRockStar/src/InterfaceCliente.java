@@ -36,7 +36,6 @@ public class InterfaceCliente implements Serializable {
     private JTable tabelaResultadoPesquisa, listaMusicasPlayList, listaMusicasCarrinho;
     private JScrollPane scroljListarMusicas, listaPlaylist, scrollCarrinho;
 
-
     public void run() {
         try {
             InterfaceCliente janela = new InterfaceCliente(cliente, app);
